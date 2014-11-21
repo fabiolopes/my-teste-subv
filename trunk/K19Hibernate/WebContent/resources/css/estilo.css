@@ -1,0 +1,7 @@
+@CHARSET "ISO-8859-1";
+
+.botao{
+	color: buttonface;
+	background-color: rgb(50, 50, 255, 30);
+	width: 150px;
+}
