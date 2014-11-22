@@ -1,10 +1,10 @@
-package br.com.livraria.dao.interfaces;
+package br.com.livraria.daoimpl;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.com.livraria.daoimpl.ConnectionFactory;
+import br.com.livraria.dao.interfaces.DAO;
 
 public class DAOImpl implements DAO{
 
