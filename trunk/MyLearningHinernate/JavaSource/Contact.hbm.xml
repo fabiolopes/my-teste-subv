@@ -6,24 +6,22 @@
 	<class name="br.com.mylearning.core.Contact" table="CONTACT">
 		<id name="id" type="java.lang.Long">
 			<column name="CONTACT_ID" />
-			<generator class="native" />
+			<generator class="increment" />
 		</id>
 		<property name="contactName" type="java.lang.String">
 			<column name="CONTACTNAME" />
 		</property>
-		<joined-subclass name="br.com.mylearning.core.EmailAndFax" table="EMAILANDFAX">
-			<key column="CONTACT_ID"/>
+		<union-subclass name="br.com.mylearning.core.EmailAndFax" table="EMAILANDFAX">
 			<property name="primaryEmail" column="PRIMARY_EMAIL" />
 			<property name="secondaryEmail" column="SECONDARY_EMAIL" />
 			<property name="faxNumber" column="FAX_NUMBER" />
-		</joined-subclass>
-		<joined-subclass name="br.com.mylearning.core.SnailMail" table="POSTALDETAILS">
-			<key column="CONTACT_ID"/>
+		</union-subclass>
+		<union-subclass name="br.com.mylearning.core.SnailMail" table="POSTALDETAILS">
 			<property name="details1" column="DETAILS1"/>
 			<property name="city" column="CITY" />
 			<property name="state" column="STATE" />
 			<property name="zipCode" column="ZIP_CODE" />
 			<property name="country" column="COUNTRY" />
-		</joined-subclass>
+		</union-subclass>
 	</class>
 </hibernate-mapping>
