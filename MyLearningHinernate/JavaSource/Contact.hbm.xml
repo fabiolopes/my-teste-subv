@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 24/11/2014 17:05:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="br.com.mylearning.core.Contact" table="CONTACT">
+		<id name="id" type="java.lang.Long">
+			<column name="ID" />
+			<generator class="native" />
+		</id>
+		<discriminator column="TYPE" type="string"/>
+		<property name="contactName" type="java.lang.String">
+			<column name="CONTACTNAME" />
+		</property>
+		<subclass name="br.com.mylearning.core.EmailAndFax"
+			discriminator-value="ECONTACT">
+			<property name="primaryEmail" column="PRIMARY_EMAIL" />
+			<property name="secondaryEmail" column="SECONDARY_EMAIL" />
+			<property name="faxNumber" column="FAX_NUMBER" />
+		</subclass>
+		<subclass name="br.com.mylearning.core.SnailMail"
+			discriminator-value="POSTALMAIL">
+			<property name="details1" column="DETAILS1"/>
+			<property name="city" column="CITY" />
+			<property name="state" column="STATE" />
+			<property name="zipCode" column="ZIP_CODE" />
+			<property name="country" column="COUNTRY" />
+		</subclass>
+	</class>
+</hibernate-mapping>
