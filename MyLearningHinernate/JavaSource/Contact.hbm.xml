@@ -5,26 +5,25 @@
 <hibernate-mapping>
 	<class name="br.com.mylearning.core.Contact" table="CONTACT">
 		<id name="id" type="java.lang.Long">
-			<column name="ID" />
+			<column name="CONTACT_ID" />
 			<generator class="native" />
 		</id>
-		<discriminator column="TYPE" type="string"/>
 		<property name="contactName" type="java.lang.String">
 			<column name="CONTACTNAME" />
 		</property>
-		<subclass name="br.com.mylearning.core.EmailAndFax"
-			discriminator-value="ECONTACT">
+		<joined-subclass name="br.com.mylearning.core.EmailAndFax" table="EMAILANDFAX">
+			<key column="CONTACT_ID"/>
 			<property name="primaryEmail" column="PRIMARY_EMAIL" />
 			<property name="secondaryEmail" column="SECONDARY_EMAIL" />
 			<property name="faxNumber" column="FAX_NUMBER" />
-		</subclass>
-		<subclass name="br.com.mylearning.core.SnailMail"
-			discriminator-value="POSTALMAIL">
+		</joined-subclass>
+		<joined-subclass name="br.com.mylearning.core.SnailMail" table="POSTALDETAILS">
+			<key column="CONTACT_ID"/>
 			<property name="details1" column="DETAILS1"/>
 			<property name="city" column="CITY" />
 			<property name="state" column="STATE" />
 			<property name="zipCode" column="ZIP_CODE" />
 			<property name="country" column="COUNTRY" />
-		</subclass>
+		</joined-subclass>
 	</class>
 </hibernate-mapping>
