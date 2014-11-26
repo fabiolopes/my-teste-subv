@@ -19,6 +19,22 @@ public class Customer implements Serializable{
 	private Date startBusinessDate;
 	
 	private Name customerName;
+	
+	private CustomerQuotation quote = new CustomerQuotation();
+
+	public Customer() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Customer(String phone, String type, Date startBusinessDate) {
+		super();
+		this.phone = phone;
+		this.type = type;
+		this.startBusinessDate = startBusinessDate;
+	}
+
+
 
 	public Long getId() {
 		return id;
@@ -58,5 +74,13 @@ public class Customer implements Serializable{
 
 	public void setCustomerName(Name customerName) {
 		this.customerName = customerName;
+	}
+
+	public CustomerQuotation getQuote() {
+		return quote;
+	}
+
+	public void setQuote(CustomerQuotation quote) {
+		this.quote = quote;
 	}
 }

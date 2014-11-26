@@ -20,5 +20,6 @@
         <property name="generate_statistics">true</property>
         <mapping resource="Customer.hbm.xml"/>
         <mapping resource="Contact.hbm.xml"/>
+        <mapping resource="CustomerQuotation.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

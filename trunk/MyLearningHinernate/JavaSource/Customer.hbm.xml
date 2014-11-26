@@ -3,24 +3,25 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 24/11/2014 09:46:12 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="br.com.mylearning.core.Customer" table="CUSTOMER">
-        <id name="id" type="java.lang.Long">
-            <column name="ID" />
-            <generator class="native" />
-        </id>
-        <property name="phone" type="java.lang.String">
-            <column name="PHONE" />
-        </property>
-        <property name="type" type="java.lang.String">
-            <column name="TYPE" />
-        </property>
-        <property name="startBusinessDate" type="java.util.Date">
-            <column name="STARTBUSINESSDATE" />
-        </property>
-        <component name="customerName" class="br.com.mylearning.core.Name">
-        	<property name="initial" column="INITIAL"/>
-        	<property name="firstName" column="FIRST_NAME"/>
-        	<property name="lastName" column="LAST_NAME"/>
-        </component>
-    </class>
+	<class name="br.com.mylearning.core.Customer" table="CUSTOMER">
+		<id name="id" column="CUSTOMER_ID">
+			<generator class="native" />
+		</id>
+		<property name="phone" type="java.lang.String">
+			<column name="PHONE" />
+		</property>
+		<property name="type" type="java.lang.String">
+			<column name="TYPE" />
+		</property>
+		<property name="startBusinessDate" type="java.util.Date">
+			<column name="STARTBUSINESSDATE" />
+		</property>
+		<component name="customerName" class="br.com.mylearning.core.Name">
+			<property name="initial" column="INITIAL" />
+			<property name="firstName" column="FIRST_NAME" />
+			<property name="lastName" column="LAST_NAME" />
+		</component>
+		<one-to-one name="quote" property-ref="customer"
+			class="br.com.mylearning.core.CustomerQuotation" />
+	</class>
 </hibernate-mapping>

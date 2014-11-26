@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 25/11/2014 10:30:43 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="br.com.mylearning.core.CustomerQuotation" table="CUSTOMERQUOTATION">
+		<id name="id" column="CUSTOMER_ID">
+			<generator class="foreign">
+				<param name="property">customer</param>
+			</generator>
+		</id>
+		<property name="status" column="QUOTE_STATUS" type="string" />
+		<property name="quoteDesc" column="QUOTE_DESC" type="string" />
+		<property name="quoteDate" column="QUOTE_DATE" type="date"/>
+		<property name="quoteValidity" column="QUOTE_VALIDITY" type="date"/>
+		<one-to-one name="customer" constrained="true"/>
+    </class>
+</hibernate-mapping>
