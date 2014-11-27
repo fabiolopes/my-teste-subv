@@ -2,6 +2,8 @@ package br.com.mylearning.core;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Customer implements Serializable{
 
@@ -20,7 +22,7 @@ public class Customer implements Serializable{
 	
 	private Name customerName;
 	
-	private CustomerQuotation quote = new CustomerQuotation();
+	private Set<CustomerQuotation> quotes = new HashSet<CustomerQuotation>();
 
 	public Customer() {
 		super();
@@ -76,11 +78,16 @@ public class Customer implements Serializable{
 		this.customerName = customerName;
 	}
 
-	public CustomerQuotation getQuote() {
-		return quote;
+	public Set<CustomerQuotation> getQuotes() {
+		return quotes;
 	}
 
-	public void setQuote(CustomerQuotation quote) {
-		this.quote = quote;
+	public void setQuotes(Set<CustomerQuotation> quotes) {
+		this.quotes = quotes;
 	}
+	
+	private void addQuotes(CustomerQuotation quote){
+		this.getQuotes().add(quote);
+	}
+
 }

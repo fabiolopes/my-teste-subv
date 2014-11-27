@@ -4,15 +4,14 @@
 <!-- Generated 25/11/2014 10:30:43 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
 	<class name="br.com.mylearning.core.CustomerQuotation" table="CUSTOMERQUOTATION">
-		<id name="id" column="CUSTOMER_ID">
-			<generator class="foreign">
-				<param name="property">customer</param>
-			</generator>
+		<id name="id" column="QUOTE_ID">
+			<generator class="native"/>
 		</id>
 		<property name="status" column="QUOTE_STATUS" type="string" />
 		<property name="quoteDesc" column="QUOTE_DESC" type="string" />
-		<property name="quoteDate" column="QUOTE_DATE" type="date"/>
-		<property name="quoteValidity" column="QUOTE_VALIDITY" type="date"/>
-		<one-to-one name="customer" constrained="true"/>
-    </class>
+		<property name="quoteDate" column="QUOTE_DATE" type="date" />
+		<property name="quoteValidity" column="QUOTE_VALIDITY" type="date" />
+		<many-to-one name="customer" column="CUSTOMER_ID"
+			class="br.com.mylearning.core.Customer" not-null="true"/>
+	</class>
 </hibernate-mapping>
