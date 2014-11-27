@@ -21,7 +21,9 @@
 			<property name="firstName" column="FIRST_NAME" />
 			<property name="lastName" column="LAST_NAME" />
 		</component>
-		<one-to-one name="quote" property-ref="customer"
-			class="br.com.mylearning.core.CustomerQuotation" />
+		<set name="quotes" inverse="true" cascade="all">
+			<key column="CUSTOMER_ID"/>
+			<one-to-many class="br.com.mylearning.core.CustomerQuotation"/>
+		</set>
 	</class>
 </hibernate-mapping>
