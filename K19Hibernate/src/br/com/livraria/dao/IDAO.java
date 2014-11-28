@@ -1,8 +1,8 @@
-package br.com.livraria.dao.interfaces;
+package br.com.livraria.dao;
 
 import java.util.List;
 
-public interface DAO {
+public interface IDAO {
 
 	public void inserir(final Object o);
 	

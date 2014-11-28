@@ -1,12 +1,10 @@
-package br.com.livraria.daoimpl;
+package br.com.livraria.dao;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import br.com.livraria.dao.interfaces.DAO;
-
-public class DAOImpl implements DAO{
+public class DAOImpl implements IDAO{
 
 	private EntityManager manager;
 	
@@ -15,7 +13,8 @@ public class DAOImpl implements DAO{
 		manager = ConnectionFactory.getManagerFactory();
 		manager.getTransaction().begin();
 		manager.persist(o);
-		
+		manager.getTransaction().commit();
+		manager.close();
 	}
 
 	@Override

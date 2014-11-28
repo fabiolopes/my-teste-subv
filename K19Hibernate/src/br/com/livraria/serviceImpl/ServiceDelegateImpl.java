@@ -1,6 +1,8 @@
 package br.com.livraria.serviceImpl;
 
-public class ServiceDelegateImpl implements ServiceDelegate{
+import br.com.livraria.service.IServiceDelegate;
+
+public class ServiceDelegateImpl implements IServiceDelegate{
 
 	private EditoraServiceImpl editoraService;
 	
