@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/11/2014 15:20:15 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="one_to_many.Categoria" table="CATEGORIA">
+        <id name="id" column="CATEGORIA_ID">
+            <generator class="native" />
+        </id>
+        <property name="nome" type="java.lang.String">
+            <column name="NOME" />
+        </property>
+        <set name="produtos" inverse="false" cascade="all">
+            <key column="CATEGORIA_ID"/>
+            <one-to-many class="one_to_many.Produto" />
+        </set>
+    </class>
+</hibernate-mapping>

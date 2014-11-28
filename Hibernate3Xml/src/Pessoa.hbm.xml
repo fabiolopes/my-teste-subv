@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 28/11/2014 10:46:23 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping package="one_to_one">
+	<class name="Pessoa" table="PESSOA">
+		<id name="id" column="PESSOA_ID">
+			<generator class="native"/>
+		</id>
+		<property name="nome" column="PESSOA_NOME" type="string"/>
+		<property name="idade" column="PESSOA_IDADE" type="integer"/>
+		<one-to-one name="documento" class="one_to_one.Documento" cascade="all"/>
+	</class>
+</hibernate-mapping>
