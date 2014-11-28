@@ -7,25 +7,40 @@
 	xmlns:rich="http://richfaces.org/rich">
 
 <h:head>
+	<script type="text/javascript">
+	function getFocus(element){
+		element.style.borderColor = "blue";
+		element.style.boxShadow = "10px gray";
+	}
 
+	function lostFocus(element){
+		element.style.borderColor = "gray";
+	}
+	</script>
 </h:head>
-<h:body>
-	<rich:panel
-		style="width:300px; margin-left:auto; margin-right:auto; margin-top:100px; text-align:center;">
-		<f:facet name="header">
-			<h:outputText value="Cadastre uma nova editora" />
-		</f:facet>
-		<h:outputLabel value="Nome:" for="nome" />
-		<h:inputText id="nome" value="" />
-		<br />
-		<br />
-		<h:outputLabel value="Email:" for="email" />
-		<h:inputText id="email" value="" />
-		<br />
-		<br />
-		<h:commandButton value="cadastrar"
-			style="color: white; background: rgba(10, 10, 255, 0.5); border-radius:6px; border-color: white;" />
-	</rich:panel>
+<h:body onload="iniciar()">
+	<h:form>
+		<rich:panel
+			style="width:300px; margin-left:auto; margin-right:auto; margin-top:100px; text-align:center; border-radius:6px; border-color:grey;">
+			<f:facet name="header">
+				<h:outputText value="Cadastre uma nova editora" />
+			</f:facet>
+			<h:outputLabel value="Nome:" for="nome" />
+			<h:inputText id="nome" value="#{editoraBean.editora.nome}"
+				style="border-radius:6px 0 6px 0; border-color:grey; height:15px;" onfocus="getFocus(this)" onblur="lostFocus(this)" />
+			<br />
+			<br />
+			<h:outputLabel value="Email:" for="email" />
+			<h:inputText id="email" value="#{editoraBean.editora.email}"
+				style="border-radius:6px; height:15px;" />
+			<br />
+			<br />
+			<h:commandButton value="cadastrar"
+				actionListener="#{editoraBean.inserirEditora}"
+				style="color: white; background: rgba(10, 10, 255, 0.5); border-radius:6px; border-color: white;" />
+		</rich:panel>
+	</h:form>
 	<a4j:jsFunction name="iniciar" actionListener="#{editoraBean.init}" />
+
 </h:body>
 </html>

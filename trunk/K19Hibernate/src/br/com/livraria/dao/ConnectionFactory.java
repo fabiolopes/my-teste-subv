@@ -1,4 +1,4 @@
-package br.com.livraria.daoimpl;
+package br.com.livraria.dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
