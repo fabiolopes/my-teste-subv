@@ -10,7 +10,7 @@
 	<script type="text/javascript">
 	function getFocus(element){
 		element.style.borderColor = "blue";
-		element.style.boxShadow = "10px gray";
+		element.style.MozBoxShadow = "5px 5px 5px gray";
 	}
 
 	function lostFocus(element){
@@ -27,12 +27,14 @@
 			</f:facet>
 			<h:outputLabel value="Nome:" for="nome" />
 			<h:inputText id="nome" value="#{editoraBean.editora.nome}"
-				style="border-radius:6px 0 6px 0; border-color:grey; height:15px;" onfocus="getFocus(this)" onblur="lostFocus(this)" />
+				style="border-radius:6px 0 6px 0; border-color:grey; height:15px;"
+				onfocus="getFocus(this)" onblur="lostFocus(this)" />
 			<br />
 			<br />
 			<h:outputLabel value="Email:" for="email" />
 			<h:inputText id="email" value="#{editoraBean.editora.email}"
-				style="border-radius:6px; height:15px;" />
+				style="border-radius:0 6px 0 6px; height:15px; border-color:grey;"
+				onfocus="getFocus(this)" onblur="lostFocus(this)" />
 			<br />
 			<br />
 			<h:commandButton value="cadastrar"
