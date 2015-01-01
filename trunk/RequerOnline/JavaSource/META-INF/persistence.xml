@@ -1,0 +1,28 @@
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+	http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="sistema_requerimento"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>com.requerOnline.core.Administrador</class>
+		<class>com.requerOnline.core.Anexo</class>
+		<class>com.requerOnline.core.Endereco</class>
+		<class>com.requerOnline.core.Funcionario</class>
+		<class>com.requerOnline.core.Gerenciador</class>
+		<class>com.requerOnline.core.GerenciadorConectado</class>
+		<class>com.requerOnline.core.Requerente</class>
+		<class>com.requerOnline.core.Requerimento</class>
+		<class>com.requerOnline.core.Secretario</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/requer_online" />
+		</properties>
+	</persistence-unit>
+</persistence>
