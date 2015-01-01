@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>#{label.titulo_login}</title>
+	<h:outputStylesheet library="css" name="estilo_login.css" />
+</h:head>
+<h:body>
+	<h:form>
+		<rich:panel styleClass="panel_login">
+			<rich:messages />
+			<f:facet name="header">
+				<h:outputText value="#{label.autenticacao_acesso}" />
+			</f:facet>
+			<h:panelGrid columns="2" styleClass="grid_login">
+				<h:outputLabel value="#{label.login}" for="login"
+					styleClass="campo_login" />
+				<h:inputText
+					value="#{loginMB.gerenciadorConectado.gerenciador.matricula}"
+					id="login" styleClass="campo_login" />
+				<h:outputLabel value="#{label.senha}" for="senha"
+					styleClass="campo_login" />
+				<h:inputText
+					value="#{loginMB.gerenciadorConectado.gerenciador.senha}"
+					id="senha" styleClass="campo_login" />
+				<h:outputLabel value="#{label.perfil}" for="perfil" />
+				<h:selectOneMenu
+					value="#{loginMB.gerenciadorConectado.gerenciador.perfil}"
+					id="perfil" styleClass="select_login">
+					<f:selectItem itemLabel="#{label.administrador}" itemValue="#{com.requerOnline.util.enums.PerfilTypes.ADMINISTRADOR}" />
+					<f:selectItem itemLabel="#{label.secretario}" itemValue="#{com.requerOnline.util.enums.PerfilTypes.SECRETARIO}" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<a4j:commandButton id="entrar" action="#{loginMB.logar()}" value="#{label.Entrar}"
+				styleClass="button_login" style="border-radius:6px;" />
+		</rich:panel>
+	</h:form>
+</h:body>
+</html>
