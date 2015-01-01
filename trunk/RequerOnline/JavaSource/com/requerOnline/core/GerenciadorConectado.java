@@ -32,7 +32,7 @@ public class GerenciadorConectado {
 	private Gerenciador gerenciador;
 	
 	public GerenciadorConectado() {
-		// TODO Auto-generated constructor stub
+		gerenciador = new Gerenciador();
 	}
 
 	public long getId() {

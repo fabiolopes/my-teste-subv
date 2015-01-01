@@ -11,7 +11,7 @@ import com.requerOnline.util.enums.PerfilTypes;
 @Service
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Gerenciador extends Funcionario{
+public class Gerenciador extends Funcionario{
 
 	private PerfilTypes perfil;
 	

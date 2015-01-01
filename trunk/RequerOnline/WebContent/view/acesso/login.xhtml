@@ -28,13 +28,6 @@
 				<h:inputText
 					value="#{loginMB.gerenciadorConectado.gerenciador.senha}"
 					id="senha" styleClass="campo_login" />
-				<h:outputLabel value="#{label.perfil}" for="perfil" />
-				<h:selectOneMenu
-					value="#{loginMB.gerenciadorConectado.gerenciador.perfil}"
-					id="perfil" styleClass="select_login">
-					<f:selectItem itemLabel="#{label.administrador}" itemValue="#{com.requerOnline.util.enums.PerfilTypes.ADMINISTRADOR}" />
-					<f:selectItem itemLabel="#{label.secretario}" itemValue="#{com.requerOnline.util.enums.PerfilTypes.SECRETARIO}" />
-				</h:selectOneMenu>
 			</h:panelGrid>
 			<a4j:commandButton id="entrar" action="#{loginMB.logar()}" value="#{label.Entrar}"
 				styleClass="button_login" style="border-radius:6px;" />
