@@ -10,7 +10,7 @@ public interface IDAO {
 	
 	public List<Object> listar();
 	
-	public Object localizar(String jpql);
+	public Object localizar(Object tabela, Object campo1, Object valor1);
 	
 	public void excluir(final Object o);
 }
