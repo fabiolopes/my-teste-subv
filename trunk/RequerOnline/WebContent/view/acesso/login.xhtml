@@ -17,14 +17,14 @@
 			<f:facet name="header">
 				<h:outputText value="#{label.autenticacao_acesso}" />
 			</f:facet>
-			<h:outputText value="#{label.login_senha_incorreto}"
-				rendered="#{loginMB.errouAutenticacao}" style="color:red;" />
+			<h:messages style="color:red;" />
 			<h:panelGrid columns="2" styleClass="grid_login">
 				<h:outputLabel value="#{label.login}" for="login"
 					styleClass="campo_login" />
 				<h:inputText
 					value="#{loginMB.gerenciadorConectado.gerenciador.matricula}"
-					id="login" styleClass="campo_login" />
+					id="login" styleClass="campo_login" required="true"
+					requiredMessage="#{label.informe_login}" />
 				<h:outputLabel value="#{label.senha}" for="senha"
 					styleClass="campo_login" />
 				<h:inputText
@@ -33,8 +33,9 @@
 			</h:panelGrid>
 			<a4j:commandButton id="entrar" action="#{loginMB.logar()}"
 				value="#{label.Entrar}" styleClass="button_login"
-				style="border-radius:6px;" />
+				style="border-radius:6px;" onclick="mostrar_msg_incorreta" />
 		</rich:panel>
+		<a4j:jsFunction name="mostrar_msg_incorreta" render="dado_incorreto" />
 	</h:form>
 </h:body>
 </html>
