@@ -14,8 +14,10 @@ public class LoginServiceImpl implements LoginService{
 	public GerenciadorConectado getGerenciadorLogado(Gerenciador gerenciador) {
 		Map<String, Object> dados = new HashMap<String, Object>();
 		dados.put("tabela", gerenciador.getClass().getSimpleName());
-		dados.put("campo", "matricula");
-		dados.put("valor", gerenciador.getMatricula());
+		dados.put("campo1", "matricula");
+		dados.put("valor1", gerenciador.getMatricula());
+		dados.put("campo2", "senha");
+		dados.put("valor2", gerenciador.getSenha());
 		
 		GerenciadorDAO dao = new GerenciadorDAO();
 		return dao.logar(dados);
