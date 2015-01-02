@@ -31,12 +31,9 @@ public class DAOImpl implements IDAO {
 	}
 
 	@Override
-	public Object localizar(Object tabela, Object campo, Object value) {
+	public Object localizar(String jpql) {
 		manager = ConnectionFactory.getManagerFactory();
-		String alias = ((String) tabela).toLowerCase();
-		Query query = manager.createQuery("SELECT " + alias + " from " + tabela
-				+ " as " + alias + " where " + alias + "." + campo + "="
-				+ value);
+		Query query = manager.createQuery(jpql);
 		if (query.getFirstResult() != 0) {
 			return query.getSingleResult();
 		} else {

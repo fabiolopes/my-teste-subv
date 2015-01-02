@@ -17,6 +17,8 @@
 			<f:facet name="header">
 				<h:outputText value="#{label.autenticacao_acesso}" />
 			</f:facet>
+			<h:outputText value="#{label.login_senha_incorreto}"
+				rendered="#{loginMB.errouAutenticacao}" style="color:red;" />
 			<h:panelGrid columns="2" styleClass="grid_login">
 				<h:outputLabel value="#{label.login}" for="login"
 					styleClass="campo_login" />
@@ -29,8 +31,9 @@
 					value="#{loginMB.gerenciadorConectado.gerenciador.senha}"
 					id="senha" styleClass="campo_login" />
 			</h:panelGrid>
-			<a4j:commandButton id="entrar" action="#{loginMB.logar()}" value="#{label.Entrar}"
-				styleClass="button_login" style="border-radius:6px;" />
+			<a4j:commandButton id="entrar" action="#{loginMB.logar()}"
+				value="#{label.Entrar}" styleClass="button_login"
+				style="border-radius:6px;" />
 		</rich:panel>
 	</h:form>
 </h:body>

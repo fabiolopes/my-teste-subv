@@ -13,24 +13,24 @@ import com.requerOnline.serviceImpl.ServiceDelegateImpl;
 @SessionScoped
 public class LoginMB {
 	private GerenciadorConectado gerenciadorConectado;
-	private Boolean logou;
+	private Boolean errouAutenticacao;
 	private ServiceDelegate delegate;
 	
 	@PostConstruct
 	public void iniciar(){
 		gerenciadorConectado = SpringBeans.getBeanGerenciadorConectado();
+		errouAutenticacao = false;
 	}
 	
-	public void logar() {
+	public String logar() {
 		delegate = new ServiceDelegateImpl();
 		gerenciadorConectado = delegate.getLoginService().getGerenciadorLogado(
 				gerenciadorConectado.getGerenciador());
 		if(gerenciadorConectado != null){
-			System.out.println("logou");
 		}else{
-			System.out.println("deu bronca");
+			errouAutenticacao = true;
 		}
-
+		return "login";
 	}
 
 	public GerenciadorConectado getGerenciadorConectado() {
@@ -42,12 +42,12 @@ public class LoginMB {
 		this.gerenciadorConectado = gerenciadorConectado;
 	}
 
-	public Boolean getLogou() {
-		return logou;
+	public Boolean getErrouAutenticacao() {
+		return errouAutenticacao;
 	}
 
-	public void setLogou(Boolean logou) {
-		this.logou = logou;
+	public void setErrouAutenticacao(Boolean errouAutenticacao) {
+		this.errouAutenticacao = errouAutenticacao;
 	}
 
 }
