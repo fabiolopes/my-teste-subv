@@ -12,7 +12,7 @@ public class Teste {
 	public static void main(String[] args) {
 		EntityManager em = ConnectionFactory.getManagerFactory();
 		
-		Endereco e = new Endereco();
+		/*Endereco e = new Endereco();
 		e.setBairro("Centro");
 		e.setCidade("Lagoa de Itaenga");
 		e.setNum("99");
@@ -34,8 +34,16 @@ public class Teste {
 		r.setTelefone("(99) 9999-7526");
 		r.setVinculo("Estatutário");
 		
+		Secretario s = new Secretario();
+		s.setMatricula("1111");
+		s.setCpf("485.267.887-10");
+		s.setNome("Lopes");
+		s.setSenha("11111111");
+		s.setEmail("fabio@gmail.com");
+		s.setSecretaria("Adm");
+		
 		em.getTransaction().begin();
-		em.persist(r);
+		em.persist(s);
 		em.getTransaction().commit();
 		em.close();
 		
@@ -43,7 +51,7 @@ public class Teste {
 		
 		
 		
-		/*Query q = em.createQuery("select object (s) from Secretario s");
+		Query q = em.createQuery("select object (s) from Secretario s");
 		@SuppressWarnings({ "unused", "unchecked" })
 		List<Secretario> secretarios = q.getResultList();
 		System.out.println();*/
