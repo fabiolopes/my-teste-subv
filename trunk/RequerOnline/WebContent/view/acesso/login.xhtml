@@ -27,15 +27,23 @@
 					requiredMessage="#{label.informe_login}" />
 				<h:outputLabel value="#{label.senha}" for="senha"
 					styleClass="campo_login" />
-				<h:inputText
+				<h:inputSecret
 					value="#{loginMB.gerenciadorConectado.gerenciador.senha}"
 					id="senha" styleClass="campo_login" />
 			</h:panelGrid>
 			<a4j:commandButton id="entrar" action="#{loginMB.logar()}"
 				value="#{label.Entrar}" styleClass="button_login"
-				style="border-radius:6px;" onclick="mostrar_msg_incorreta" />
+				style="border-radius:6px;">
+				<a4j:status id="statusCarregarModalPanel"
+					onstart="#{rich:component('panelStatus')}.show()"
+					onstop="#{rich:component('panelStatus')}.hide()" />
+			</a4j:commandButton>
 		</rich:panel>
-		<a4j:jsFunction name="mostrar_msg_incorreta" render="dado_incorreto" />
 	</h:form>
+	<rich:popupPanel id="panelStatus" autosized="true" styleClass="popup_carregar">
+		<h:graphicImage library="images" name="carregando.gif"
+			styleClass="img_carregar" />
+		<h:outputText value="#{label.carregando}" />
+	</rich:popupPanel>
 </h:body>
 </html>

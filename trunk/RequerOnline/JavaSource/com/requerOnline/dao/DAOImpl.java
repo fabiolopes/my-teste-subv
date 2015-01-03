@@ -3,6 +3,7 @@ package com.requerOnline.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 public class DAOImpl implements IDAO {
@@ -31,14 +32,12 @@ public class DAOImpl implements IDAO {
 	}
 
 	@Override
-	public Object localizar(Object tabela, Object campo, Object value) {
-		String alias = ((String) tabela).toLowerCase();
+	public Object localizar(String jpql) {
 		manager = ConnectionFactory.getManagerFactory();
-		Query query = manager.createQuery("SELECT " + alias + " from " + tabela
-				+ " as " + alias);
-		if (query.getFirstResult() != 0) {
+		Query query = manager.createQuery(jpql);
+		try {
 			return query.getSingleResult();
-		} else {
+		} catch (NoResultException no) {
 			return null;
 		}
 	}
