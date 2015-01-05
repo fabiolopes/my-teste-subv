@@ -11,31 +11,34 @@
 </h:head>
 <h:body styleClass="body_escuro">
 
-	<!-- Div da página -->
-	<div id="pagina" class="pagina">
-	
-		<!-- Div com o nome do gerenciador logado -->
-		<div id="usuario" class="div_usuario">
-			<h:outputText value="Olá, Usuário.	" /><br />
-			<h:outputText value="Perfil:Informa perfil	" />
-			<h:outputText value="Sair" />
-		</div>
 
-		<!-- Div do banner -->
-		<div id="banner" style="position: relative;">
-			<h:graphicImage library="images" name="banner.jpg" />
-		</div>
+		<!-- Div da página -->
+		<div id="pagina" class="pagina">
 
-		<!-- Div com o template do menu contido no arquivo template_menu.xhtml -->
-		<div>
-			<ui:insert name="menu">
-				<ui:include src="/view/template/template_menu.xhtml" />
+			<!-- Insert da div com usuário logado -->
+			<div>
+				<ui:insert name="usuario_logado">
+					<ui:include src="/view/template/template_usuario.xhtml" />
+				</ui:insert>
+			</div>
+
+			<!-- Div do banner -->
+			<div>
+				<ui:insert name="banner">
+					<ui:include src="/view/template/template_banner.xhtml" />
+				</ui:insert>
+			</div>
+
+			<!-- Div com o template do menu contido no arquivo template_menu.xhtml -->
+			<div>
+				<ui:insert name="menu">
+					<ui:include src="/view/template/template_menu.xhtml" />
+				</ui:insert>
+			</div>
+			<ui:insert name="conteudo">
+			
 			</ui:insert>
 		</div>
-
-
-	</div>
-
-
+	
 </h:body>
 </html>
