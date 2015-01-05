@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<h:outputStylesheet library="css" name="estilo_template.css" />
+</h:head>
+
+<!-- Menu inserido no template através do facelets -->
+<h:body>
+	<ui:composition>
+		<h:form>
+		<!-- Estrutura do menu -->
+			<rich:toolbar style="border-style: none;">
+				<!-- Menu requerentes -->
+				<rich:dropDownMenu mode="ajax" id="menu_requerentes">
+					<f:facet name="label">
+						<h:panelGroup styleClass="menu_itens">
+							<h:outputText value="Requerentes" />
+						</h:panelGroup>
+					</f:facet>
+					<rich:menuItem label="Novo" />
+					<rich:menuSeparator id="menuSeparator1" />
+					<rich:menuItem label="Atualizar" />
+					<rich:menuSeparator id="menuSeparator2" />
+					<rich:menuItem label="Localizar" />
+				</rich:dropDownMenu>
+				
+				<!-- Menu requerimentos -->
+				<rich:dropDownMenu mode="ajax" id="menu_requerimentos">
+					<f:facet name="label">
+						<h:panelGrid cellpadding="0" cellspacing="0" columns="2" styleClass="menu_itens"
+							style="vertical-align:middle">
+							<h:outputText value="Requerimentos" />
+						</h:panelGrid>
+					</f:facet>
+					<rich:menuItem label="Novo" />
+					<rich:menuSeparator id="menuSeparator3" />
+					<rich:menuItem label="Acompanhar" />
+					<rich:menuSeparator id="menuSeparator4" />
+					<rich:menuItem label="Localizar" />
+				</rich:dropDownMenu>
+
+			<!-- Menu gerenciadores -->
+				<rich:dropDownMenu mode="ajax" id="menu_gerenciadores">
+					<f:facet name="label">
+						<h:panelGrid cellpadding="0" cellspacing="0" columns="2" styleClass="menu_itens"
+							style="vertical-align:middle">
+							<h:outputText value="Gerenciadores" />
+						</h:panelGrid>
+					</f:facet>
+					<rich:menuItem label="Novo" />
+					<rich:menuSeparator id="menuSeparator5" />
+					<rich:menuItem label="Localizar" />
+					<rich:menuSeparator id="menuSeparator6" />
+					<rich:menuItem label="Excluir" />
+					<rich:menuSeparator id="menuSeparator7" />
+					<rich:menuItem label="Alterar" />
+					<rich:menuSeparator id="menuSeparator8" />
+					<rich:menuItem label="Listar" />
+				</rich:dropDownMenu>
+			
+			
+			<!-- Menu Administrativo -->
+				<rich:dropDownMenu mode="ajax" id="menu_administrativo">
+					<f:facet name="label">
+						<h:panelGrid cellpadding="0" cellspacing="0" columns="2" styleClass="menu_itens"
+							style="vertical-align:middle">
+							<h:outputText value="Administrativo" />
+						</h:panelGrid>
+					</f:facet>
+					<rich:menuItem label="Acompanhar/Responder requerimentos" />
+				</rich:dropDownMenu>
+				
+				<!-- Menu Sair -->
+				<rich:dropDownMenu mode="ajax" id="menu_sair">
+					<f:facet name="label">
+						<h:panelGrid cellpadding="0" cellspacing="0" columns="2" styleClass="menu_itens"
+							style="vertical-align:middle">
+							<h:outputText value="Sair" />
+						</h:panelGrid>
+					</f:facet>
+					<rich:menuItem label="Fazer logoff" />
+					<rich:menuSeparator id="menuSeparator9" />
+					<rich:menuItem label="Fechar" />
+				</rich:dropDownMenu>
+			</rich:toolbar>
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,40 @@
+@CHARSET "UTF-8";
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.body_escuro{
+	background-color: #eeeeee;
+}
+
+.pagina{
+	width: 90%;
+	height: 600px;
+	background-color: white;
+	margin: 6px auto 6px auto;
+	box-shadow: 5px 5px 5px rgba(100, 100, 255, 0.5);
+	text-align: center;
+	border-radius:15px;
+}
+
+.rf-tb{
+	height: 40px;
+	border-radius:15px;
+	box-shadow: 5px 5px 5px rgba(100, 100, 255, 0.5);
+}
+
+.menu_itens{
+	font-size: 14px;
+	color: #0085B2;
+}
+
+.div_usuario{
+	position: relative;
+	text-align:left;
+	margin: 10px 0 auto auto;
+	float:right;
+	font-size: 10px;
+	width: 15%;
+}
