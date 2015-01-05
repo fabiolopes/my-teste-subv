@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<h:outputStylesheet library="css" name="estilo_template.css" />
+</h:head>
+<h:body styleClass="body_escuro">
+
+	<!-- Div da página -->
+	<div id="pagina" class="pagina">
+	
+		<!-- Div com o nome do gerenciador logado -->
+		<div id="usuario" class="div_usuario">
+			<h:outputText value="Olá, Usuário.	" /><br />
+			<h:outputText value="Perfil:Informa perfil	" />
+			<h:outputText value="Sair" />
+		</div>
+
+		<!-- Div do banner -->
+		<div id="banner" style="position: relative;">
+			<h:graphicImage library="images" name="banner.jpg" />
+		</div>
+
+		<!-- Div com o template do menu contido no arquivo template_menu.xhtml -->
+		<div>
+			<ui:insert name="menu">
+				<ui:include src="/view/template/template_menu.xhtml" />
+			</ui:insert>
+		</div>
+
+
+	</div>
+
+
+</h:body>
+</html>
