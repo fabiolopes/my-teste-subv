@@ -11,23 +11,23 @@ import com.requerOnline.dao.DAOImpl;
 public class GerenciadorDAO extends DAOImpl {
 
 	public GerenciadorConectado logar(Map<String, Object> dados) {
-		String alias = ((String) dados.get("tabela")).toLowerCase();
-		// Query para pesquisar gerenciador com matrícula e senha iguais
-		String jpql = "SELECT " + alias + " from " + dados.get("tabela")
-				+ " as " + alias + " where " + alias + "."
-				+ dados.get("campo1") + "='" + dados.get("valor1")
-				+ "' AND " + alias + "." + dados.get("campo2") + "='" + dados.get("valor2") + "'";
-
-		Gerenciador gerenciador = (Gerenciador) localizar(jpql);
+		Gerenciador gerenciador = (Gerenciador) localizar("Gerenciador.logar",
+				dados);
 		if (gerenciador != null) {
-			GerenciadorConectado gerenciadorConectado = SpringBeans
-					.getBeanGerenciadorConectado();
-			gerenciadorConectado.setDataHoraLogin(new Date());
-			gerenciadorConectado.setGerenciador(gerenciador);
-			inserir(gerenciadorConectado);
-			return gerenciadorConectado;
+			return registrarGerenciadorConectado(gerenciador);
 		} else {
 			return null;
 		}
+	}
+
+	/*Registrar o login efetuado pelo gerenciador*/
+	private GerenciadorConectado registrarGerenciadorConectado(
+			Gerenciador gerenciador) {
+		GerenciadorConectado gerenciadorConectado = SpringBeans
+				.getBeanGerenciadorConectado();
+		gerenciadorConectado.setDataHoraLogin(new Date());
+		gerenciadorConectado.setGerenciador(gerenciador);
+		inserir(gerenciadorConectado);
+		return gerenciadorConectado;
 	}
 }
