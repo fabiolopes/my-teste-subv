@@ -30,4 +30,8 @@ public class GerenciadorDAO extends DAOImpl {
 		inserir(gerenciadorConectado);
 		return gerenciadorConectado;
 	}
+	
+	public void desconectarGerenciadorLogado(Map<String, Object> dados){
+		atualizar("GerenciadorConectado.RegistrarLogoff", dados);
+	}
 }

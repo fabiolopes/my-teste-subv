@@ -24,20 +24,23 @@ public class LoginMB {
 		gerenciadorConectado = SpringBeans.getBeanGerenciadorConectado();
 	}
 	
-	public String logar() {
+	public String logar() throws InterruptedException {
+		String pagina = "login";
 		delegate = new ServiceDelegateImpl();
 		gerenciadorConectado = delegate.getLoginService().getGerenciadorLogado(
 				gerenciadorConectado.getGerenciador());
 		FacesMessage msg = new FacesMessage();
 		if(gerenciadorConectado != null){
-			msg.setSummary("Login e senha corretos");
+			msg.setSummary("Benvindo à página inicial");
+			pagina = "index";
+			
 		}else{
 			msg.setSummary("Login ou senha incorretos");
 			errouAutenticacao = true;
 		}
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 		iniciar();
-		return "login";
+		return pagina;
 	}
 
 	public GerenciadorConectado getGerenciadorConectado() {

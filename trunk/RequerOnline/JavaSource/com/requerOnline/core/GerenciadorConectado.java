@@ -6,12 +6,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+@NamedQueries({
+	@NamedQuery(name="GerenciadorConectado.RegistrarLogoff", 
+			query="UPDATE GerenciadorConectado g SET g.dataHoraLogoff=:dataHoraLogoff WHERE g.id=:id")
+})
 
 @Service
 @Entity

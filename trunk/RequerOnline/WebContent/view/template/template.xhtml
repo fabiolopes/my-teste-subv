@@ -12,33 +12,41 @@
 <h:body styleClass="body_escuro">
 
 
-		<!-- Div da página -->
-		<div id="pagina" class="pagina">
+	<!-- Div da página -->
+	<div id="pagina" class="pagina">
 
-			<!-- Insert da div com usuário logado -->
-			<div>
-				<ui:insert name="usuario_logado">
-					<ui:include src="/view/template/template_usuario.xhtml" />
-				</ui:insert>
-			</div>
+		<!-- Insert da div com usuário logado -->
+		<div>
+			<ui:insert name="usuario_logado">
+				<ui:include src="/view/template/template_usuario.xhtml" />
+			</ui:insert>
+		</div>
 
-			<!-- Div do banner -->
-			<div>
-				<ui:insert name="banner">
-					<ui:include src="/view/template/template_banner.xhtml" />
-				</ui:insert>
-			</div>
+		<!-- Div do banner -->
+		<div>
+			<ui:insert name="banner">
+				<ui:include src="/view/template/template_banner.xhtml" />
+			</ui:insert>
+		</div>
 
-			<!-- Div com o template do menu contido no arquivo template_menu.xhtml -->
-			<div>
-				<ui:insert name="menu">
-					<ui:include src="/view/template/template_menu.xhtml" />
-				</ui:insert>
-			</div>
-			
-			<!-- Espaço do template em branco para inserir conteúdo -->
+		<!-- Div com o template do menu contido no arquivo template_menu.xhtml -->
+		<div>
+			<ui:insert name="menu">
+				<ui:include src="/view/template/template_menu.xhtml" />
+			</ui:insert>
+		</div>
+
+		<!-- Espaço do template em branco para inserir conteúdo -->
+
+		<div class="content">
 			<ui:insert name="conteudo" />
 		</div>
-	
+
+		<div class="rodape">
+			<h:outputText
+				value="Sistema RequerOnline - Desenvolvido por FLB. 2014." />
+		</div>
+	</div>
+
 </h:body>
 </html>
