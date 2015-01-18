@@ -1,5 +1,7 @@
 package com.requerOnline.mb;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -18,29 +20,25 @@ public class LoginMB {
 	private Boolean errouAutenticacao = false;
 	private Boolean logou;
 	private ServiceDelegate delegate;
-	
+
 	@PostConstruct
-	public void iniciar(){
+	public void iniciar() {
 		gerenciadorConectado = SpringBeans.getBeanGerenciadorConectado();
 	}
-	
-	public String logar() throws InterruptedException {
-		String pagina = "login";
+
+	public void logar() throws IOException{
 		delegate = new ServiceDelegateImpl();
 		gerenciadorConectado = delegate.getLoginService().getGerenciadorLogado(
 				gerenciadorConectado.getGerenciador());
 		FacesMessage msg = new FacesMessage();
-		if(gerenciadorConectado != null){
-			msg.setSummary("Benvindo à página inicial");
-			pagina = "index";
-			
-		}else{
+		if (gerenciadorConectado != null) {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
+		} else {
 			msg.setSummary("Login ou senha incorretos");
 			errouAutenticacao = true;
-		}
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-		iniciar();
-		return pagina;
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+			iniciar();
+		}		
 	}
 
 	public GerenciadorConectado getGerenciadorConectado() {

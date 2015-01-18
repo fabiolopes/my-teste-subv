@@ -1,9 +1,13 @@
 package com.requerOnline.mb;
 
+import java.io.IOException;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
+import com.requerOnline.applicationContext.SpringBeans;
 import com.requerOnline.service.ServiceDelegate;
 
 @ManagedBean
@@ -15,9 +19,13 @@ public class TemplateMB {
 	@ManagedProperty(value="#{loginMB}")
 	private LoginMB loginMB;
 	
-	public String logoff(){
-		delegate.getLoginService().desconectarGerenciadorLogado(loginMB.getGerenciadorConectado());
-		return "login";
+	public String iniciar(){
+		return "index";
+	}
+	
+	public void logoff() throws IOException{
+		loginMB.setGerenciadorConectado(SpringBeans.getBeanGerenciadorConectado());
+		FacesContext.getCurrentInstance().getExternalContext().redirect("view/acesso/login.xhtml");
 	}
 
 	public LoginMB getLoginMB() {
