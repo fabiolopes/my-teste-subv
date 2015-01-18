@@ -14,14 +14,18 @@ public class GerenciadorDAO extends DAOImpl {
 		Gerenciador gerenciador = (Gerenciador) localizar("Gerenciador.logar",
 				dados);
 		if (gerenciador != null) {
-			return registrarGerenciadorConectado(gerenciador);
+			GerenciadorConectado gerenciadorConectado = SpringBeans
+					.getBeanGerenciadorConectado();
+			gerenciadorConectado.setDataHoraLogin(new Date());
+			gerenciadorConectado.setGerenciador(gerenciador);
+			return gerenciadorConectado;
 		} else {
 			return null;
 		}
 	}
 
 	/*Registrar o login efetuado pelo gerenciador*/
-	private GerenciadorConectado registrarGerenciadorConectado(
+	/*private GerenciadorConectado registrarGerenciadorConectado(
 			Gerenciador gerenciador) {
 		GerenciadorConectado gerenciadorConectado = SpringBeans
 				.getBeanGerenciadorConectado();
@@ -29,7 +33,7 @@ public class GerenciadorDAO extends DAOImpl {
 		gerenciadorConectado.setGerenciador(gerenciador);
 		inserir(gerenciadorConectado);
 		return gerenciadorConectado;
-	}
+	}*/
 	
 	public void desconectarGerenciadorLogado(Map<String, Object> dados){
 		atualizar("GerenciadorConectado.RegistrarLogoff", dados);

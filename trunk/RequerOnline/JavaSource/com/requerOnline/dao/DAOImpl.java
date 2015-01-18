@@ -29,7 +29,6 @@ public class DAOImpl implements IDAO {
 	@Override
 	public void atualizar(String namedQuery, Map<String, Object> dados) {
 		manager = ConnectionFactory.getManagerFactory();
-		manager.getTransaction().begin();
 		Query query = manager.createNamedQuery(namedQuery);
 
 		for (Entry<String, Object> dado : dados.entrySet()) {
@@ -37,9 +36,8 @@ public class DAOImpl implements IDAO {
 		}
 
 		try {
-			manager.getTransaction().commit();
+			query.executeUpdate();
 		} catch (Exception e) {
-			manager.getTransaction().rollback();
 		} finally {
 			manager.close();
 		}
