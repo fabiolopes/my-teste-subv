@@ -1,6 +1,7 @@
 package com.requerOnline.mb;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -15,10 +16,16 @@ import com.requerOnline.serviceImpl.ServiceDelegateImpl;
 
 @ManagedBean
 @SessionScoped
-public class LoginMB {
+public class LoginMB implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private GerenciadorConectado gerenciadorConectado;
+	
 	private Boolean errouAutenticacao = false;
+	
 	private Boolean logou;
+	
 	private ServiceDelegate delegate;
 
 	@PostConstruct

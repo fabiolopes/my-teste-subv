@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/view/template/template.xhtml">
 
 <h:head>
 	<h:outputStylesheet library="css" name="estilo_template.css" />
@@ -12,7 +13,7 @@
 <!-- background escuro para dar impessão de "página em branco" -->
 <h:body styleClass="body_escuro">
 	<!-- Inserção do template na página -->
-	<ui:composition template="/view/template/template.xhtml">
+	
 	<div id="content">
 		<!-- Código do conteúdo deve ser inserido aqui -->
 		<ui:define name="conteudo">
@@ -21,6 +22,6 @@
 				
 		</ui:define>
 	</div>
-	</ui:composition>
+	
 </h:body>
-</html>
+</ui:composition>
