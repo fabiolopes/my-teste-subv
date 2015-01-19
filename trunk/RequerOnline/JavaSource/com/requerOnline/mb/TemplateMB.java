@@ -1,6 +1,7 @@
 package com.requerOnline.mb;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -12,7 +13,9 @@ import com.requerOnline.service.ServiceDelegate;
 
 @ManagedBean
 @ViewScoped
-public class TemplateMB {
+public class TemplateMB implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private ServiceDelegate delegate;
 	
@@ -23,9 +26,10 @@ public class TemplateMB {
 		return "index";
 	}
 	
-	public void logoff() throws IOException{
-		loginMB.setGerenciadorConectado(SpringBeans.getBeanGerenciadorConectado());
-		FacesContext.getCurrentInstance().getExternalContext().redirect("view/acesso/login.xhtml");
+	public String logoff() throws IOException{
+		//loginMB.setGerenciadorConectado(SpringBeans.getBeanGerenciadorConectado());
+		//FacesContext.getCurrentInstance().getExternalContext().redirect("view/acesso/login.xhtml");
+		return "login";
 	}
 
 	public LoginMB getLoginMB() {
