@@ -1,18 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/view/template/template.xhtml">
 
-<h:head></h:head> 
-<body>
-    <rich:panel>
-        <f:facet name="header">
-        Write your own custom rich components with built-in AJAX support
-        </f:facet>
-		<h:outputText value="Panel Body" /> 
-	</rich:panel>
-</body> 
-</html>
+	<h:head></h:head>
+	<body>
+		<div id="content">
+			<!-- Código do conteúdo deve ser inserido aqui -->
+			<ui:define name="conteudo">
+				<fieldset
+					style="margin-left: auto; margin-right: auto; margin-top: 10px; width: 90%; 
+					border: 2px #0085B2 solid; border-radius: 30px; border-style: none; background-color: #ddeeff;">
+					<legend>Dados pessoais</legend>
+					
+				</fieldset>
+
+
+			</ui:define>
+		</div>
+	</body>
+</ui:composition>
