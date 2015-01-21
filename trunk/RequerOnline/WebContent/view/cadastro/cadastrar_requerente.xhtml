@@ -12,14 +12,28 @@
 		<div id="content">
 			<!-- Código do conteúdo deve ser inserido aqui -->
 			<ui:define name="conteudo">
-				<fieldset
-					style="margin-left: auto; margin-right: auto; margin-top: 10px; width: 90%; 
-					border: 2px #0085B2 solid; border-radius: 30px; border-style: none; background-color: #ddeeff;">
-					<legend>Dados pessoais</legend>
-					
-				</fieldset>
+				<h:form>
+					<fieldset class="fieldset_dadospessoais">
+						<legend>Dados pessoais</legend>
+						<div>
+							<div class="div_campos">
+								<h:outputLabel value="Nome" for="nome"
+									/>
+								<h:inputText id="nome" value="" style="margin-right:20px; margin-left:5px;"  />
+							</div>
 
-
+							<div class="div_campos">
+								<h:outputLabel value="Matrícula" for="matricula" />
+								<h:inputText id="matricula" value="" maxlength="10" style="width:60px; margin-right:20px; margin-left:5px;" />
+							</div>
+							
+							<div class="div_campos">
+								<h:outputLabel value="CPF" for="cpf" />
+								<h:inputText id="cpf" value="" maxlength="14" style="margin-right:20px; margin-left:5px;" />
+							</div>
+						</div>
+					</fieldset>
+				</h:form>
 			</ui:define>
 		</div>
 	</body>

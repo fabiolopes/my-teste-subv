@@ -61,3 +61,37 @@
 	font-size: 9px;
 	text-decoration: none;
 }
+
+.fieldset_dadospessoais{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	width: 90%;
+	border: 2px #0085B2 solid;
+	border-radius: 30px;
+	border-style: none;
+	background-color: #ddeeff;
+	font-family: monospace;
+	font-variant: small-caps;
+}
+
+.fieldset_dadospessoais input{
+	border-radius:10px;
+	margin-right: 20px;
+	height:20px;
+	font-size: 15px;
+	color:#000099;
+	text-shadow: 0 0 3px #FF0000;
+}
+
+.fieldset_dadospessoais input:FOCUS {
+	border-color: #aaaaff;
+	box-shadow: 2px 2px 1px rgba(100, 100, 255, 0.5);
+}
+
+.div_campos{
+	text-align: left;
+	float: left;
+	position: relative;
+}
+
