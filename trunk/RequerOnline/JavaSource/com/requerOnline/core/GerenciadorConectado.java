@@ -1,5 +1,6 @@
 package com.requerOnline.core;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -22,7 +23,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-public class GerenciadorConectado {
+public class GerenciadorConectado implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

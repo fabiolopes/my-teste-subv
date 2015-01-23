@@ -13,10 +13,10 @@
 		<h:form>
 			<div id="usuario" class="div_usuario">
 				<h:outputText
-					value="Olá, #{templateMB.loginMB.gerenciadorConectado.gerenciador.nome}." />
+					value="#{label.ola}, #{templateMB.loginMB.gerenciadorConectado.gerenciador.nome}." />
 				<br />
-				<h:outputText value="Perfil:Informa perfil	" />
-				<a4j:commandLink action="#{templateMB.logoff}" value="Logoff"
+				<h:outputText value="#{label.perfil}l:Informa perfil	" />
+				<a4j:commandLink action="#{templateMB.logoff}" value="#{label.logoff}"
 					styleClass="logoff" />
 			</div>
 		</h:form>
