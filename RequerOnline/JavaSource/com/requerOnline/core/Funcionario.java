@@ -8,7 +8,6 @@ import javax.persistence.InheritanceType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.stereotype.Service;
 
@@ -26,10 +25,6 @@ public abstract class Funcionario {
 
 	@NotNull(message = "Insira um nome.")
 	private String nome;
-
-	@NotNull(message = "Insira uma senha")
-	@Length(min = 8, max = 20, message = "Senha deve ter de 8 a 20 caracteres.")
-	private String senha;
 
 	@Email(message="Insira um email v�lido.")
 	private String email;
@@ -60,14 +55,6 @@ public abstract class Funcionario {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public String getEmail() {

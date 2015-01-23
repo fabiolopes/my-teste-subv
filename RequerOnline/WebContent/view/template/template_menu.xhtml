@@ -20,14 +20,14 @@
 				<rich:dropDownMenu mode="ajax" id="menu_requerentes">
 					<f:facet name="label">
 						<h:panelGroup styleClass="menu_itens">
-							<h:outputText value="Requerentes" />
+							<h:outputText value="#{label.requerentes}" />
 						</h:panelGroup>
 					</f:facet>
-					<rich:menuItem label="Novo" />
+					<rich:menuItem label="#{label.novo}" />
 					<rich:menuSeparator id="menuSeparator1" />
-					<rich:menuItem label="Atualizar" />
+					<rich:menuItem label="#{label.atualizar}" />
 					<rich:menuSeparator id="menuSeparator2" />
-					<rich:menuItem label="Localizar" />
+					<rich:menuItem label="#{label.localizar}" />
 				</rich:dropDownMenu>
 				
 				<!-- Menu requerimentos -->
@@ -35,14 +35,14 @@
 					<f:facet name="label">
 						<h:panelGrid cellpadding="0" cellspacing="0" columns="2" styleClass="menu_itens"
 							style="vertical-align:middle">
-							<h:outputText value="Requerimentos" />
+							<h:outputText value="#{label.requerimentos}" />
 						</h:panelGrid>
 					</f:facet>
-					<rich:menuItem label="Novo" />
+					<rich:menuItem label="#{label.novo}" />
 					<rich:menuSeparator id="menuSeparator3" />
-					<rich:menuItem label="Acompanhar" />
+					<rich:menuItem label="#{label.acompanhar}" />
 					<rich:menuSeparator id="menuSeparator4" />
-					<rich:menuItem label="Localizar" />
+					<rich:menuItem label="#{label.localizar}" />
 				</rich:dropDownMenu>
 
 			<!-- Menu gerenciadores -->
