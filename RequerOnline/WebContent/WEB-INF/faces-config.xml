@@ -16,7 +16,14 @@
 			<to-view-id>/view/acesso/login.xhtml</to-view-id>
 			<redirect></redirect>
 		</navigation-case>
-
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>cadastrar_requerente</from-outcome>
+			<to-view-id>/view/cadastro/cadastrar_requerente.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
 	</navigation-rule>
 	
 	<application>

@@ -1,53 +1,53 @@
 @CHARSET "UTF-8";
 
-*{
+* {
 	margin: 0;
 	padding: 0;
 }
 
-.body_escuro{
+.body_escuro {
 	background-color: #eeeeee;
 }
 
-.pagina{
+.pagina {
 	width: 80%;
 	height: 90%;
 	background-color: white;
 	margin: 6px auto 6px auto;
 	box-shadow: 5px 5px 5px rgba(100, 100, 255, 0.5);
 	text-align: center;
-	border-radius:15px;
+	border-radius: 15px;
 }
 
-.rf-tb{
+.rf-tb {
 	height: 40px;
-	border-radius:15px;
+	border-radius: 15px;
 	box-shadow: 5px 5px 5px rgba(100, 100, 255, 0.5);
 }
 
-.menu_itens{
+.menu_itens {
 	font-size: 14px;
 	color: #0085B2;
 }
 
-.div_usuario{
+.div_usuario {
 	position: relative;
-	text-align:left;
+	text-align: left;
 	margin: 10px 0 auto auto;
-	float:right;
+	float: right;
 	font-size: 10px;
 	width: 15%;
 }
 
-.content{
+.content {
 	margin: 20px 50px 20px 50px;
 	border: 2px #0085B2 solid;
-	border-radius:30px;
+	border-radius: 30px;
 	box-shadow: 5px 5px 5px rgba(100, 100, 255, 0.5);
 	height: 300px;
 }
 
-.rodape{
+.rodape {
 	width: 100%;
 	height: 30px;
 	background-color: #aaccff;
@@ -57,12 +57,12 @@
 	font-family: "Arial";
 }
 
-.logoff{
+.logoff {
 	font-size: 9px;
 	text-decoration: none;
 }
 
-.fieldset_dadospessoais{
+.fieldset_dadospessoais {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 10px;
@@ -75,13 +75,14 @@
 	font-variant: small-caps;
 }
 
-.fieldset_dadospessoais input{
-	border-radius:10px;
+.fieldset_dadospessoais input {
+	border-radius: 10px;
 	margin-right: 20px;
-	height:20px;
+	height: 20px;
 	font-size: 15px;
-	color:#000099;
-	text-shadow: 0 0 3px #FF0000;
+	color: #000099;
+	padding: 1px 4px 1px 4px;
+	text-transform: uppercase;
 }
 
 .fieldset_dadospessoais input:FOCUS {
@@ -89,9 +90,24 @@
 	box-shadow: 2px 2px 1px rgba(100, 100, 255, 0.5);
 }
 
-.div_campos{
+.fieldset_dadospessoais select{
+	border-radius: 10px 0 0 10px;
+	margin-right: 20px;
+	height: 20px;
+	font-size: 15px;
+	color: #000099;
+	padding: 1px 4px 1px 4px;
+}
+
+.div_campos {
 	text-align: left;
 	float: left;
 	position: relative;
+	margin-right: 20px;
+	margin-left: 5px;
+	margin-top: 5px;
 }
 
+.div_campos label{
+	margin-right: 5px;
+}
