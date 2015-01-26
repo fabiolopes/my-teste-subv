@@ -33,14 +33,13 @@ public class Teste {
 		r.setSetor("Nenhum");
 		r.setTelefone("(99) 9999-7526");
 		r.setVinculo("Estatutário");
-		
+		*/
 		Secretario s = new Secretario();
 		s.setMatricula("1111");
 		s.setCpf("485.267.887-10");
 		s.setNome("Lopes");
 		s.setSenha("11111111");
 		s.setEmail("fabio@gmail.com");
-		s.setSecretaria("Adm");
 		
 		em.getTransaction().begin();
 		em.persist(s);
@@ -50,7 +49,7 @@ public class Teste {
 		
 		
 		
-		
+		/*
 		Query q = em.createQuery("select object (s) from Secretario s");
 		@SuppressWarnings({ "unused", "unchecked" })
 		List<Secretario> secretarios = q.getResultList();

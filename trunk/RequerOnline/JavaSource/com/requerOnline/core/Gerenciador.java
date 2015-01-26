@@ -1,5 +1,7 @@
 package com.requerOnline.core;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -20,8 +22,10 @@ import com.requerOnline.util.enums.PerfilTypes;
 @Service
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Gerenciador extends Funcionario {
+public class Gerenciador extends Funcionario implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@NotNull(message = "Insira uma senha")
 	@Length(min = 8, max = 20, message = "Senha deve ter de 8 a 20 caracteres.")
 	private String senha;

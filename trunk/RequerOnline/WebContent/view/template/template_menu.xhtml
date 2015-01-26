@@ -23,7 +23,7 @@
 							<h:outputText value="#{label.requerentes}" />
 						</h:panelGroup>
 					</f:facet>
-					<rich:menuItem label="#{label.novo}" />
+					<rich:menuItem label="#{label.novo}" action="cadastrar_requerente" />
 					<rich:menuSeparator id="menuSeparator1" />
 					<rich:menuItem label="#{label.atualizar}" />
 					<rich:menuSeparator id="menuSeparator2" />
@@ -50,18 +50,18 @@
 					<f:facet name="label">
 						<h:panelGrid cellpadding="0" cellspacing="0" columns="2" styleClass="menu_itens"
 							style="vertical-align:middle">
-							<h:outputText value="Gerenciadores" />
+							<h:outputText value="#{label.gerenciadores}" />
 						</h:panelGrid>
 					</f:facet>
-					<rich:menuItem label="Novo" />
+					<rich:menuItem label="#{label.novo}" />
 					<rich:menuSeparator id="menuSeparator5" />
-					<rich:menuItem label="Localizar" />
+					<rich:menuItem label="#{label.localizar}" />
 					<rich:menuSeparator id="menuSeparator6" />
-					<rich:menuItem label="Excluir" />
+					<rich:menuItem label="#{label.excluir}" />
 					<rich:menuSeparator id="menuSeparator7" />
-					<rich:menuItem label="Alterar" />
+					<rich:menuItem label="#{label.alterar}" />
 					<rich:menuSeparator id="menuSeparator8" />
-					<rich:menuItem label="Listar" />
+					<rich:menuItem label="#{label.listar}" />
 				</rich:dropDownMenu>
 			
 			
@@ -70,10 +70,10 @@
 					<f:facet name="label">
 						<h:panelGrid cellpadding="0" cellspacing="0" columns="2" styleClass="menu_itens"
 							style="vertical-align:middle">
-							<h:outputText value="Administrativo" />
+							<h:outputText value="#{label.administrativo}" />
 						</h:panelGrid>
 					</f:facet>
-					<rich:menuItem label="Acompanhar/Responder requerimentos" />
+					<rich:menuItem label="#{label.acompanharresponder}" />
 				</rich:dropDownMenu>
 				
 				<!-- Menu Sair -->
@@ -81,12 +81,12 @@
 					<f:facet name="label">
 						<h:panelGrid cellpadding="0" cellspacing="0" columns="2" styleClass="menu_itens"
 							style="vertical-align:middle">
-							<h:outputText value="Sair" />
+							<h:outputText value="#{label.sair}" />
 						</h:panelGrid>
 					</f:facet>
-					<rich:menuItem label="Fazer logoff" action="#{templateMB.logoff()}" />
+					<rich:menuItem label="#{label.logoff}" action="#{templateMB.logoff()}" />
 					<rich:menuSeparator id="menuSeparator9" />
-					<rich:menuItem label="Fechar" />
+					<rich:menuItem label="#{label.fechar}" />
 				</rich:dropDownMenu>
 			</rich:toolbar>
 		</h:form>

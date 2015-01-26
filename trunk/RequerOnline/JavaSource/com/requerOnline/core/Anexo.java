@@ -27,7 +27,7 @@ public class Anexo {
 	
 	private String descDocumento;
 	
-	@NotNull
+	@NotNull//se o anexo é de resposta ou não
 	private AnexoTypes tipo;
 
 	public Anexo() {

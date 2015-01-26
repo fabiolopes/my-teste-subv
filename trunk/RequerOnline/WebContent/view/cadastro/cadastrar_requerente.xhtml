@@ -7,30 +7,96 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/view/template/template.xhtml">
 
-	<h:head></h:head>
+	<h:head>
+		<!-- <h:outputScript library="javascript" name="jquery-1.11.2.js" target="head" rendered="true" />
+		<h:outputScript library="javascript" name="jquery.maskedinput.js" target="head" rendered="true" />
+
+		<script>
+		$(document).ready(function(){
+			$("#form_requerente\\:cpf").mask("999.999.999-99", {placeholder="123.456.789-01"});
+			});
+        jQuery(function($){
+           $("#form_requerente\\:cpf").mask("999.999.999-99", {placeholder="123.456.789-01"});
+      	});
+    </script> -->
+	</h:head>
 	<body>
 		<div id="content">
 			<!-- Código do conteúdo deve ser inserido aqui -->
 			<ui:define name="conteudo">
-				<h:form>
+				<h:form id="form_requerente">
 					<fieldset class="fieldset_dadospessoais">
 						<legend>Dados pessoais</legend>
 						<div>
 							<div class="div_campos">
-								<h:outputLabel value="Nome" for="nome"
-									/>
-								<h:inputText id="nome" value="" style="margin-right:20px; margin-left:5px;"  />
+								<h:outputLabel value="#{label.nome}" for="nome" />
+								<h:inputText id="nome" value=""
+									style="margin-left:7px; width:250px;" />
 							</div>
 
 							<div class="div_campos">
-								<h:outputLabel value="Matrícula" for="matricula" />
-								<h:inputText id="matricula" value="" maxlength="10" style="width:60px; margin-right:20px; margin-left:5px;" />
+								<h:outputLabel value="#{label.matricula}" for="matricula" />
+								<h:inputText id="matricula" value="" maxlength="10"
+									style="width:100px;margin-right:0;" />
 							</div>
-							
+
 							<div class="div_campos">
-								<h:outputLabel value="CPF" for="cpf" />
-								<h:inputText id="cpf" value="" maxlength="14" style="margin-right:20px; margin-left:5px;" />
+								<h:outputLabel value="#{label.cpf}" for="cpf" />
+								<h:inputText id="cpf" value="" maxlength="14"
+									style="margin-right:0;" />
 							</div>
+
+							<div class="div_campos">
+								<h:outputLabel value="Email" for="email" />
+								<h:inputText id="email" value=""
+									style="text-transform:lowercase;margin-right:0" />
+							</div>
+
+							<div class="div_campos">
+								<h:outputLabel value="#{label.telefone}" for="telefone" />
+								<h:inputText id="telefone" value="" style="margin-right:0" />
+							</div>
+
+							<div class="div_campos">
+								<h:outputLabel value="#{label.nacionalidade}"
+									for="nacionalidade" />
+								<h:inputText id="nacionalidade" value=""
+									style="width:135px; margin-right:0" />
+							</div>
+
+						</div>
+					</fieldset>
+
+					<fieldset class="fieldset_dadospessoais">
+						<legend>Dados funcionais</legend>
+
+						<div class="div_campos">
+							<h:outputLabel value="#{label.vinculo}" for="vinculo" />
+							<h:selectOneMenu style="margin-right:0;" value="">
+								<f:selectItems value="#{cadastroRequerenteMB.vinculoTypes}"
+									var="vinculo" itemValue="#{vinculo}"
+									itemLabel="#{vinculo.value}" />
+							</h:selectOneMenu>
+						</div>
+
+						<div class="div_campos">
+							<h:outputLabel value="#{label.rg}" for="rg" />
+							<h:inputText id="rg" value="" style="margin-right:0;" />
+						</div>
+						
+						<div class="div_campos">
+							<h:outputLabel value="#{label.funcao}" for="funcao" />
+							<h:inputText id="funcao" value="" style="margin-right:0;" />
+						</div>
+						
+						<div class="div_campos">
+							<h:outputLabel value="#{label.secretaria}" for="secretaria" />
+							<h:inputText id="secretaria" value="" style="margin-right:0;" />
+						</div>
+						
+						<div class="div_campos">
+							<h:outputLabel value="#{label.setor}" for="setor" />
+							<h:inputText id="setor value="" style="margin-right:0;" />
 						</div>
 					</fieldset>
 				</h:form>

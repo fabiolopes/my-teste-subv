@@ -28,6 +28,8 @@ public class Endereco {
 	@NotNull(message="Insira a cidade")
 	private String cidade;
 	
+	private String cep;
+	
 	public Endereco() {
 		// TODO Auto-generated constructor stub
 	}
@@ -70,6 +72,14 @@ public class Endereco {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 }

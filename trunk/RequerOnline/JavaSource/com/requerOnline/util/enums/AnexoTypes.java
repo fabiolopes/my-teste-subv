@@ -6,7 +6,7 @@ public enum AnexoTypes {
 	
 	private int value;
 	
-	private AnexoTypes(int value) {
+	AnexoTypes(int value) {
 		this.setValue(value);
 	}
 

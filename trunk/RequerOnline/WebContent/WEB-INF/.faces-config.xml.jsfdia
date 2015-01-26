@@ -17,4 +17,15 @@
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#view#acesso#login.xhtml"
   PATH="/view/acesso/login.xhtml" SHAPE="240,257,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules::2" SHAPE="48,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules::2" NAME="item" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cadastrar_requerente::#view#cadastro#cadastrar_requerente.xhtml"
+    NAME="output" PATH="/view/cadastro/cadastrar_requerente.xhtml"
+    TARGET="rules:#view#cadastro#cadastrar_requerente.xhtml"
+    TITLE="cadastrar_requerente" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#view#cadastro#cadastrar_requerente.xhtml"
+  PATH="/view/cadastro/cadastrar_requerente.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>
