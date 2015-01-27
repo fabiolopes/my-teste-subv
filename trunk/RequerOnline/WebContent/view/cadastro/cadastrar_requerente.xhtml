@@ -21,6 +21,7 @@
 					jQuery(function($) {
 						$(".cpf").mask("999.999.999-99");
 						$(".telefone").mask("(99) 9999-9999");
+						$(".cep").mask("99999-999");
 					});
 				</script>
 
@@ -102,7 +103,7 @@
 					</fieldset>
 
 					<fieldset class="fieldset_dadospessoais">
-						<legend>Dados funcionais</legend>
+						<legend>Endereço do requerente</legend>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.rua}" for="rua" />
@@ -115,15 +116,35 @@
 						</div>
 						
 						<div class="div_campos">
+							<h:outputLabel value="#{label.complemento}" for="complemento" />
+							<h:inputText id="complemento" value="" style="margin-right:0;" />
+						</div>
+						
+						<div class="div_campos">
 							<h:outputLabel value="#{label.bairro}" for="bairro" />
 							<h:inputText id="bairro" value="" style="margin-right:0;" />
 						</div>
 						
 						<div class="div_campos">
-							<h:outputLabel value="#{label.complemento}" for="complemento" />
-							<h:inputText id="complemento" value="" style="margin-right:0;" />
+							<h:outputLabel value="#{label.cidade}" for="cidade" />
+							<h:inputText id="cidade" value="" style="margin-right:0;" />
 						</div>
-
+						
+						<div class="div_campos">
+							<h:outputLabel value="#{label.cep}" for="cep" />
+							<h:inputText id="cep" value="" styleClass="cep" style="margin-right:0;" />
+						</div>
+						
+						<div class="div_campos">
+							<h:outputLabel value="#{label.estado}" for="estado" />
+							<h:selectOneMenu style="margin-right:0;" value="">
+								<f:selectItems value="#{cadastroRequerenteMB.estadoTypes}"
+									var="estado" itemValue="#{estado}"
+									itemLabel="#{estado.value}" />
+							</h:selectOneMenu>
+						</div>
+						
+						
 					</fieldset>
 				</h:form>
 			</ui:define>

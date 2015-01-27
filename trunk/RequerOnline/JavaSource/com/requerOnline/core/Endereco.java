@@ -1,5 +1,6 @@
 package com.requerOnline.core;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +8,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Service;
+
+import com.requerOnline.util.enums.EstadoTypes;
 
 @Service
 @Entity
@@ -22,13 +25,20 @@ public class Endereco {
 	@NotNull(message="Insira o número")
 	private String num;
 	
+	@Column(nullable=true)
+	private String complemento;
+	
 	@NotNull(message="Insira o bairro")
 	private String bairro;
 	
 	@NotNull(message="Insira a cidade")
 	private String cidade;
 	
+	@NotNull(message="Insira o CEP")
 	private String cep;
+	
+	@NotNull(message="Insira o estado")
+	private EstadoTypes estado;
 	
 	public Endereco() {
 		// TODO Auto-generated constructor stub
@@ -57,6 +67,14 @@ public class Endereco {
 	public void setNum(String num) {
 		this.num = num;
 	}
+	
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
 
 	public String getBairro() {
 		return bairro;
@@ -80,6 +98,14 @@ public class Endereco {
 
 	public void setCep(String cep) {
 		this.cep = cep;
+	}
+
+	public EstadoTypes getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoTypes estado) {
+		this.estado = estado;
 	}
 
 }
