@@ -8,22 +8,22 @@
 	template="/view/template/template.xhtml">
 
 	<h:head>
-		<!-- <h:outputScript library="javascript" name="jquery-1.11.2.js" target="head" rendered="true" />
-		<h:outputScript library="javascript" name="jquery.maskedinput.js" target="head" rendered="true" />
 
-		<script>
-		$(document).ready(function(){
-			$("#form_requerente\\:cpf").mask("999.999.999-99", {placeholder="123.456.789-01"});
-			});
-        jQuery(function($){
-           $("#form_requerente\\:cpf").mask("999.999.999-99", {placeholder="123.456.789-01"});
-      	});
-    </script> -->
 	</h:head>
 	<body>
 		<div id="content">
 			<!-- Código do conteúdo deve ser inserido aqui -->
 			<ui:define name="conteudo">
+
+				<h:outputScript library="js" name="jquery-2.1.3.js" />
+				<h:outputScript library="js" name="jquery.maskedinput.min.js" />
+				<script>
+					jQuery(function($) {
+						$(".cpf").mask("999.999.999-99");
+						$(".telefone").mask("(99) 9999-9999");
+					});
+				</script>
+
 				<h:form id="form_requerente">
 					<fieldset class="fieldset_dadospessoais">
 						<legend>Dados pessoais</legend>
@@ -42,7 +42,7 @@
 
 							<div class="div_campos">
 								<h:outputLabel value="#{label.cpf}" for="cpf" />
-								<h:inputText id="cpf" value="" maxlength="14"
+								<h:inputText id="cpf" styleClass="cpf" value="" maxlength="14"
 									style="margin-right:0;" />
 							</div>
 
@@ -54,7 +54,8 @@
 
 							<div class="div_campos">
 								<h:outputLabel value="#{label.telefone}" for="telefone" />
-								<h:inputText id="telefone" value="" style="margin-right:0" />
+								<h:inputText id="telefone" value="" styleClass="telefone"
+									style="margin-right:0" />
 							</div>
 
 							<div class="div_campos">
@@ -83,21 +84,46 @@
 							<h:outputLabel value="#{label.rg}" for="rg" />
 							<h:inputText id="rg" value="" style="margin-right:0;" />
 						</div>
-						
+
 						<div class="div_campos">
 							<h:outputLabel value="#{label.funcao}" for="funcao" />
 							<h:inputText id="funcao" value="" style="margin-right:0;" />
 						</div>
-						
+
 						<div class="div_campos">
 							<h:outputLabel value="#{label.secretaria}" for="secretaria" />
 							<h:inputText id="secretaria" value="" style="margin-right:0;" />
 						</div>
-						
+
 						<div class="div_campos">
 							<h:outputLabel value="#{label.setor}" for="setor" />
 							<h:inputText id="setor" value="" style="margin-right:0;" />
 						</div>
+					</fieldset>
+
+					<fieldset class="fieldset_dadospessoais">
+						<legend>Dados funcionais</legend>
+
+						<div class="div_campos">
+							<h:outputLabel value="#{label.rua}" for="rua" />
+							<h:inputText id="rua" value="" style="margin-right:0; width:250px;" />
+						</div>
+						
+						<div class="div_campos">
+							<h:outputLabel value="#{label.num}" for="numero" />
+							<h:inputText id="numero" value="" style="margin-right:0; width:60px;" />
+						</div>
+						
+						<div class="div_campos">
+							<h:outputLabel value="#{label.bairro}" for="bairro" />
+							<h:inputText id="bairro" value="" style="margin-right:0;" />
+						</div>
+						
+						<div class="div_campos">
+							<h:outputLabel value="#{label.complemento}" for="complemento" />
+							<h:inputText id="complemento" value="" style="margin-right:0;" />
+						</div>
+
 					</fieldset>
 				</h:form>
 			</ui:define>
