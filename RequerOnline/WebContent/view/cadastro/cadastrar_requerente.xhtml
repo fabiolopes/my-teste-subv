@@ -14,7 +14,7 @@
 		<div id="content">
 			<!-- Código do conteúdo deve ser inserido aqui -->
 			<ui:define name="conteudo">
-
+				<h:outputStylesheet library="css" name="estilo_login.css" />
 				<h:outputScript library="js" name="jquery-2.1.3.js" />
 				<h:outputScript library="js" name="jquery.maskedinput.min.js" />
 				<script>
@@ -27,7 +27,7 @@
 
 				<h:form id="form_requerente">
 					<fieldset class="fieldset_dadospessoais">
-						<legend>Dados pessoais</legend>
+						<legend>#{label.dados_pessoais}</legend>
 						<div>
 							<div class="div_campos">
 								<h:outputLabel value="#{label.nome}" for="nome" />
@@ -70,7 +70,7 @@
 					</fieldset>
 
 					<fieldset class="fieldset_dadospessoais">
-						<legend>Dados funcionais</legend>
+						<legend>#{label.dados_funcionais}</legend>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.vinculo}" for="vinculo" />
@@ -103,50 +103,70 @@
 					</fieldset>
 
 					<fieldset class="fieldset_dadospessoais">
-						<legend>Endereço do requerente</legend>
+						<legend>#{label.endereco}</legend>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.rua}" for="rua" />
-							<h:inputText id="rua" value="" style="margin-right:0; width:250px;" />
+							<h:inputText id="rua" value=""
+								style="margin-right:0; width:250px;" />
 						</div>
-						
+
 						<div class="div_campos">
 							<h:outputLabel value="#{label.num}" for="numero" />
-							<h:inputText id="numero" value="" style="margin-right:0; width:60px;" />
+							<h:inputText id="numero" value=""
+								style="margin-right:0; width:60px;" />
 						</div>
-						
+
 						<div class="div_campos">
 							<h:outputLabel value="#{label.complemento}" for="complemento" />
 							<h:inputText id="complemento" value="" style="margin-right:0;" />
 						</div>
-						
+
 						<div class="div_campos">
 							<h:outputLabel value="#{label.bairro}" for="bairro" />
 							<h:inputText id="bairro" value="" style="margin-right:0;" />
 						</div>
-						
+
 						<div class="div_campos">
 							<h:outputLabel value="#{label.cidade}" for="cidade" />
 							<h:inputText id="cidade" value="" style="margin-right:0;" />
 						</div>
-						
+
 						<div class="div_campos">
-							<h:outputLabel value="#{label.cep}" for="cep" />
-							<h:inputText id="cep" value="" styleClass="cep" style="margin-right:0;" />
+							<h:outputLabel value="#{label.cep}" styleClass="cep" for="cep" />
+							<h:inputText id="cep" value="" style="margin-right:0;" />
 						</div>
-						
+
 						<div class="div_campos">
 							<h:outputLabel value="#{label.estado}" for="estado" />
 							<h:selectOneMenu style="margin-right:0;" value="">
 								<f:selectItems value="#{cadastroRequerenteMB.estadoTypes}"
-									var="estado" itemValue="#{estado}"
-									itemLabel="#{estado.value}" />
+									var="estado" itemValue="#{estado}" itemLabel="#{estado.value}" />
 							</h:selectOneMenu>
 						</div>
-						
-						
 					</fieldset>
+					<a4j:commandButton id="entrar" action="#{loginMB.logar}"
+						value="#{label.entrar}" styleClass="button_login"
+						style="border-radius:6px;">
+						<a4j:status id="statusCarregarModalPanel"
+							onstart="#{rich:component('panelStatus')}.show()"
+							onstop="#{rich:component('panelStatus')}.hide()" />
+					</a4j:commandButton>
+					
+					<a4j:commandButton id="cancelar" action="#{loginMB.logar}"
+						value="#{label.cancelar}" styleClass="button_login"
+						style="border-radius:6px;"/>
+					
+					<input type="reset" value="#{label.limpar}" class="button_login"/>
+					
 				</h:form>
+
+				<rich:popupPanel id="panelStatus" autosized="true"
+					styleClass="popup_carregar">
+					<h:graphicImage library="images" name="carregando.gif"
+						styleClass="img_carregar" />
+					<h:outputText value="#{label.carregando}" />
+				</rich:popupPanel>
 			</ui:define>
 		</div>
 	</body>

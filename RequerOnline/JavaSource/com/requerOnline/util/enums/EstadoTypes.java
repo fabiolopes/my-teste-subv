@@ -2,7 +2,7 @@ package com.requerOnline.util.enums;
 
 public enum EstadoTypes {
 	ACRE("AC"), ALAGOAS("AL"), AMAPA("AP"), 
-    AMAZONAS("Amazonas"), BAHIA("BA"), CEARA("CE"), DISTRITO_FEDERAL("DF"), 
+    AMAZONAS("AM"), BAHIA("BA"), CEARA("CE"), DISTRITO_FEDERAL("DF"), 
     ESPIRITO_SANTO("ES"), GOIAS("GO"), MARANHAO("MA"), MATO_GROSSO("MT"), 
     MATO_GROSSO_DO_SUL("MS"), MINAS_GERAIS("MG"), 
     PARA("PA"), PARAIBA("PB"), PARANA("PR"), PERNAMBUCO("PE"), PIAUI("PI"), 
