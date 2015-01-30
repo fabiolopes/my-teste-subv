@@ -67,7 +67,7 @@ public class SpringBeans {
 	public static Requerente getBeanRequerente(){
 		if(requerente == null){
 			getApplicationContext();
-			requerente = (Requerente) applicationContext.getBean("Requerente");
+			requerente = (Requerente) applicationContext.getBean("requerente");
 		}
 		return requerente;
 	}

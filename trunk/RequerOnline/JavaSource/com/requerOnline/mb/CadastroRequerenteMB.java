@@ -3,6 +3,7 @@ package com.requerOnline.mb;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import com.requerOnline.applicationContext.SpringBeans;
 import com.requerOnline.core.Requerente;
 import com.requerOnline.service.ServiceDelegate;
 import com.requerOnline.serviceImpl.ServiceDelegateImpl;
@@ -17,11 +18,12 @@ public class CadastroRequerenteMB {
 	private Requerente requerente;
 	
 	public CadastroRequerenteMB(){
-		this.requerente = new Requerente();
+		this.requerente = SpringBeans.getBeanRequerente();
 	}
 	
 	public void salvar(){
-		setDelegate(new ServiceDelegateImpl());
+		delegate = new ServiceDelegateImpl();
+		delegate.getCadastroRequerenteService().salvar(requerente);
 	}
 	
 	
