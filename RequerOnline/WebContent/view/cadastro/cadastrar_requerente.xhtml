@@ -19,9 +19,9 @@
 				<h:outputScript library="js" name="jquery.maskedinput.min.js" />
 				<script>
 					jQuery(function($) {
-						$(".cpf").mask("999.999.999-99");
-						$(".telefone").mask("(99) 9999-9999");
-						$(".cep").mask("99999-999");
+						$("#form_requerente\\:cpf").mask("999.999.999-99");
+						$("#form_requerente\\:telefone").mask("(99) 9999-9999");
+						$("#form_requerente\\:cep").mask("99999-999");
 					});
 				</script>
 
@@ -31,38 +31,44 @@
 						<div>
 							<div class="div_campos">
 								<h:outputLabel value="#{label.nome}" for="nome" />
-								<h:inputText id="nome" value="#{cadastroRequerenteMB.requerente.nome}"
+								<h:inputText id="nome"
+									value="#{cadastroRequerenteMB.requerente.nome}"
 									style="margin-left:7px; width:250px;" />
 							</div>
 
 							<div class="div_campos">
 								<h:outputLabel value="#{label.matricula}" for="matricula" />
-								<h:inputText id="matricula" value="#{cadastroRequerenteMB.requerente.matricula}" maxlength="10"
-									style="width:100px;margin-right:0;" />
+								<h:inputText id="matricula"
+									value="#{cadastroRequerenteMB.requerente.matricula}"
+									maxlength="10" style="width:100px;margin-right:0;" />
 							</div>
 
 							<div class="div_campos">
 								<h:outputLabel value="#{label.cpf}" for="cpf" />
-								<h:inputText id="cpf" styleClass="cpf" value="#{cadastroRequerenteMB.requerente.cpf}" maxlength="14"
+								<h:inputText id="cpf"
+									value="#{cadastroRequerenteMB.requerente.cpf}" maxlength="14"
 									style="margin-right:0;" />
 							</div>
 
 							<div class="div_campos">
 								<h:outputLabel value="Email" for="email" />
-								<h:inputText id="email" value="#{cadastroRequerenteMB.requerente.email}"
+								<h:inputText id="email"
+									value="#{cadastroRequerenteMB.requerente.email}"
 									style="text-transform:lowercase;margin-right:0" />
 							</div>
 
 							<div class="div_campos">
 								<h:outputLabel value="#{label.telefone}" for="telefone" />
-								<h:inputText id="telefone" value="#{cadastroRequerenteMB.requerente.telefone}" styleClass="telefone"
+								<h:inputText id="telefone"
+									value="#{cadastroRequerenteMB.requerente.telefone}"
 									style="margin-right:0" />
 							</div>
 
 							<div class="div_campos">
 								<h:outputLabel value="#{label.nacionalidade}"
 									for="nacionalidade" />
-								<h:inputText id="nacionalidade" value="#{cadastroRequerenteMB.requerente.nacionalidade}"
+								<h:inputText id="nacionalidade"
+									value="#{cadastroRequerenteMB.requerente.nacionalidade}"
 									style="width:135px; margin-right:0" />
 							</div>
 
@@ -74,7 +80,8 @@
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.vinculo}" for="vinculo" />
-							<h:selectOneMenu style="margin-right:0;" value="#{cadastroRequerenteMB.requerente.vinculo}">
+							<h:selectOneMenu style="margin-right:0;"
+								value="#{cadastroRequerenteMB.requerente.vinculo}">
 								<f:selectItems value="#{cadastroRequerenteMB.vinculoTypes}"
 									var="vinculo" itemValue="#{vinculo}"
 									itemLabel="#{vinculo.value}" />
@@ -83,22 +90,30 @@
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.rg}" for="rg" />
-							<h:inputText id="rg" value="#{cadastroRequerenteMB.requerente.rg}" style="margin-right:0;" />
+							<h:inputText id="rg"
+								value="#{cadastroRequerenteMB.requerente.rg}"
+								style="margin-right:0;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.funcao}" for="funcao" />
-							<h:inputText id="funcao" value="#{cadastroRequerenteMB.requerente.funcao}" style="margin-right:0;" />
+							<h:inputText id="funcao"
+								value="#{cadastroRequerenteMB.requerente.funcao}"
+								style="margin-right:0;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.secretaria}" for="secretaria" />
-							<h:inputText id="secretaria" value="#{cadastroRequerenteMB.requerente.secretaria}" style="margin-right:0;" />
+							<h:inputText id="secretaria"
+								value="#{cadastroRequerenteMB.requerente.secretaria}"
+								style="margin-right:0;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.setor}" for="setor" />
-							<h:inputText id="setor" value="#{cadastroRequerenteMB.requerente.setor}" style="margin-right:0;" />
+							<h:inputText id="setor"
+								value="#{cadastroRequerenteMB.requerente.setor}"
+								style="margin-right:0;" />
 						</div>
 					</fieldset>
 
@@ -107,67 +122,76 @@
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.rua}" for="rua" />
-							<h:inputText id="rua" value="#{cadastroRequerenteMB.requerente.endereco.rua}"
+							<h:inputText id="rua"
+								value="#{cadastroRequerenteMB.requerente.endereco.rua}"
 								style="margin-right:0; width:250px;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.num}" for="numero" />
-							<h:inputText id="numero" value="#{cadastroRequerenteMB.requerente.endereco.num}"
+							<h:inputText id="numero"
+								value="#{cadastroRequerenteMB.requerente.endereco.num}"
 								style="margin-right:0; width:60px;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.complemento}" for="complemento" />
-							<h:inputText id="complemento" value="#{cadastroRequerenteMB.requerente.endereco.complemento}" style="margin-right:0;" />
+							<h:inputText id="complemento"
+								value="#{cadastroRequerenteMB.requerente.endereco.complemento}"
+								style="margin-right:0;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.bairro}" for="bairro" />
-							<h:inputText id="bairro" value="#{cadastroRequerenteMB.requerente.endereco.bairro}" style="margin-right:0;" />
+							<h:inputText id="bairro"
+								value="#{cadastroRequerenteMB.requerente.endereco.bairro}"
+								style="margin-right:0;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.cidade}" for="cidade" />
-							<h:inputText id="cidade" value="#{cadastroRequerenteMB.requerente.endereco.cidade}" style="margin-right:0;" />
+							<h:inputText id="cidade"
+								value="#{cadastroRequerenteMB.requerente.endereco.cidade}"
+								style="margin-right:0;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.cep}" styleClass="cep" for="cep" />
-							<h:inputText id="cep" value="#{cadastroRequerenteMB.requerente.endereco.cep}" style="margin-right:0;" />
+							<h:inputText id="cep"
+								value="#{cadastroRequerenteMB.requerente.endereco.cep}"
+								style="margin-right:0;" />
 						</div>
 
 						<div class="div_campos">
 							<h:outputLabel value="#{label.estado}" for="estado" />
-							<h:selectOneMenu style="margin-right:0;" value="#{cadastroRequerenteMB.requerente.endereco.estado}">
+							<h:selectOneMenu style="margin-right:0;"
+								value="#{cadastroRequerenteMB.requerente.endereco.estado}">
 								<f:selectItems value="#{cadastroRequerenteMB.estadoTypes}"
 									var="estado" itemValue="#{estado}" itemLabel="#{estado.value}" />
 							</h:selectOneMenu>
 						</div>
 					</fieldset>
-					<a4j:commandButton id="entrar" action="#{loginMB.logar}"
-						value="#{label.entrar}" styleClass="button_login"
+					<a4j:commandButton id="Cadastrar"
+						action="#{cadastroRequerenteMB.salvar()}"
+						value="#{label.salvar_requerente}" styleClass="button_login"
 						style="border-radius:6px;">
 						<a4j:status id="statusCarregarModalPanel"
-							onstart="#{rich:component('panelStatus')}.show()"
-							onstop="#{rich:component('panelStatus')}.hide()" />
+							onstart="#{rich:component('carregarModal')}.show()"
+							onstop="#{rich:component('carregarModal')}.hide()" />
 					</a4j:commandButton>
-					
+
 					<a4j:commandButton id="cancelar" action="#{loginMB.logar}"
 						value="#{label.cancelar}" styleClass="button_login"
-						style="border-radius:6px;"/>
-					
-					<input type="reset" value="#{label.limpar}" class="button_login"/>
-					<rich:messages />
-					
-				</h:form>
+						style="border-radius:6px;" />
 
-				<rich:popupPanel id="panelStatus" autosized="true"
-					styleClass="popup_carregar">
-					<h:graphicImage library="images" name="carregando.gif"
-						styleClass="img_carregar" />
-					<h:outputText value="#{label.carregando}" />
-				</rich:popupPanel>
+					<input type="reset" value="#{label.limpar}" class="button_login" />
+					
+
+				</h:form>
+<rich:messages />
+				<ui:insert name="panel_carregando">
+					<ui:include src="/view/template/carregar_modal.xhtml" />
+				</ui:insert>
 			</ui:define>
 		</div>
 	</body>

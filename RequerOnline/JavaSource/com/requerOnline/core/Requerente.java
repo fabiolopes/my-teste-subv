@@ -1,5 +1,7 @@
 package com.requerOnline.core;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -11,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-public class Requerente extends Funcionario {
+public class Requerente extends Funcionario implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@NotNull(message = "Insira uma nacionalidade.")
 	private String nacionalidade;

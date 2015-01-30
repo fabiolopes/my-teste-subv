@@ -35,15 +35,13 @@
 				value="#{label.entrar}" styleClass="button_login"
 				style="border-radius:6px;">
 				<a4j:status id="statusCarregarModalPanel"
-					onstart="#{rich:component('panelStatus')}.show()"
-					onstop="#{rich:component('panelStatus')}.hide()" />
+					onstart="#{rich:component('carregarModal')}.show()"
+					onstop="#{rich:component('carregarModal')}.hide()" />
 			</a4j:commandButton>
 		</rich:panel>
 	</h:form>
-	<rich:popupPanel id="panelStatus" autosized="true" styleClass="popup_carregar">
-		<h:graphicImage library="images" name="carregando.gif"
-			styleClass="img_carregar" />
-		<h:outputText value="#{label.carregando}" />
-	</rich:popupPanel>
+	<ui:insert name="panel_carregando">
+		<ui:include src="/view/template/carregar_modal.xhtml" />
+	</ui:insert>
 </h:body>
 </html>
