@@ -9,7 +9,7 @@
 <h:head>
 	<h:outputStylesheet library="css" name="estilo_template.css" />
 </h:head>
-<h:body styleClass="body_escuro" style="position:absolute;">
+<h:body styleClass="body_escuro">
 
 
 	<!-- Div da página -->
@@ -40,6 +40,10 @@
 
 		<div class="content">
 			<ui:insert name="conteudo" />
+		</div>
+		
+		<div>
+			<ui:insert name="others"/>
 		</div>
 
 		<div class="rodape">

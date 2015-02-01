@@ -14,6 +14,7 @@
 		<div id="content">
 			<!-- Código do conteúdo deve ser inserido aqui -->
 			<ui:define name="conteudo">
+				<!-- Inserção dos estilos, e script Jquery de máscaras -->
 				<h:outputStylesheet library="css" name="estilo_login.css" />
 				<h:outputScript library="js" name="jquery-2.1.3.js" />
 				<h:outputScript library="js" name="jquery.maskedinput.min.js" />
@@ -171,27 +172,36 @@
 							</h:selectOneMenu>
 						</div>
 					</fieldset>
-					<a4j:commandButton id="Cadastrar"
-						action="#{cadastroRequerenteMB.salvar()}"
-						value="#{label.salvar_requerente}" styleClass="button_login"
-						style="border-radius:6px;">
-						<a4j:status id="statusCarregarModalPanel"
-							onstart="#{rich:component('carregarModal')}.show()"
-							onstop="#{rich:component('carregarModal')}.hide()" />
-					</a4j:commandButton>
+					<h:panelGrid columns="3" styleClass="div_buttons">
+						<a4j:commandButton id="Cadastrar"
+							action="#{cadastroRequerenteMB.salvar()}"
+							value="#{label.salvar_requerente}" styleClass="buttons_default"
+							style="border-radius:6px;">
+							<a4j:status id="statusCarregarModalPanel"
+								onstart="#{rich:component('carregarModal')}.show()"
+								onstop="#{rich:component('carregarModal')}.hide()" />
+						</a4j:commandButton>
 
-					<a4j:commandButton id="cancelar" action="#{loginMB.logar}"
-						value="#{label.cancelar}" styleClass="button_login"
-						style="border-radius:6px;" />
+						<a4j:commandButton id="cancelar" action="#{loginMB.logar}"
+							value="#{label.cancelar}" styleClass="buttons_default"
+							style="border-radius:6px;" />
 
-					<input type="reset" value="#{label.limpar}" class="button_login" />
-					
-
+						<input type="reset" value="#{label.limpar}" class="buttons_default" />
+					</h:panelGrid>
+					<a4j:outputPanel id="panel_tooltip">
+						<h:graphicImage library="images" name="erro_tooltip.png">
+							<rich:tooltip target="panel_tooltip">
+								<rich:messages id="msgs"/>
+							</rich:tooltip>
+						</h:graphicImage>
+					</a4j:outputPanel>
 				</h:form>
-<rich:messages />
+				
+				<!-- Inclusão do modal de carregamento, para invocação -->
 				<ui:insert name="panel_carregando">
 					<ui:include src="/view/template/carregar_modal.xhtml" />
 				</ui:insert>
+				
 			</ui:define>
 		</div>
 	</body>

@@ -1,55 +1,40 @@
 package com.requerOnline.core;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Embeddable;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Service;
 
 import com.requerOnline.util.enums.EstadoTypes;
 
 @Service
-@Entity
+@Embeddable
 public class Endereco {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
-	
-	@NotNull(message="Insira o nome da rua")
+	@NotEmpty(message="Insira o nome da rua")
 	private String rua;
 	
-	@NotNull(message="Insira o número")
+	@NotEmpty(message="Insira o número")
 	private String num;
 	
 	@Column(nullable=true)
 	private String complemento;
 	
-	@NotNull(message="Insira o bairro")
+	@NotEmpty(message="Insira o bairro")
 	private String bairro;
 	
-	@NotNull(message="Insira a cidade")
+	@NotEmpty(message="Insira a cidade")
 	private String cidade;
 	
-	@NotNull(message="Insira o CEP")
+	@NotEmpty(message="Insira o CEP")
 	private String cep;
 	
-	@NotNull(message="Insira o estado")
-	private EstadoTypes estado;
+	@NotEmpty(message="Insira o estado")
+	private String estado;
 	
 	public Endereco() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public String getRua() {
@@ -100,11 +85,11 @@ public class Endereco {
 		this.cep = cep;
 	}
 
-	public EstadoTypes getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(EstadoTypes estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 
