@@ -1,47 +1,45 @@
 package com.requerOnline.core;
 
-import java.io.Serializable;
-
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @Entity
-public class Requerente extends Funcionario implements Serializable{
+public class Requerente extends Funcionario{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7554507026090905682L;
 
-	@NotNull(message = "Insira uma nacionalidade.")
+	@NotEmpty(message = "Insira uma nacionalidade.")
 	private String nacionalidade;
 
-	@NotNull
+	@NotEmpty
 	@Length(min = 5, message = "Insira um RG válido.")
 	private String rg;
 
 	@Autowired
-	@OneToOne
+	@Embedded
 	private Endereco endereco;
 
-	@Pattern(regexp = "^\\(?\\d{2}\\)?[\\s-]?\\d{4}-?\\d{4}$")
-	@NotNull(message="Insira um telefone de contato.")
+	@Pattern(regexp = "^\\(?\\d{2}\\)?[\\s-]?\\d{4}-?\\d{4}$", message="Insira um telefone válido")
+	@NotEmpty(message="Insira um telefone de contato.")
 	private String telefone;
 	
-	@NotNull(message="Informe o vínculo empregatício.")
+	@NotEmpty(message="Informe o vínculo empregatício.")
 	private String vinculo;
 	
-	@NotNull(message="Informe a função.")
+	@NotEmpty(message="Informe a função.")
 	private String funcao;
 	
-	@NotNull(message="Informe a secretaria de lotação.")
+	@NotEmpty(message="Informe a secretaria de lotação.")
 	private String secretaria;
 	
-	@NotNull(message="Informe o setor de origem.")
+	@NotEmpty(message="Informe o setor de origem.")
 	private String setor;
 
 	public Requerente() {

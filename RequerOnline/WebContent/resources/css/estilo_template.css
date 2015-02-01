@@ -10,12 +10,15 @@
 }
 
 .pagina {
-	width: 80%;
-	height: 90%;
+	position:absolute;
+	left:50%;
+	top:50%;
+	width: 1000px;
+	height: 700px;
+	margin-left:-500px;
+	margin-top:-315px;
 	background-color: white;
-	margin: 6px auto 6px auto;
 	box-shadow: 5px 5px 5px rgba(100, 100, 255, 0.5);
-	text-align: center;
 	border-radius: 15px;
 }
 
@@ -48,6 +51,7 @@
 }
 
 .rodape {
+	position:absolute;
 	width: 100%;
 	height: 30px;
 	background-color: #aaccff;
@@ -55,6 +59,8 @@
 	text-align: center;
 	color: #222266;
 	font-family: "Arial";
+	top: 100%;
+	margin-top: -30px;
 }
 
 .logoff {
@@ -110,4 +116,28 @@
 
 .div_campos label{
 	margin-right: 5px;
+}
+
+.div_buttons{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.buttons_default {
+	margin-top: 10px;
+	border-radius: 6px;
+	height: 30px;
+	width: 100px;
+	border-style: hidden;
+	cursor: pointer;
+}
+
+.buttons_default:HOVER {
+	background-color: #bbbbff;
+	border-color: #aaaaff;
+	box-shadow: 2px 2px 1px rgba(100, 100, 255, 0.5);
+		-webkit-transition: background 2s linear, border 3s;
+	-moz-transition: background 2s linear, border 3s;
+	-o-transition: background 2s linear, border 3s;
+	transition: background 2s linear, border 3s;
 }
