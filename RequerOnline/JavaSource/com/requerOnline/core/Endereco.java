@@ -1,16 +1,18 @@
 package com.requerOnline.core;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Service;
 
-import com.requerOnline.util.enums.EstadoTypes;
-
 @Service
 @Embeddable
-public class Endereco {
+public class Endereco implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@NotEmpty(message="Insira o nome da rua")
 	private String rua;

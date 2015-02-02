@@ -16,14 +16,20 @@ public class CadastroRequerenteMB {
 	
 	private ServiceDelegate delegate;
 	private Requerente requerente;
+	private String msg;
 	
 	public CadastroRequerenteMB(){
 		this.requerente = SpringBeans.getBeanRequerente();
 	}
 	
 	public void salvar(){
-		delegate = new ServiceDelegateImpl();
-		delegate.getCadastroRequerenteService().salvar(requerente);
+		try {			
+			delegate = new ServiceDelegateImpl();
+			delegate.getCadastroRequerenteService().salvar(requerente);
+			msg = "Cadastro realizado com sucesso";
+		} catch (Exception e) {
+			msg = "Erro de duplicação";
+		}
 	}
 	
 	
@@ -49,6 +55,14 @@ public class CadastroRequerenteMB {
 
 	public void setDelegate(ServiceDelegate delegate) {
 		this.delegate = delegate;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
 	}
 
 }

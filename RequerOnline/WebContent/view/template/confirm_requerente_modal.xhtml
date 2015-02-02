@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+	<rich:popupPanel id="confirmModal" style="width:50px; height:50px;" rendered="#{facesContext.validationFailed}">
+		<f:facet name="header">
+			<h:outputText value="Confirmação" />
+		</f:facet>
+		<div style="position: absolute; width: 100px; height: 100px; left: 50%; top: 50%; margin-left: -50px; margin-top: -50px; text-align: center;">
+			<h:outputText value="#{cadastroRequerenteMB.msg}" />
+			<a4j:commandButton value="Ok" styleClass="buttons_default">
+				<a4j:status onstart="#{rich:component('confirmModal')}.hide()" />
+			</a4j:commandButton>
+		</div>
+	</rich:popupPanel>
+
+</ui:composition>
