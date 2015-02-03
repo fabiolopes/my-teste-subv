@@ -1,7 +1,7 @@
 package com.requerOnline.applicationContext;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.requerOnline.core.Administrador;
 import com.requerOnline.core.Anexo;
@@ -25,8 +25,7 @@ public class SpringBeans {
 
 	private static void getApplicationContext() {
 		if (applicationContext == null) {
-			applicationContext = new ClassPathXmlApplicationContext(
-					"com/requerOnline/applicationContext/applicationContext.xml");
+			applicationContext = new AnnotationConfigApplicationContext(JavaConfig.class);
 		}
 	}
 
