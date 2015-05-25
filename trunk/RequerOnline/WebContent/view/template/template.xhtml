@@ -41,15 +41,26 @@
 		<div class="content">
 			<ui:insert name="conteudo" />
 		</div>
-		
+
 		<div>
-			<ui:insert name="others"/>
+			<ui:insert name="others" />
 		</div>
 
 		<div class="rodape">
-			<h:outputText
-				value="#{label.rodape}" />
+			<h:outputText value="#{label.rodape}" />
 		</div>
+
+		<!-- Inclusão do modal de carregamento, para invocação -->
+		<ui:insert name="panel_carregando">
+			<ui:include src="/view/template/carregar_modal.xhtml" />
+		</ui:insert>
+
+		<!-- Chamada do panel_carregando a cada requisição Ajax -->
+		<a4j:status id="statusCarregarModalPanel"
+			onstart="#{rich:component('carregarModal')}.show()"
+			onstop="#{rich:component('carregarModal')}.hide()" />
+
+
 	</div>
 
 </h:body>

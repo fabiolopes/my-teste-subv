@@ -171,10 +171,9 @@
 						<a4j:commandButton id="Cadastrar"
 							action="#{cadastroRequerenteMB.salvar()}"
 							value="#{label.salvar_requerente}" styleClass="buttons_default"
-							render="panel_tooltip" style="border-radius:6px;">
-							<a4j:status id="statusCarregarModalPanel"
-								onstart="#{rich:component('carregarModal')}.show()"
-								onstop="#{rich:component('carregarModal')}.hide(); #{rich:component('confirmModal')}.show()" />
+							render="panel_tooltip confirmModal statusConfirmPanel" style="border-radius:6px;">
+							<a4j:status id="statusConfirmPanel" rendered="#{cadastroRequerenteMB.msg.length() > 0}"
+								onstop="#{rich:component('confirmModal')}.show()" />
 						</a4j:commandButton>
 
 						<a4j:commandButton id="cancelar" action="#{loginMB.logar}"
@@ -192,11 +191,6 @@
 					</h:panelGrid>
 
 				</h:form>
-
-				<!-- Inclusão do modal de carregamento, para invocação -->
-				<ui:insert name="panel_carregando">
-					<ui:include src="/view/template/carregar_modal.xhtml" />
-				</ui:insert>
 				
 				<ui:insert name="panel_confirm">
 					<ui:include src="/view/template/confirm_requerente_modal.xhtml" />
