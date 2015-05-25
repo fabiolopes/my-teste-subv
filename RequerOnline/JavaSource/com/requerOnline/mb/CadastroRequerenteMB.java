@@ -13,31 +13,31 @@ import com.requerOnline.util.enums.VinculoTypes;
 @ManagedBean
 @SessionScoped
 public class CadastroRequerenteMB {
-	
+
 	private ServiceDelegate delegate;
 	private Requerente requerente;
 	private String msg;
-	
-	public CadastroRequerenteMB(){
+
+	public CadastroRequerenteMB() {
 		this.requerente = SpringBeans.getBeanRequerente();
 	}
-	
-	public void salvar(){
-		try {			
+
+	public void salvar() {
+		try {
 			delegate = new ServiceDelegateImpl();
 			delegate.getCadastroRequerenteService().salvar(requerente);
 			msg = "Cadastro realizado com sucesso";
 		} catch (Exception e) {
 			msg = "Erro de duplicação";
+
 		}
 	}
-	
-	
-	public VinculoTypes[] getVinculoTypes(){
+
+	public VinculoTypes[] getVinculoTypes() {
 		return VinculoTypes.values();
 	}
-	
-	public EstadoTypes[] getEstadoTypes(){
+
+	public EstadoTypes[] getEstadoTypes() {
 		return EstadoTypes.values();
 	}
 
