@@ -1,11 +1,14 @@
 package gui;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
+import exceptions.RuntimeScriptException;
 
 import services.BuildServices;
 
@@ -235,7 +238,7 @@ public class TelaInicio extends JFrame {
 		panelServer.setLayout(null);
 
 		cbServer.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
-				"10.1.43.87", "10.1.43.110" }));
+				"10.43.1.87", "10.43.1.110" }));
 		panelServer.add(cbServer);
 		cbServer.setBounds(20, 20, 110, 22);
 
@@ -307,7 +310,15 @@ public class TelaInicio extends JFrame {
 		String server = cbServer.getSelectedItem().toString();
 		BuildServices build = new BuildServices(server,
 				isSomeJavaItemSelected());
-		build.executeBuildAndDeployScripts(getpkgsToInstall());
+		try {
+			build.executeBuildAndDeployScripts(getpkgsToInstall());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RuntimeScriptException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	
