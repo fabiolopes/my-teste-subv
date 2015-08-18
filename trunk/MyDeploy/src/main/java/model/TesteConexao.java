@@ -2,11 +2,13 @@ package model;
 
 import java.io.IOException;
 
+import exceptions.RuntimeScriptException;
+
 
 import util.PkgDeployConstants;
 
 public class TesteConexao {
-	public static void main(String[] args){
+	public static void main(String[] args) throws RuntimeScriptException{
 		// TODO Auto-generated method stub
 		RemoteShell shell = new RemoteShell("10.43.1.109");
 		try {

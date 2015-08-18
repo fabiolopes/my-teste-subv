@@ -1,33 +1,32 @@
 package services;
 
-import gui.TelaOutPut;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
-import org.apache.commons.logging.Log;
+import exceptions.RuntimeScriptException;
+
+import model.RemoteShell;
 
 import util.PkgDeployConstants;
 
 public class BuildServices {
 	
-	private String serverToBuild;
 	private String serverToDeploy;
 	private boolean someJavaSelected;
 	
-	public BuildServices(String serverToBuild, boolean someJavaSelected) {
+	public BuildServices(String serverToDeploy, boolean someJavaSelected) {
 		super();
-		this.serverToBuild = serverToBuild;
+		this.serverToDeploy = serverToDeploy;
 		this.someJavaSelected = someJavaSelected;
 	}
 	
-	public void executeBuildAndDeployScripts(ArrayList<String> pkgs){
+	public void executeBuildAndDeployScripts(ArrayList<String> pkgs) throws IOException, RuntimeScriptException{
 		executeBuildScripts(pkgs);
 	}
 	
-	public void executeBuildScripts(final ArrayList<String> pkgs){
-		TelaOutPut out = new TelaOutPut();
+	public void executeBuildScripts(final ArrayList<String> pkgs) throws IOException, RuntimeScriptException{
 		List<String> buildCommands = new ArrayList<String>();
 		buildCommands.add(PkgDeployConstants.SCRIPT_GET_CODE);
 		if(someJavaSelected || pkgs.contains("BPM")){
@@ -49,15 +48,23 @@ public class BuildServices {
 		}
 		
 		System.out.println(buildCommands.toString());
+		RemoteShell shell = new RemoteShell(getServerToBuild());
+		for(String comm: buildCommands){
+			shell.executeCommand(comm);
+		}
 	}
 
-	public String getServerToBuild() {
-		return serverToBuild;
+	
+	public String getServerToBuild(){
+		if(serverToDeploy.equals(PkgDeployConstants.MACHINE_ST1)){
+			return PkgDeployConstants.MACHINE_DEV1;
+		}else if(serverToDeploy.equals(PkgDeployConstants.MACHINE_ST2)){
+			return PkgDeployConstants.MACHINE_DEV2;
+		}
+		
+		return null;
 	}
-
-	public void setServerToBuild(String serverToBuild) {
-		this.serverToBuild = serverToBuild;
-	}
+	
 
 	public String getServerToDeploy() {
 		return serverToDeploy;

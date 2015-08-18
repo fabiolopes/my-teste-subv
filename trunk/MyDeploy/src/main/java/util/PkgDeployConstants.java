@@ -4,18 +4,19 @@ public class PkgDeployConstants {
 	
 	public static final String TAR_NAME = "OM-*";
 	//dados das máquinas{
-	public static final String MACHINE_DEV1 = "10.1.43.84";
-	public static final String MACHINE_DEV2 = "10.1.43.109";
-	public static final String MACHINE_ST1 = "10.1.43.87";
-	public static final String MACHINE_ST2 = "10.1.43.110";
+	public static final String MACHINE_DEV1 = "10.43.1.84";
+	public static final String MACHINE_DEV2 = "10.43.1.109";
+	public static final String MACHINE_ST1 = "10.43.1.87";
+	public static final String MACHINE_ST2 = "10.43.1.110";
 	public static final String SSH_MACHINE_ST1 = "usersiebel@"+MACHINE_ST1;
 	public static final String SSH_MACHINE_ST2 = "usersiebel@1"+MACHINE_ST2;
 	//}
 	//pastas{
-	public static final String FOLDER_STABLE_BUILD_SCRIPTS = "/oradata/om/stable_build_scripts/";
-	public static final String FOLDER_PKG_STABLE = "/oradata/om/stable_build_scripts/pkg/";
-	public static final String FOLDER_PKG_ST = "/oradata/om/pkg/";
-	public static final String FOLDER_DEPLOY_SCRIPTS_ST = "/oradata/om/deploy_scripts/";
+	public static final String FOLDER_MAIN = "/oradata/om/";
+	public static final String FOLDER_STABLE_BUILD_SCRIPTS = FOLDER_MAIN+"stable_build_scripts/";
+	public static final String FOLDER_PKG_STABLE = FOLDER_MAIN+"stable_build_scripts/pkg/";
+	public static final String FOLDER_PKG_ST = FOLDER_MAIN+"pkg/";
+	public static final String FOLDER_DEPLOY_SCRIPTS_ST = FOLDER_MAIN+"deploy_scripts/";
 	//}
 	//scripts de geração de pacotes(Executá-los dentro de $FOLDER_STABLE_BUILD_SCRIPTS){
 	public static final String SCRIPT_GET_CODE = "cd "+FOLDER_STABLE_BUILD_SCRIPTS+";./get_code.sh;";
