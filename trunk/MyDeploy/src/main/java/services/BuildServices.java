@@ -5,11 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import exceptions.RuntimeScriptException;
-
 import model.RemoteShell;
-
 import util.PkgDeployConstants;
+import exceptions.RuntimeScriptException;
 
 public class BuildServices {
 	

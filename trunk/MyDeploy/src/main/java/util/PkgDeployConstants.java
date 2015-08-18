@@ -24,7 +24,7 @@ public class PkgDeployConstants {
 	public static final String SCRIPT_PKG_ALL_JAVA = "cd "+FOLDER_STABLE_BUILD_SCRIPTS+";./pkgAllJava.sh;";
 	public static final String SCRIPT_PKG_BPM = "cd "+FOLDER_STABLE_BUILD_SCRIPTS+";./pkgBPM.sh;";
 	//Passar como argumento "num_delta+;"
-	public static final String SCRIPT_PKG_SQL_DELTA = "cd "+FOLDER_STABLE_BUILD_SCRIPTS+";./pkgSQL.sh ";
+	public static final String SCRIPT_PKG_SQL_DELTA = "cd "+FOLDER_STABLE_BUILD_SCRIPTS+";./pkgSQL_auto.sh ";
 	public static final String SCRIPT_PKG_ALL = "cd "+FOLDER_STABLE_BUILD_SCRIPTS+";./pkgAll.sh;";
 	//Executar após usar o $SCRIPT_PKG_ALL
 	public static final String SCRIPT_COMMIT_PKG_SVN = "cd "+FOLDER_STABLE_BUILD_SCRIPTS+";./caddsvn.sh pkg/"+TAR_NAME;
