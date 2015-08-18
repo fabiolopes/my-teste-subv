@@ -3,6 +3,7 @@ package model;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Closeable;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -75,7 +76,8 @@ public class RemoteShell {
 			// Executa comando
 			final Command cmd = session.exec(command);
 			bf = new BufferedReader(new InputStreamReader(cmd.getInputStream()));
-			bw = new BufferedWriter(new FileWriter(PkgDeployConstants.FOLDER_MAIN+"saida.out"));
+			String []filecom = command.split("/");
+			bw = new BufferedWriter(new FileWriter(new File("C:\\Users\\fabio.bione\\Documents\\FLB\\saida_"+filecom[filecom.length-1]+".txt")));
 			String line;
 			// Imprime saida, se exister
 			while ((line = bf.readLine()) != null) {
@@ -98,10 +100,10 @@ public class RemoteShell {
 
 			// Aguarda
 			cmd.join(1, TimeUnit.SECONDS);
+			bw.close();
 		} finally {
 			secureClose(bf);
 			secureClose(session);
-			bw.close();
 		}
 	}
 
