@@ -5,12 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
-
-import exceptions.RuntimeScriptException;
 
 import services.BuildServices;
+import exceptions.RuntimeScriptException;
 
 public class TelaInicio extends JFrame {
 
@@ -57,7 +54,7 @@ public class TelaInicio extends JFrame {
 		btInstalar = new javax.swing.JButton();
 		panelServer = new javax.swing.JPanel();
 		cbServer = new javax.swing.JComboBox();
-		panelDelta = new JPanel();
+		scrollPanelOutPut = new javax.swing.JScrollPane();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Wellcome to application - OM Deploy helper");
@@ -238,7 +235,7 @@ public class TelaInicio extends JFrame {
 		panelServer.setLayout(null);
 
 		cbServer.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
-				"10.43.1.87", "10.43.1.110" }));
+				"10.43.1.87", "10.43.1.109", "10.43.1.110" }));
 		panelServer.add(cbServer);
 		cbServer.setBounds(20, 20, 110, 22);
 
@@ -310,15 +307,15 @@ public class TelaInicio extends JFrame {
 		String server = cbServer.getSelectedItem().toString();
 		BuildServices build = new BuildServices(server,
 				isSomeJavaItemSelected());
-		try {
-			build.executeBuildAndDeployScripts(getpkgsToInstall());
+		/*try {
+			//build.executeBuildAndDeployScripts(getpkgsToInstall());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (RuntimeScriptException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 	}
 	
@@ -438,11 +435,11 @@ public class TelaInicio extends JFrame {
 	private javax.swing.JLabel labelWhatDelta;
 	private javax.swing.JPanel panelPrincipal;
 	private javax.swing.JPanel panelServer;
-	private javax.swing.JPanel panelDelta;
 	private javax.swing.JTextArea taOutPut;
 	private javax.swing.JRadioButton rbMais;
 	private javax.swing.JRadioButton rbOne;
 	private javax.swing.JTextField tfDeltaFinal;
 	private javax.swing.JTextField tfDeltaInicio;
+	private javax.swing.JScrollPane scrollPanelOutPut;
 	// End of variables declaration
 }

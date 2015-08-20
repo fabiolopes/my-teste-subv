@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.RemoteShell;
+import model.Script;
 import util.PkgDeployConstants;
 import exceptions.RuntimeScriptException;
 
@@ -20,37 +21,38 @@ public class BuildServices {
 		this.someJavaSelected = someJavaSelected;
 	}
 	
-	public void executeBuildAndDeployScripts(ArrayList<String> pkgs) throws IOException, RuntimeScriptException{
+	/*public void executeBuildAndDeployScripts(ArrayList<String> pkgs) throws IOException, RuntimeScriptException{
 		executeBuildScripts(pkgs);
-	}
+	}*/
 	
-	public void executeBuildScripts(final ArrayList<String> pkgs) throws IOException, RuntimeScriptException{
-		List<String> buildCommands = new ArrayList<String>();
-		buildCommands.add(PkgDeployConstants.SCRIPT_GET_CODE);
+	public ArrayList<Script> getBuildScripts(final ArrayList<String> pkgs){
+		ArrayList<Script> buildCommands = new ArrayList<Script>();
+		buildCommands.add(new Script("get_code from SVN", PkgDeployConstants.SCRIPT_GET_CODE));
 		if(someJavaSelected || pkgs.contains("BPM")){
-			buildCommands.add(PkgDeployConstants.SCRIPT_BUILD_JAVA);
+			buildCommands.add(new Script("build Java by Maven", PkgDeployConstants.SCRIPT_BUILD_JAVA));
 			
 			if (someJavaSelected){
-				buildCommands.add(PkgDeployConstants.SCRIPT_PKG_ALL_JAVA);
+				buildCommands.add(new Script("Pkg All Java pkgs", PkgDeployConstants.SCRIPT_PKG_ALL_JAVA));
 			}
 			if(pkgs.contains("BPM")){
-				buildCommands.add(PkgDeployConstants.SCRIPT_PKG_BPM);
+				buildCommands.add(new Script("pkg BPM", PkgDeployConstants.SCRIPT_PKG_BPM));
 			}
 		}
 		
 		for(String pkg:pkgs){
 			if(pkg.contains("Delta")){
 				String deltaCommand = pkg.substring(6);
-				buildCommands.add(PkgDeployConstants.SCRIPT_PKG_SQL_DELTA+deltaCommand+";");
+				buildCommands.add(new Script("Delta"+deltaCommand, PkgDeployConstants.SCRIPT_PKG_SQL_DELTA+deltaCommand+";"));
 			}
 		}
 		
-		System.out.println(buildCommands.toString());
-		RemoteShell shell = new RemoteShell(getServerToBuild());
-		for(String comm: buildCommands){
-			shell.executeCommand(comm);
-		}
+		return buildCommands;
+		
 	}
+	
+	/*public ArrayList<Script> getDeployScripts(final ArrayList<String> pkgs){
+		
+	}*/
 
 	
 	public String getServerToBuild(){
