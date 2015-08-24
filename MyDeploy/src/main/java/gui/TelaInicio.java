@@ -1,13 +1,13 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import services.BuildServices;
-import exceptions.RuntimeScriptException;
 
 public class TelaInicio extends JFrame {
 
@@ -54,12 +54,12 @@ public class TelaInicio extends JFrame {
 		btInstalar = new javax.swing.JButton();
 		panelServer = new javax.swing.JPanel();
 		cbServer = new javax.swing.JComboBox();
-		scrollPanelOutPut = new javax.swing.JScrollPane();
+		scrollOutput = new javax.swing.JScrollPane();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Wellcome to application - OM Deploy helper");
-		setMinimumSize(new java.awt.Dimension(700, 700));
-		setPreferredSize(new java.awt.Dimension(700, 700));
+		setMinimumSize(new java.awt.Dimension(700, 380));
+		setPreferredSize(new java.awt.Dimension(700, 380));
 		getContentPane().setLayout(null);
 
 		panelPrincipal.setBorder(javax.swing.BorderFactory
@@ -224,9 +224,14 @@ public class TelaInicio extends JFrame {
 		});
 		getContentPane().add(btInstalar);
 		btInstalar.setBounds(40, 280, 80, 30);
-		getContentPane().add(taOutPut);
-		taOutPut.setBounds(40, 350, 600, 250);
-		taOutPut.setEditable(false);
+		scrollOutput.setViewportView(taOutPut);
+		getContentPane().add(scrollOutput);
+		scrollOutput.setBounds(40, 350, 600, 250);
+		//getContentPane().add(taOutPut);
+		//taOutPut.setBounds(40, 350, 600, 250);
+		taOutPut.setEditable(true);
+		taOutPut.setBackground(Color.BLACK);
+		taOutPut.setForeground(Color.WHITE);
 		taOutPut.setVisible(true);
 
 		panelServer
@@ -303,10 +308,14 @@ public class TelaInicio extends JFrame {
 		}
 	}
 
+
 	private void btInstalarActionPerformed(java.awt.event.ActionEvent evt){
 		String server = cbServer.getSelectedItem().toString();
 		BuildServices build = new BuildServices(server,
 				isSomeJavaItemSelected());
+		setMinimumSize(new java.awt.Dimension(700, 700));
+		setPreferredSize(new java.awt.Dimension(700, 700));
+		setLocationRelativeTo(null);
 		/*try {
 			//build.executeBuildAndDeployScripts(getpkgsToInstall());
 		} catch (IOException e) {
@@ -316,9 +325,7 @@ public class TelaInicio extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
-
 	}
-	
 
 	private ArrayList<String> getpkgsToInstall() {
 		ArrayList<String> pkgs = new ArrayList<String>();
@@ -372,6 +379,11 @@ public class TelaInicio extends JFrame {
 		}
 
 	}
+	
+	public void setOutPutInTextArea(String out){
+		taOutPut.append(out+"\n");
+	}
+	
 
 	/**
 	 * @param args
@@ -435,11 +447,11 @@ public class TelaInicio extends JFrame {
 	private javax.swing.JLabel labelWhatDelta;
 	private javax.swing.JPanel panelPrincipal;
 	private javax.swing.JPanel panelServer;
+	private javax.swing.JScrollPane scrollOutput;
 	private javax.swing.JTextArea taOutPut;
 	private javax.swing.JRadioButton rbMais;
 	private javax.swing.JRadioButton rbOne;
 	private javax.swing.JTextField tfDeltaFinal;
 	private javax.swing.JTextField tfDeltaInicio;
-	private javax.swing.JScrollPane scrollPanelOutPut;
 	// End of variables declaration
 }

@@ -11,6 +11,8 @@ public class TelaOutPut extends JFrame{
 	
 	public TelaOutPut(){
 		initComponents();
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 	
 	
@@ -24,7 +26,7 @@ public class TelaOutPut extends JFrame{
 	}
 	
 	public void setValueInTextArea(String s){
-		outputArea.setText(s);
+		outputArea.setText(outputArea.getText()+"\n"+s);
 	}
 	
 	public static void main(String[] args) {
