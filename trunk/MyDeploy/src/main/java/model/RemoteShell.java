@@ -1,23 +1,14 @@
 package model;
 
+import exceptions.RuntimeScriptException;
+import gui.TelaInicio;
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.Closeable;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.security.PublicKey;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import util.PkgDeployConstants;
-
-import exceptions.RuntimeScriptException;
-import gui.TelaOutPut;
 
 import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.connection.ConnectionException;
@@ -25,6 +16,11 @@ import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.connection.channel.direct.Session.Command;
 import net.schmizz.sshj.transport.TransportException;
 import net.schmizz.sshj.transport.verification.HostKeyVerifier;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import services.BuildServices;
 
 public class RemoteShell {
 
@@ -48,8 +44,9 @@ public class RemoteShell {
 		this.machine = machine;
 	}
 
-	public void executeCommand(final String command) throws IOException,
-			RuntimeScriptException {
+	public void executeCommand(final String command,
+			final BuildServices buildServices, final TelaInicio telaInicio)
+			throws IOException, RuntimeScriptException {
 		// Cliente SSH
 		final SSHClient ssh = new SSHClient();
 		try {
@@ -60,29 +57,26 @@ public class RemoteShell {
 			// Autenticacao
 			ssh.authPassword(USER, PASS);
 			// Executa comando remoto
-			executeCommandBySSH(ssh, command);
+			executeCommandBySSH(ssh, command, buildServices, telaInicio);
 		} finally {
 			ssh.disconnect();
 		}
 	}
 
-	private void executeCommandBySSH(final SSHClient ssh,
-			final String command) throws ConnectionException, IOException,
-			TransportException, RuntimeScriptException {
+	private void executeCommandBySSH(final SSHClient ssh, final String command,
+			final BuildServices buildServices, final TelaInicio telaInicio)
+			throws ConnectionException, IOException, TransportException,
+			RuntimeScriptException {
 		final Session session = ssh.startSession();
 		BufferedReader bf = null;
-		BufferedWriter bw = null;
 		try {
 			// Executa comando
 			final Command cmd = session.exec(command);
 			bf = new BufferedReader(new InputStreamReader(cmd.getInputStream()));
-			String []filecom = command.split("/");
-			bw = new BufferedWriter(new FileWriter(new File("C:\\Users\\fabio.bione\\Documents\\FLB\\saida_"+filecom[filecom.length-1]+".txt")));
 			String line;
 			// Imprime saida, se exister
 			while ((line = bf.readLine()) != null) {
-				System.out.println(line);
-				bw.append(line+"\n");
+				buildServices.sendOutputToTela(telaInicio, line);
 			}
 
 			BufferedReader errorBF = new BufferedReader(new InputStreamReader(
@@ -92,7 +86,6 @@ public class RemoteShell {
 			String errorLine;
 			while ((errorLine = errorBF.readLine()) != null) {
 				errorMsg = errorMsg + errorLine + "\n";
-				bw.append(line+"\n");
 			}
 			if (!errorMsg.isEmpty()) {
 				throw new RuntimeScriptException(errorMsg);
@@ -100,7 +93,6 @@ public class RemoteShell {
 
 			// Aguarda
 			cmd.join(1, TimeUnit.SECONDS);
-			bw.close();
 		} finally {
 			secureClose(bf);
 			secureClose(session);
