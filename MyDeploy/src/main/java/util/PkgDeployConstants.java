@@ -10,7 +10,7 @@ public class PkgDeployConstants {
 	public static final String MACHINE_ST2 = "10.43.1.110";
 	public static final String MACHINE_USER = "usersiebel";
 	public static final String SSH_MACHINE_ST1 = "usersiebel@"+MACHINE_ST1;
-	public static final String SSH_MACHINE_ST2 = "usersiebel@1"+MACHINE_ST2;
+	public static final String SSH_MACHINE_ST2 = "usersiebel@"+MACHINE_ST2;
 	//}
 	//pastas{
 	public static final String FOLDER_MAIN = "/oradata/om/";
@@ -44,7 +44,7 @@ public class PkgDeployConstants {
 	//}
 	//scripts de deploy(Executá-los dentro de $FOLDER_DEPLOY_SCRIPTS_ST){
 	//está sem "./" pq é chamado direto via ssh
-	public static final String SCRIPT_CREATE_PKG_FOLDER = "create_pkg_folder.sh;";
+	public static final String SCRIPT_CREATE_PKG_FOLDER = "./create_pkg_folder.sh;";
 	public static final String SCRIPT_DEPLOY_EJB = "./deployEJBs.sh;";
 	public static final String SCRIPT_DEPLOY_MOD = "./deployModules.sh;";
 	public static final String SCRIPT_DEPLOY_GUI = "./deployGUI.sh;";
@@ -53,16 +53,17 @@ public class PkgDeployConstants {
 	public static final String SCRIPT_DEPLOY_AGE = "./deployAgents.sh;";
 	//Passar como argumento "num_delta+;"
 	public static final String SCRIPT_DEPLOY_SQL = "./deploySQL.sh ";
+	public static final String SCRIPT_DEPLOY_SQL_P212_1 = "./deploySQLp21.sh ";
+	public static final String SCRIPT_DEPLOY_SQL_P212_2 = "./deploySQLp22.sh ";
 	public static final String SCRIPT_FULL_RESTART = "./full_restart.sh;";
 	//}
 	//Comandos para tranferência do TAR para a pasta pkg ST{
-	public static final String CMD_ST1_CALL_CREATE_PKG_FOLDER = "ssh "+SSH_MACHINE_ST1+" sh "+FOLDER_DEPLOY_SCRIPTS_ST+SCRIPT_CREATE_PKG_FOLDER;
-	public static final String CMD_ST2_CALL_CREATE_PKG_FOLDER = "ssh "+SSH_MACHINE_ST2+" sh "+FOLDER_DEPLOY_SCRIPTS_ST+SCRIPT_CREATE_PKG_FOLDER;
-	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";";
-	public static final String CMD_ST2_CPY_TAR_TO_PKG = "scp pkg/"+TAR_NAME+" "+SSH_MACHINE_ST2+":"+FOLDER_PKG_ST+";";
-	public static final String CMD_ST1_UNTAR_OM_TAR = "ssh "+SSH_MACHINE_ST1+" tar -xvf "+FOLDER_DEPLOY_SCRIPTS_ST+TAR_NAME+";";
-	public static final String CMD_ST1_PREPARE_PKG_FOLDER = CMD_ST1_CALL_CREATE_PKG_FOLDER+CMD_ST1_CPY_TAR_TO_PKG;
-	public static final String CMD_ST2_PREPARE_PKG_FOLDER = CMD_ST2_CALL_CREATE_PKG_FOLDER+CMD_ST2_CPY_TAR_TO_PKG;
+	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";";
+	public static final String CMD_ST2_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST2+":"+FOLDER_PKG_ST+";";
+	public static final String CMD_ST1_UNTAR_OM_TAR = "ssh "+SSH_MACHINE_ST1+" tar -xvf "+FOLDER_PKG_ST+TAR_NAME+";";
+	public static final String CMD_ST2_UNTAR_OM_TAR = "ssh "+SSH_MACHINE_ST2+" tar -xvf "+FOLDER_PKG_ST+TAR_NAME+";";
+	public static final String CMD_ST1_PREPARE_PKG_FOLDER = CMD_ST1_CPY_TAR_TO_PKG+CMD_ST1_UNTAR_OM_TAR;
+	public static final String CMD_ST2_PREPARE_PKG_FOLDER = CMD_ST2_CPY_TAR_TO_PKG+CMD_ST2_UNTAR_OM_TAR;
 	//}
 
 }

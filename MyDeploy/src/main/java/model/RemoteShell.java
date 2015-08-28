@@ -44,10 +44,11 @@ public class RemoteShell {
 		this.machine = machine;
 	}
 
-	public void executeCommand(final String command,
+	public void executeCommand(final Script command,
 			final BuildServices buildServices, final TelaInicio telaInicio)
 			throws IOException, RuntimeScriptException {
 		// Cliente SSH
+		machine = command.getServer();
 		final SSHClient ssh = new SSHClient();
 		try {
 			// Configura tipo de KeyVerifier
@@ -63,7 +64,7 @@ public class RemoteShell {
 		}
 	}
 
-	private void executeCommandBySSH(final SSHClient ssh, final String command,
+	private void executeCommandBySSH(final SSHClient ssh, final Script command,
 			final BuildServices buildServices, final TelaInicio telaInicio)
 			throws ConnectionException, IOException, TransportException,
 			RuntimeScriptException {
@@ -71,11 +72,14 @@ public class RemoteShell {
 		BufferedReader bf = null;
 		try {
 			// Executa comando
-			final Command cmd = session.exec(command);
+			
+			buildServices.sendOutputToTela(telaInicio, command.getDescricao());
+			final Command cmd = session.exec(command.getScript());
 			bf = new BufferedReader(new InputStreamReader(cmd.getInputStream()));
 			String line;
 			// Imprime saida, se exister
 			while ((line = bf.readLine()) != null) {
+				System.out.println(line);
 				buildServices.sendOutputToTela(telaInicio, line);
 			}
 
@@ -88,11 +92,13 @@ public class RemoteShell {
 				errorMsg = errorMsg + errorLine + "\n";
 			}
 			if (!errorMsg.isEmpty()) {
+				buildServices.sendOutputToTela(telaInicio, command.getDescricao()+"KO");
 				throw new RuntimeScriptException(errorMsg);
 			}
 
 			// Aguarda
 			cmd.join(1, TimeUnit.SECONDS);
+			buildServices.sendOutputToTela(telaInicio, command.getDescricao()+": OK");
 		} finally {
 			secureClose(bf);
 			secureClose(session);

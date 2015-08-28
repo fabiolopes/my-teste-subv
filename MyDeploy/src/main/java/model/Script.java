@@ -8,10 +8,13 @@ public class Script {
 	//script a ser rodado
 	private String script;
 	
-	public Script(String descricao, String script) {
+	private String server;
+	
+	public Script(String descricao, String script, String server) {
 		super();
 		this.descricao = descricao;
 		this.script = script;
+		this.setServer(server);
 	}
 
 	public Script() {
@@ -33,6 +36,14 @@ public class Script {
 
 	public void setScript(String script) {
 		this.script = script;
+	}
+
+	public String getServer() {
+		return server;
+	}
+
+	public void setServer(String server) {
+		this.server = server;
 	}
 	
 	

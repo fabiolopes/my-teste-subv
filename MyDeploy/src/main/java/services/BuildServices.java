@@ -1,9 +1,12 @@
 package services;
 
+import exceptions.RuntimeScriptException;
 import gui.TelaInicio;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import model.RemoteShell;
 import model.Script;
 import util.PkgDeployConstants;
 
@@ -13,68 +16,103 @@ public class BuildServices {
 	private boolean someJavaSelected;
 	private String folderToPkg;
 	private String folderToDeploy;
+	private ArrayList<String> pkgs;
+	private ArrayList<Script> commands;
 
 	public BuildServices(String serverToDeploy, boolean someJavaSelected) {
 		super();
 		this.serverToDeploy = serverToDeploy;
 		this.someJavaSelected = someJavaSelected;
 		this.setFolders();
+		pkgs = new ArrayList<String>();
+		commands = new ArrayList<Script>();
 	}
 
-	/*
-	 * public void executeBuildAndDeployScripts(ArrayList<String> pkgs) throws
-	 * IOException, RuntimeScriptException{ executeBuildScripts(pkgs); }
-	 */
+	public void executeBuildAndDeployScripts(ArrayList<String> pkgs, TelaInicio telaInicio)
+			throws IOException, RuntimeScriptException {
+		this.pkgs = pkgs;
+		getBuildScripts();
+		getPrepareDeploy();
+		getDeployScripts();
+		RemoteShell shell = new RemoteShell(getServerToBuild());
+		for(Script command: commands){
+			shell.executeCommand(command, this, telaInicio);
+		}
+	}
 
-	public ArrayList<Script> getBuildScripts(final ArrayList<String> pkgs) {
-		ArrayList<Script> buildCommands = new ArrayList<Script>();
-		buildCommands.add(new Script("get_code from SVN", folderToPkg
-				+ PkgDeployConstants.SCRIPT_GET_CODE));
+	public void getBuildScripts() {
+		commands.add(new Script("get_code from SVN", folderToPkg
+				+ PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
 		if (someJavaSelected || pkgs.contains("BPM")) {
-			buildCommands.add(new Script("build Java by Maven", folderToPkg
-					+ PkgDeployConstants.SCRIPT_BUILD_JAVA));
+			commands.add(new Script("build Java by Maven", folderToPkg
+					+ PkgDeployConstants.SCRIPT_BUILD_JAVA, getServerToBuild()));
 
 			if (someJavaSelected) {
-				buildCommands.add(new Script("Pkg All Java pkgs", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA));
+				commands.add(new Script("Pkg All Java pkgs", folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA, getServerToBuild()));
 			}
 			if (pkgs.contains("BPM")) {
-				buildCommands.add(new Script("pkg BPM", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_BPM));
+				commands.add(new Script("pkg BPM", folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_BPM, getServerToBuild()));
 			}
 		}
 
 		for (String pkg : pkgs) {
 			if (pkg.contains("Delta")) {
 				String deltaCommand = pkg.substring(6);
-				buildCommands.add(new Script("Delta" + deltaCommand,
-						folderToPkg + PkgDeployConstants.SCRIPT_PKG_SQL_DELTA
-								+ deltaCommand + ";"));
+				commands.add(new Script("Delta" + deltaCommand, folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_SQL_DELTA
+						+ deltaCommand + ";", getServerToBuild()));
 			}
 		}
 
-		return buildCommands;
-
 	}
 
-	/*
-	 * public ArrayList<Script> getDeployScripts(final ArrayList<String> pkgs){
-	 * 
-	 * }
-	 */
+	public void getDeployScripts() {
+		if (pkgs.contains("MOD"))
+			commands.add(new Script("Deploy of Modules", folderToDeploy
+					+ PkgDeployConstants.SCRIPT_DEPLOY_MOD, getServerToDeploy()));
+		if (pkgs.contains("EJB"))
+			commands.add(new Script("Deploy of EJBs", folderToDeploy
+					+ PkgDeployConstants.SCRIPT_DEPLOY_EJB, getServerToDeploy()));
+		if (pkgs.contains("GUI"))
+			commands.add(new Script("Deploy of GUI", folderToDeploy
+					+ PkgDeployConstants.SCRIPT_DEPLOY_GUI, getServerToDeploy()));
+		if (pkgs.contains("WS"))
+			commands.add(new Script("Deploy of Web Services", folderToDeploy
+					+ PkgDeployConstants.SCRIPT_DEPLOY_WS, getServerToDeploy()));
+		if (pkgs.contains("BPM"))
+			commands.add(new Script("Deploy of BPMs", folderToDeploy
+					+ PkgDeployConstants.SCRIPT_DEPLOY_BPM, getServerToDeploy()));
+		if (pkgs.contains("AGE"))
+			commands.add(new Script("Deploy of Agents", folderToDeploy
+					+ PkgDeployConstants.SCRIPT_DEPLOY_AGE, getServerToDeploy()));
+		for (String pkg : pkgs) {
+			if (pkg.contains("Delta")) {
+				String deltaCommand = pkg.substring(6);
+				commands.add(new Script("Deploy Delta" + deltaCommand,
+						folderToDeploy + getCorrectDeltaScript(deltaCommand)
+								+ deltaCommand + ";", getServerToDeploy()));
+			}
+		}
+		commands.add(new Script("Doing a full restart", folderToDeploy
+				+ PkgDeployConstants.SCRIPT_FULL_RESTART, getServerToDeploy()));
+	}
 
-	public ArrayList<Script> getPrepareDeploy(ArrayList<Script> commands) {
+	public void getPrepareDeploy() {
 		if (serverToDeploy.equals(PkgDeployConstants.MACHINE_DEV1)
 				|| serverToDeploy.equals(PkgDeployConstants.MACHINE_DEV2)) {
 			commands.add(new Script("Copy_local",
-					PkgDeployConstants.SCRIPT_COPYLOCAL));
+					PkgDeployConstants.SCRIPT_COPYLOCAL, getServerToBuild()));
 		} else {
-			commands.add(new Script("To copy all pkgs to deploy machine",
-					serverToDeploy.equals(PkgDeployConstants.MACHINE_DEV1) ? 
-							PkgDeployConstants.CMD_ST1_PREPARE_PKG_FOLDER:
-							PkgDeployConstants.CMD_ST1_PREPARE_PKG_FOLDER));
+			commands.add(new Script("Creating the .tar. for all pkg in deploy machine",
+					folderToPkg+PkgDeployConstants.SCRIPT_PKG_ALL,getServerToBuild()));
+			commands.add(new Script("Creating a pkg folder in deploy machine", folderToDeploy+PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER, getServerToDeploy()));
+			commands.add(new Script(
+					"Creating the .tar file, transfering and untar inside of pkg in deploy machine",
+					serverToDeploy.equals(PkgDeployConstants.MACHINE_ST1) ? folderToPkg+PkgDeployConstants.CMD_ST1_PREPARE_PKG_FOLDER
+							: folderToPkg+PkgDeployConstants.CMD_ST2_PREPARE_PKG_FOLDER, getServerToBuild()));
 		}
-		return commands;
 	}
 
 	public String getServerToBuild() {
@@ -95,6 +133,16 @@ public class BuildServices {
 		} else {
 			folderToPkg = PkgDeployConstants.CD_STABLE_BUILD_SCRIPTS;
 			folderToDeploy = PkgDeployConstants.CD_FOLDER_ST_DEPLOY_SCRIPTS;
+		}
+	}
+	
+	private String getCorrectDeltaScript(String number){
+		if(number.startsWith("2121")){
+			return PkgDeployConstants.SCRIPT_DEPLOY_SQL_P212_1;
+		}else if(number.startsWith("2122")){
+			return PkgDeployConstants.SCRIPT_DEPLOY_SQL_P212_2;
+		}else{
+			return PkgDeployConstants.SCRIPT_DEPLOY_SQL;
 		}
 	}
 
