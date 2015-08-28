@@ -394,11 +394,11 @@ public class TelaInicio extends JFrame {
 		// (rb está selecionado ou: (brmais está selecionado e tfdeltafinal não
 		// está vazio
 		// e o deltafinal é maior que o inicial) e deltainicio não está vazio
-		return (cbDelta.isSelected() && (rbOne.isSelected() || (rbMais
+		return (!cbDelta.isSelected() || ((rbOne.isSelected() || (rbMais
 				.isSelected() && !tfDeltaFinal.getText().equals("") && Integer
 				.parseInt(tfDeltaFinal.getText()) > Integer
 				.parseInt(tfDeltaInicio.getText()))
-				) && !tfDeltaInicio.getText().equals(""));
+				) && !tfDeltaInicio.getText().equals("")));
 	}
 
 	public void setOutPutInTextArea(final String out) {
