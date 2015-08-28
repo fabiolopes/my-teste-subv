@@ -36,6 +36,7 @@ public class TelaInicio extends JFrame {
 	private void initComponents() {
 
 		btGDelta = new javax.swing.ButtonGroup();
+		btGProced = new javax.swing.ButtonGroup();
 		panelPrincipal = new javax.swing.JPanel();
 		cbAgents = new javax.swing.JCheckBox();
 		cbEJB = new javax.swing.JCheckBox();
@@ -47,21 +48,29 @@ public class TelaInicio extends JFrame {
 		rbOne = new javax.swing.JRadioButton();
 		labelWhatDelta = new javax.swing.JLabel();
 		rbMais = new javax.swing.JRadioButton();
+		rbDeploy = new javax.swing.JRadioButton();
+		rbFullRestart = new javax.swing.JRadioButton();
+		rbRestartAgents = new javax.swing.JRadioButton();
+		rbRestartJBoss = new javax.swing.JRadioButton();
 		tfDeltaInicio = new javax.swing.JTextField();
 		tfDeltaFinal = new javax.swing.JTextField();
 		labelDeltaInicio = new javax.swing.JLabel();
 		labelDeltaFinal = new javax.swing.JLabel();
 		taOutPut = new javax.swing.JTextArea();
+		taStatus = new javax.swing.JTextArea();
 		labelTitle = new javax.swing.JLabel();
 		btInstalar = new javax.swing.JButton();
 		panelServer = new javax.swing.JPanel();
+		panelProcedimento = new javax.swing.JPanel();
 		cbServer = new javax.swing.JComboBox();
 		scrollOutput = new javax.swing.JScrollPane();
+		scrollStatus = new javax.swing.JScrollPane();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("Wellcome to application - OM Deploy helper");
-		setMinimumSize(new java.awt.Dimension(700, 700));
-		setPreferredSize(new java.awt.Dimension(700, 700));
+		setMinimumSize(new java.awt.Dimension(900, 700));
+		setPreferredSize(new java.awt.Dimension(900, 700));
+		setResizable(false);
 		getContentPane().setLayout(null);
 
 		panelPrincipal.setBorder(javax.swing.BorderFactory
@@ -228,13 +237,18 @@ public class TelaInicio extends JFrame {
 		btInstalar.setBounds(40, 280, 80, 30);
 		scrollOutput.setViewportView(taOutPut);
 		getContentPane().add(scrollOutput);
-		scrollOutput.setBounds(40, 350, 600, 250);
+		scrollOutput.setBounds(40, 350, 810, 250);
 		// getContentPane().add(taOutPut);
 		// taOutPut.setBounds(40, 350, 600, 250);
 		taOutPut.setEditable(true);
 		taOutPut.setBackground(Color.BLACK);
 		taOutPut.setForeground(Color.WHITE);
 		taOutPut.setVisible(true);
+
+		scrollStatus.setViewportView(taStatus);
+		getContentPane().add(scrollStatus);
+		scrollStatus.setBounds(660, 97, 190, 170);
+		taStatus.setEditable(false);
 
 		panelServer
 				.setBorder(javax.swing.BorderFactory
@@ -247,8 +261,35 @@ public class TelaInicio extends JFrame {
 		cbServer.setBounds(20, 20, 110, 22);
 
 		getContentPane().add(panelServer);
-		panelServer.setBounds(40, 40, 610, 50);
+		panelServer.setBounds(40, 40, 400, 50);
 
+		panelProcedimento
+				.setBorder(javax.swing.BorderFactory
+						.createTitledBorder("Escolha o procedimento a ser realizado"));
+		panelProcedimento.setLayout(null);
+		getContentPane().add(panelProcedimento);
+		panelProcedimento.setBounds(450, 40, 400, 50);
+		
+		btGProced.add(rbDeploy);
+		rbDeploy.setText("Deploy");
+		panelProcedimento.add(rbDeploy);
+		rbDeploy.setBounds(15, 20, 70, 20);
+		
+		btGProced.add(rbFullRestart);
+		rbFullRestart.setText("Full Restart");
+		panelProcedimento.add(rbFullRestart);
+		rbFullRestart.setBounds(90, 20, 90, 20);
+		
+		btGProced.add(rbRestartAgents);
+		rbRestartAgents.setText("Restart Agents");
+		panelProcedimento.add(rbRestartAgents);
+		rbRestartAgents.setBounds(180, 20, 100, 20);
+		
+		btGProced.add(rbRestartJBoss);
+		rbRestartJBoss.setText("Restart JBOSS");
+		panelProcedimento.add(rbRestartJBoss);
+		rbRestartJBoss.setBounds(290, 20, 100, 20);
+		
 		pack();
 	}// </editor-fold>
 
@@ -334,8 +375,9 @@ public class TelaInicio extends JFrame {
 					}
 				}
 			}).start();
-		}else{
-			JOptionPane.showMessageDialog(null, "Insira insformações corretas dos deltas");
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Insira insformações corretas dos deltas");
 		}
 	}
 
@@ -397,13 +439,18 @@ public class TelaInicio extends JFrame {
 		return (!cbDelta.isSelected() || ((rbOne.isSelected() || (rbMais
 				.isSelected() && !tfDeltaFinal.getText().equals("") && Integer
 				.parseInt(tfDeltaFinal.getText()) > Integer
-				.parseInt(tfDeltaInicio.getText()))
-				) && !tfDeltaInicio.getText().equals("")));
+				.parseInt(tfDeltaInicio.getText()))) && !tfDeltaInicio
+				.getText().equals("")));
 	}
 
 	public void setOutPutInTextArea(final String out) {
 		taOutPut.append(out + "\n");
 		taOutPut.setCaretPosition(taOutPut.getDocument().getLength());
+	}
+
+	public void setStatusCode(final String status) {
+		taStatus.append(status + "\n");
+		taStatus.setCaretPosition(taStatus.getDocument().getLength());
 	}
 
 	/**
@@ -453,6 +500,7 @@ public class TelaInicio extends JFrame {
 
 	// Variables declaration - do not modify
 	private javax.swing.ButtonGroup btGDelta;
+	private javax.swing.ButtonGroup btGProced;
 	private javax.swing.JButton btInstalar;
 	private javax.swing.JCheckBox cbAgents;
 	private javax.swing.JCheckBox cbBPM;
@@ -469,10 +517,17 @@ public class TelaInicio extends JFrame {
 	private javax.swing.JLabel labelWhatDelta;
 	private javax.swing.JPanel panelPrincipal;
 	private javax.swing.JPanel panelServer;
+	private javax.swing.JPanel panelProcedimento;
+	private javax.swing.JScrollPane scrollStatus;
 	private javax.swing.JScrollPane scrollOutput;
 	private javax.swing.JTextArea taOutPut;
+	private javax.swing.JTextArea taStatus;
 	private javax.swing.JRadioButton rbMais;
 	private javax.swing.JRadioButton rbOne;
+	private javax.swing.JRadioButton rbDeploy;
+	private javax.swing.JRadioButton rbFullRestart;
+	private javax.swing.JRadioButton rbRestartAgents;
+	private javax.swing.JRadioButton rbRestartJBoss;
 	private javax.swing.JTextField tfDeltaFinal;
 	private javax.swing.JTextField tfDeltaInicio;
 	// End of variables declaration

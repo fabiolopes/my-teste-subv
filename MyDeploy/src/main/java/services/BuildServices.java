@@ -150,6 +150,10 @@ public class BuildServices {
 			final String output) {
 		telaInicio.setOutPutInTextArea(output);
 	}
+	
+	public void sendStatusCode(final TelaInicio telaInicio, final String status){
+		telaInicio.setStatusCode(status);
+	}
 
 	public String getServerToDeploy() {
 		return serverToDeploy;

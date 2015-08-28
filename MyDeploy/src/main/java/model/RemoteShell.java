@@ -92,7 +92,7 @@ public class RemoteShell {
 				errorMsg = errorMsg + errorLine + "\n";
 			}
 			if (!errorMsg.isEmpty()) {
-				buildServices.sendOutputToTela(telaInicio, command.getDescricao()+"KO");
+				buildServices.sendOutputToTela(telaInicio, command.getDescricao()+": KO");
 				throw new RuntimeScriptException(errorMsg);
 			}
 
