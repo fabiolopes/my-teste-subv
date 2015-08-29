@@ -56,6 +56,8 @@ public class PkgDeployConstants {
 	public static final String SCRIPT_DEPLOY_SQL_P212_1 = "./deploySQLp21.sh ";
 	public static final String SCRIPT_DEPLOY_SQL_P212_2 = "./deploySQLp22.sh ";
 	public static final String SCRIPT_FULL_RESTART = "./full_restart.sh;";
+	public static final String SCRIPT_RESTART_AGENTS = "./full_restart.sh agents;";
+	public static final String SCRIPT_RESTART_JBOSS = "./full_restart.sh jboss;";
 	//}
 	//Comandos para tranferência do TAR para a pasta pkg ST{
 	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";";

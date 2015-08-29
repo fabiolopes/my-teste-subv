@@ -59,6 +59,9 @@ public class RemoteShell {
 			ssh.authPassword(USER, PASS);
 			// Executa comando remoto
 			executeCommandBySSH(ssh, command, buildServices, telaInicio);
+		}catch(Exception e){
+			e.printStackTrace();
+			buildServices.sendOutputToTela(telaInicio, "Problemas ao acessar servidor. (Disponibilidade/Autenticação)"+": KO");
 		} finally {
 			ssh.disconnect();
 		}
@@ -98,7 +101,7 @@ public class RemoteShell {
 
 			// Aguarda
 			cmd.join(1, TimeUnit.SECONDS);
-			buildServices.sendOutputToTela(telaInicio, command.getDescricao()+": OK");
+			buildServices.sendStatusCode(telaInicio, command.getDescricao()+": OK");
 		} finally {
 			secureClose(bf);
 			secureClose(session);

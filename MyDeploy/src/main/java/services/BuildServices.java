@@ -19,13 +19,18 @@ public class BuildServices {
 	private ArrayList<String> pkgs;
 	private ArrayList<Script> commands;
 
-	public BuildServices(String serverToDeploy, boolean someJavaSelected) {
+	public BuildServices(String serverToDeploy) {
 		super();
 		this.serverToDeploy = serverToDeploy;
-		this.someJavaSelected = someJavaSelected;
 		this.setFolders();
 		pkgs = new ArrayList<String>();
 		commands = new ArrayList<Script>();
+	}
+	
+	public void doRestart(String restart, TelaInicio telaInicio) throws IOException, RuntimeScriptException{
+		RemoteShell shell = new RemoteShell();
+		Script restartScript = new Script("Doing a "+restart, folderToDeploy+restart, getServerToDeploy());
+		shell.executeCommand(restartScript, this, telaInicio);
 	}
 
 	public void executeBuildAndDeployScripts(ArrayList<String> pkgs, TelaInicio telaInicio)
@@ -97,6 +102,7 @@ public class BuildServices {
 		}
 		commands.add(new Script("Doing a full restart", folderToDeploy
 				+ PkgDeployConstants.SCRIPT_FULL_RESTART, getServerToDeploy()));
+		commands.add(new Script("Looking the number pkg", folderToDeploy, getServerToDeploy()));
 	}
 
 	public void getPrepareDeploy() {

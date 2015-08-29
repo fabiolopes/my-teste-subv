@@ -1,14 +1,17 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 
 import services.BuildServices;
+import util.PkgDeployConstants;
 import exceptions.RuntimeScriptException;
 
 public class TelaInicio extends JFrame {
@@ -220,6 +223,7 @@ public class TelaInicio extends JFrame {
 
 		getContentPane().add(panelPrincipal);
 		panelPrincipal.setBounds(40, 90, 610, 180);
+		changePanelPrincipalEditable(false);
 
 		labelTitle.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 		labelTitle.setText("Defina os dados da instalação");
@@ -263,33 +267,54 @@ public class TelaInicio extends JFrame {
 		getContentPane().add(panelServer);
 		panelServer.setBounds(40, 40, 400, 50);
 
-		panelProcedimento
-				.setBorder(javax.swing.BorderFactory
-						.createTitledBorder("Escolha o procedimento a ser realizado"));
+		panelProcedimento.setBorder(javax.swing.BorderFactory
+				.createTitledBorder("Escolha o procedimento a ser realizado"));
 		panelProcedimento.setLayout(null);
 		getContentPane().add(panelProcedimento);
 		panelProcedimento.setBounds(450, 40, 400, 50);
-		
+
 		btGProced.add(rbDeploy);
 		rbDeploy.setText("Deploy");
 		panelProcedimento.add(rbDeploy);
 		rbDeploy.setBounds(15, 20, 70, 20);
-		
+		rbDeploy.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				rbDeployStateChanged(evt);
+			}
+		});
+
 		btGProced.add(rbFullRestart);
 		rbFullRestart.setText("Full Restart");
 		panelProcedimento.add(rbFullRestart);
 		rbFullRestart.setBounds(90, 20, 90, 20);
-		
+		rbFullRestart.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				rbStateChanged(evt, rbFullRestart);
+			}
+		});
+
 		btGProced.add(rbRestartAgents);
 		rbRestartAgents.setText("Restart Agents");
 		panelProcedimento.add(rbRestartAgents);
 		rbRestartAgents.setBounds(180, 20, 100, 20);
-		
+		rbRestartAgents
+				.addChangeListener(new javax.swing.event.ChangeListener() {
+					public void stateChanged(javax.swing.event.ChangeEvent evt) {
+						rbStateChanged(evt, rbRestartAgents);
+					}
+				});
+
 		btGProced.add(rbRestartJBoss);
 		rbRestartJBoss.setText("Restart JBOSS");
 		panelProcedimento.add(rbRestartJBoss);
 		rbRestartJBoss.setBounds(290, 20, 100, 20);
-		
+		rbRestartJBoss
+				.addChangeListener(new javax.swing.event.ChangeListener() {
+					public void stateChanged(javax.swing.event.ChangeEvent evt) {
+						rbStateChanged(evt, rbRestartJBoss);
+					}
+				});
+
 		pack();
 	}// </editor-fold>
 
@@ -317,6 +342,23 @@ public class TelaInicio extends JFrame {
 		if (rbMais.isSelected()) {
 			tfDeltaInicio.setEnabled(true);
 			tfDeltaFinal.setEnabled(true);
+		}
+	}
+
+	private void rbDeployStateChanged(javax.swing.event.ChangeEvent evt) {
+		if (rbDeploy.isSelected()) {
+			changePanelPrincipalEditable(true);
+		} else {
+			changePanelPrincipalEditable(false);
+		}
+	}
+
+	private void rbStateChanged(javax.swing.event.ChangeEvent evt,
+			JRadioButton rb) {
+		if (rb.isSelected()) {
+			btInstalar.setEnabled(true);
+		} else {
+			btInstalar.setEnabled(false);
 		}
 	}
 
@@ -352,20 +394,44 @@ public class TelaInicio extends JFrame {
 	}
 
 	private void btInstalarActionPerformed(java.awt.event.ActionEvent evt) {
-		if (isDeltaCorrect()) {
-			final TelaInicio ctx = this;
-			String server = cbServer.getSelectedItem().toString();
-			final BuildServices build = new BuildServices(server,
-					isSomeJavaItemSelected());
-			// setMinimumSize(new java.awt.Dimension(700, 700));
-			// setPreferredSize(new java.awt.Dimension(700, 700));
-			// setLocationRelativeTo(null);
-			new Thread(new Runnable() {
+		final BuildServices build = new BuildServices(cbServer.getSelectedItem().toString());
+		final TelaInicio ctx = this;
+		if (rbDeploy.isSelected()) {
+			if (isDeltaCorrect()) {			
+				new Thread(new Runnable() {
 
+					public void run() {
+						try {
+							build.executeBuildAndDeployScripts(
+									getpkgsToInstall(), ctx);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (RuntimeScriptException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}).start();
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Insira insformações corretas dos deltas");
+			}
+		}else{
+			String restart="";
+			if(rbFullRestart.isSelected()){
+				restart=PkgDeployConstants.SCRIPT_FULL_RESTART;
+			}else if(rbRestartAgents.isSelected()){
+				restart=PkgDeployConstants.SCRIPT_RESTART_AGENTS;
+			}else if(rbRestartJBoss.isSelected()){
+				restart=PkgDeployConstants.SCRIPT_RESTART_JBOSS;
+			}
+			final String finalRestart = restart;
+			new Thread(new Runnable() {
+				
 				public void run() {
 					try {
-						build.executeBuildAndDeployScripts(getpkgsToInstall(),
-								ctx);
+						build.doRestart(finalRestart, ctx);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -373,11 +439,9 @@ public class TelaInicio extends JFrame {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
 				}
 			}).start();
-		} else {
-			JOptionPane.showMessageDialog(null,
-					"Insira insformações corretas dos deltas");
 		}
 	}
 
@@ -441,6 +505,20 @@ public class TelaInicio extends JFrame {
 				.parseInt(tfDeltaFinal.getText()) > Integer
 				.parseInt(tfDeltaInicio.getText()))) && !tfDeltaInicio
 				.getText().equals("")));
+	}
+
+	private void changePanelPrincipalEditable(boolean isEditable) {
+		for (Component c : panelPrincipal.getComponents()) {
+			c.setEnabled(isEditable);
+		}
+		// Problema: Se true, todos os componentes, inclusive os referentes ao
+		// delta estarão habilitados
+		// Como solução, quando true, o checkbox do delta é marcado e
+		// desmarcado, deixando tudo desabilitado :)
+		if (isEditable) {
+			cbDelta.setSelected(true);
+			cbDelta.setSelected(false);
+		}
 	}
 
 	public void setOutPutInTextArea(final String out) {
