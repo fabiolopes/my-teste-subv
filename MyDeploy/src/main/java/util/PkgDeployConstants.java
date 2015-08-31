@@ -44,6 +44,7 @@ public class PkgDeployConstants {
 	//}
 	//scripts de deploy(Executá-los dentro de $FOLDER_DEPLOY_SCRIPTS_ST){
 	//está sem "./" pq é chamado direto via ssh
+	public static final String CMD_CAT_OM = "cat OM.txt;";
 	public static final String SCRIPT_CREATE_PKG_FOLDER = "./create_pkg_folder.sh;";
 	public static final String SCRIPT_DEPLOY_EJB = "./deployEJBs.sh;";
 	public static final String SCRIPT_DEPLOY_MOD = "./deployModules.sh;";

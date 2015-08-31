@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import services.BuildServices;
+import util.PkgDeployConstants;
 
 public class RemoteShell {
 
@@ -28,6 +29,7 @@ public class RemoteShell {
 	private String machine;
 	private final String USER = "usersiebel";
 	private final String PASS = "siebel2014";
+	private String omTxt;
 
 	public RemoteShell(String machine) {
 		this.machine = machine;
@@ -59,9 +61,11 @@ public class RemoteShell {
 			ssh.authPassword(USER, PASS);
 			// Executa comando remoto
 			executeCommandBySSH(ssh, command, buildServices, telaInicio);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
-			buildServices.sendOutputToTela(telaInicio, "Problemas ao acessar servidor. (Disponibilidade/Autenticação)"+": KO");
+			buildServices.sendOutputToTela(telaInicio,
+					"Problemas ao acessar servidor. (Disponibilidade/Autenticação)"
+							+ ": KO");
 		} finally {
 			ssh.disconnect();
 		}
@@ -75,7 +79,7 @@ public class RemoteShell {
 		BufferedReader bf = null;
 		try {
 			// Executa comando
-			
+
 			buildServices.sendOutputToTela(telaInicio, command.getDescricao());
 			final Command cmd = session.exec(command.getScript());
 			bf = new BufferedReader(new InputStreamReader(cmd.getInputStream()));
@@ -86,6 +90,10 @@ public class RemoteShell {
 				buildServices.sendOutputToTela(telaInicio, line);
 			}
 
+			if (command.getScript().contains(PkgDeployConstants.CMD_CAT_OM)) {
+				omTxt = line;
+			}
+
 			BufferedReader errorBF = new BufferedReader(new InputStreamReader(
 					cmd.getErrorStream()));
 
@@ -94,14 +102,17 @@ public class RemoteShell {
 			while ((errorLine = errorBF.readLine()) != null) {
 				errorMsg = errorMsg + errorLine + "\n";
 			}
+
 			if (!errorMsg.isEmpty()) {
-				buildServices.sendOutputToTela(telaInicio, command.getDescricao()+": KO");
+				buildServices.sendOutputToTela(telaInicio,
+						command.getDescricao() + ": KO");
 				throw new RuntimeScriptException(errorMsg);
 			}
 
 			// Aguarda
 			cmd.join(1, TimeUnit.SECONDS);
-			buildServices.sendStatusCode(telaInicio, command.getDescricao()+": OK");
+			buildServices.sendStatusCode(telaInicio, command.getDescricao()
+					+ ": OK");
 		} finally {
 			secureClose(bf);
 			secureClose(session);

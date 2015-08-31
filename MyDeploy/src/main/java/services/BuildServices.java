@@ -74,6 +74,7 @@ public class BuildServices {
 	}
 
 	public void getDeployScripts() {
+		commands.add(new Script("Looking the number pkg", folderToDeploy+PkgDeployConstants.CMD_CAT_OM, getServerToDeploy()));
 		if (pkgs.contains("MOD"))
 			commands.add(new Script("Deploy of Modules", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_MOD, getServerToDeploy()));
@@ -102,7 +103,6 @@ public class BuildServices {
 		}
 		commands.add(new Script("Doing a full restart", folderToDeploy
 				+ PkgDeployConstants.SCRIPT_FULL_RESTART, getServerToDeploy()));
-		commands.add(new Script("Looking the number pkg", folderToDeploy, getServerToDeploy()));
 	}
 
 	public void getPrepareDeploy() {

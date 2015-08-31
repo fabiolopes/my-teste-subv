@@ -41,8 +41,7 @@
 			<artifactId>log4j-over-slf4j</artifactId>
 			<version>1.7.10</version>
 		</dependency>
-	</dependencies>
 
-	
+	</dependencies>
 
 </project>
