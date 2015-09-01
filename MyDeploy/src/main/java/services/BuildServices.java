@@ -26,7 +26,7 @@ public class BuildServices {
 		pkgs = new ArrayList<String>();
 		commands = new ArrayList<Script>();
 	}
-	
+
 	public void doRestart(String restart, TelaInicio telaInicio) throws IOException, RuntimeScriptException{
 		RemoteShell shell = new RemoteShell();
 		Script restartScript = new Script("Doing a "+restart, folderToDeploy+restart, getServerToDeploy());
@@ -115,9 +115,10 @@ public class BuildServices {
 					folderToPkg+PkgDeployConstants.SCRIPT_PKG_ALL,getServerToBuild()));
 			commands.add(new Script("Creating a pkg folder in deploy machine", folderToDeploy+PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER, getServerToDeploy()));
 			commands.add(new Script(
-					"Creating the .tar file, transfering and untar inside of pkg in deploy machine",
+					"Creating the .tar file, transfering inside of pkg in deploy machine",
 					serverToDeploy.equals(PkgDeployConstants.MACHINE_ST1) ? folderToPkg+PkgDeployConstants.CMD_ST1_PREPARE_PKG_FOLDER
 							: folderToPkg+PkgDeployConstants.CMD_ST2_PREPARE_PKG_FOLDER, getServerToBuild()));
+			commands.add(new Script("Untar the OM-*.tar", PkgDeployConstants.CMD_UNTAR_OM_TAR, getServerToDeploy()));
 		}
 	}
 

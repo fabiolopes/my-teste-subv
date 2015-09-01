@@ -272,7 +272,7 @@ public class TelaInicio extends JFrame {
 		panelProcedimento.setLayout(null);
 		getContentPane().add(panelProcedimento);
 		panelProcedimento.setBounds(450, 40, 400, 50);
-
+		
 		btGProced.add(rbDeploy);
 		rbDeploy.setText("Deploy");
 		panelProcedimento.add(rbDeploy);
@@ -282,7 +282,7 @@ public class TelaInicio extends JFrame {
 				rbDeployStateChanged(evt);
 			}
 		});
-
+		
 		btGProced.add(rbFullRestart);
 		rbFullRestart.setText("Full Restart");
 		panelProcedimento.add(rbFullRestart);
@@ -292,7 +292,7 @@ public class TelaInicio extends JFrame {
 				rbStateChanged(evt, rbFullRestart);
 			}
 		});
-
+		
 		btGProced.add(rbRestartAgents);
 		rbRestartAgents.setText("Restart Agents");
 		panelProcedimento.add(rbRestartAgents);
@@ -303,7 +303,7 @@ public class TelaInicio extends JFrame {
 						rbStateChanged(evt, rbRestartAgents);
 					}
 				});
-
+		
 		btGProced.add(rbRestartJBoss);
 		rbRestartJBoss.setText("Restart JBOSS");
 		panelProcedimento.add(rbRestartJBoss);
@@ -314,7 +314,7 @@ public class TelaInicio extends JFrame {
 						rbStateChanged(evt, rbRestartJBoss);
 					}
 				});
-
+		
 		pack();
 	}// </editor-fold>
 
@@ -397,26 +397,26 @@ public class TelaInicio extends JFrame {
 		final BuildServices build = new BuildServices(cbServer.getSelectedItem().toString());
 		final TelaInicio ctx = this;
 		if (rbDeploy.isSelected()) {
-			if (isDeltaCorrect()) {			
-				new Thread(new Runnable() {
+		if (isDeltaCorrect()) {
+			new Thread(new Runnable() {
 
-					public void run() {
-						try {
+				public void run() {
+					try {
 							build.executeBuildAndDeployScripts(
 									getpkgsToInstall(), ctx);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (RuntimeScriptException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (RuntimeScriptException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				}).start();
-			} else {
-				JOptionPane.showMessageDialog(null,
-						"Insira insformações corretas dos deltas");
-			}
+				}
+			}).start();
+		} else {
+			JOptionPane.showMessageDialog(null,
+					"Insira insformações corretas dos deltas");
+		}
 		}else{
 			String restart="";
 			if(rbFullRestart.isSelected()){

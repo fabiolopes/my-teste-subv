@@ -40,7 +40,7 @@ public class PkgDeployConstants {
 	public static final String SCRIPT_PKG_ALL = "./pkgAll.sh;";
 	//Executar após usar o $SCRIPT_PKG_ALL
 	public static final String SCRIPT_COMMIT_PKG_SVN = "./caddsvn.sh pkg/"+TAR_NAME;
-	public static final String SCRIPT_COPYLOCAL = CD_OFFICIAL_BUILD_SCRIPTS+"./copyLocal.sh .."+FOLDER_PKG_ASST+";";
+	public static final String SCRIPT_COPYLOCAL = CD_OFFICIAL_BUILD_SCRIPTS+"./copyLocal.sh .."+"/pkg_asst/;";
 	//}
 	//scripts de deploy(Executá-los dentro de $FOLDER_DEPLOY_SCRIPTS_ST){
 	//está sem "./" pq é chamado direto via ssh
@@ -63,10 +63,9 @@ public class PkgDeployConstants {
 	//Comandos para tranferência do TAR para a pasta pkg ST{
 	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";";
 	public static final String CMD_ST2_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST2+":"+FOLDER_PKG_ST+";";
-	public static final String CMD_ST1_UNTAR_OM_TAR = "ssh "+SSH_MACHINE_ST1+" tar -xvf "+FOLDER_PKG_ST+TAR_NAME+";";
-	public static final String CMD_ST2_UNTAR_OM_TAR = "ssh "+SSH_MACHINE_ST2+" tar -xvf "+FOLDER_PKG_ST+TAR_NAME+";";
-	public static final String CMD_ST1_PREPARE_PKG_FOLDER = CMD_ST1_CPY_TAR_TO_PKG+CMD_ST1_UNTAR_OM_TAR;
-	public static final String CMD_ST2_PREPARE_PKG_FOLDER = CMD_ST2_CPY_TAR_TO_PKG+CMD_ST2_UNTAR_OM_TAR;
+	public static final String CMD_UNTAR_OM_TAR = "tar -xvf "+FOLDER_PKG_ST+TAR_NAME+";";
+	public static final String CMD_ST1_PREPARE_PKG_FOLDER = CMD_ST1_CPY_TAR_TO_PKG;
+	public static final String CMD_ST2_PREPARE_PKG_FOLDER = CMD_ST2_CPY_TAR_TO_PKG;
 	//}
 
 }

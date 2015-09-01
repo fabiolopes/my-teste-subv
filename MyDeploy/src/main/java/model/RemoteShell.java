@@ -79,7 +79,7 @@ public class RemoteShell {
 		BufferedReader bf = null;
 		try {
 			// Executa comando
-
+			
 			buildServices.sendOutputToTela(telaInicio, command.getDescricao());
 			final Command cmd = session.exec(command.getScript());
 			bf = new BufferedReader(new InputStreamReader(cmd.getInputStream()));
@@ -102,7 +102,6 @@ public class RemoteShell {
 			while ((errorLine = errorBF.readLine()) != null) {
 				errorMsg = errorMsg + errorLine + "\n";
 			}
-
 			if (!errorMsg.isEmpty()) {
 				buildServices.sendOutputToTela(telaInicio,
 						command.getDescricao() + ": KO");
