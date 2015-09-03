@@ -33,21 +33,24 @@ public class BuildServices {
 		shell.executeCommand(restartScript, this, telaInicio);
 	}
 
-	public void executeBuildAndDeployScripts(ArrayList<String> pkgs, TelaInicio telaInicio)
+	public void executeBuildAndDeployScripts(ArrayList<String> pkgs, TelaInicio telaInicio, boolean isSomeJavaSelected)
 			throws IOException, RuntimeScriptException {
 		this.pkgs = pkgs;
+		this.someJavaSelected = isSomeJavaSelected;
 		getBuildScripts();
 		getPrepareDeploy();
 		getDeployScripts();
 		RemoteShell shell = new RemoteShell(getServerToBuild());
+		try{
 		for(Script command: commands){
 			shell.executeCommand(command, this, telaInicio);
 		}
+		}catch(Exception e){}
 	}
 
 	public void getBuildScripts() {
-		commands.add(new Script("get_code from SVN", folderToPkg
-				+ PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
+		//commands.add(new Script("get_code from SVN", folderToPkg
+			//	+ PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
 		if (someJavaSelected || pkgs.contains("BPM")) {
 			commands.add(new Script("build Java by Maven", folderToPkg
 					+ PkgDeployConstants.SCRIPT_BUILD_JAVA, getServerToBuild()));
@@ -74,7 +77,7 @@ public class BuildServices {
 	}
 
 	public void getDeployScripts() {
-		commands.add(new Script("Looking the number pkg", folderToDeploy+PkgDeployConstants.CMD_CAT_OM, getServerToDeploy()));
+		commands.add(new Script("Looking the number pkg", getCorrectPkgDeploy()+PkgDeployConstants.CMD_CAT_OM, getServerToDeploy()));
 		if (pkgs.contains("MOD"))
 			commands.add(new Script("Deploy of Modules", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_MOD, getServerToDeploy()));
@@ -116,9 +119,9 @@ public class BuildServices {
 			commands.add(new Script("Creating a pkg folder in deploy machine", folderToDeploy+PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER, getServerToDeploy()));
 			commands.add(new Script(
 					"Creating the .tar file, transfering inside of pkg in deploy machine",
-					serverToDeploy.equals(PkgDeployConstants.MACHINE_ST1) ? folderToPkg+PkgDeployConstants.CMD_ST1_PREPARE_PKG_FOLDER
-							: folderToPkg+PkgDeployConstants.CMD_ST2_PREPARE_PKG_FOLDER, getServerToBuild()));
-			commands.add(new Script("Untar the OM-*.tar", PkgDeployConstants.CMD_UNTAR_OM_TAR, getServerToDeploy()));
+					serverToDeploy.equals(PkgDeployConstants.MACHINE_ST1) ? folderToPkg+PkgDeployConstants.CMD_ST1_CPY_TAR_TO_PKG
+							: folderToPkg+PkgDeployConstants.CMD_ST2_CPY_TAR_TO_PKG, getServerToBuild()));
+			commands.add(new Script("Untar the OM-*.tar", PkgDeployConstants.CD_FOLDER_PKG_ST+PkgDeployConstants.CMD_UNTAR_OM_TAR, getServerToDeploy()));
 		}
 	}
 
@@ -140,6 +143,15 @@ public class BuildServices {
 		} else {
 			folderToPkg = PkgDeployConstants.CD_STABLE_BUILD_SCRIPTS;
 			folderToDeploy = PkgDeployConstants.CD_FOLDER_ST_DEPLOY_SCRIPTS;
+		}
+	}
+	
+	private String getCorrectPkgDeploy(){
+		if (serverToDeploy.equals(PkgDeployConstants.MACHINE_DEV1)
+				|| serverToDeploy.equals(PkgDeployConstants.MACHINE_DEV2)) {
+			return PkgDeployConstants.FOLDER_PKG_ASST;
+		} else {
+			return PkgDeployConstants.FOLDER_PKG_ST;
 		}
 	}
 	

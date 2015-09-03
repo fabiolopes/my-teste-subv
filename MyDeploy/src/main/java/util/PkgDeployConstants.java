@@ -28,6 +28,8 @@ public class PkgDeployConstants {
 	public static final String CD_STABLE_BUILD_SCRIPTS = "cd "+FOLDER_STABLE_BUILD_SCRIPTS+";";
 	public static final String CD_FOLDER_ST_DEPLOY_SCRIPTS = "cd "+FOLDER_DEPLOY_SCRIPTS_ST+";";
 	public static final String CD_FOLDER_ASST_DEPLOY_SCRIPTS = "cd "+FOLDER_DEPLOY_ASST_SCRIPTS+";";
+	public static final String CD_FOLDER_PKG_ST = "cd "+FOLDER_PKG_ST+";";
+	public static final String CD_FOLDER_PKG_ASST = "cd "+FOLDER_PKG_ASST+";";
 	//}
 	
 	//scripts de geração de pacotes(Executá-los dentro de $FOLDER_STABLE_BUILD_SCRIPTS){
@@ -61,11 +63,8 @@ public class PkgDeployConstants {
 	public static final String SCRIPT_RESTART_JBOSS = "./full_restart.sh jboss;";
 	//}
 	//Comandos para tranferência do TAR para a pasta pkg ST{
-	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";";
-	public static final String CMD_ST2_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST2+":"+FOLDER_PKG_ST+";";
-	public static final String CMD_UNTAR_OM_TAR = "tar -xvf "+FOLDER_PKG_ST+TAR_NAME+";";
-	public static final String CMD_ST1_PREPARE_PKG_FOLDER = CMD_ST1_CPY_TAR_TO_PKG;
-	public static final String CMD_ST2_PREPARE_PKG_FOLDER = CMD_ST2_CPY_TAR_TO_PKG;
-	//}
+	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";pwd;";
+	public static final String CMD_ST2_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST2+":"+FOLDER_PKG_ST+";pwd;";
+	public static final String CMD_UNTAR_OM_TAR = "tar -xvf "+TAR_NAME+";pwd;";
 
 }

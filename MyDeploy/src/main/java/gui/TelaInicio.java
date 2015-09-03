@@ -403,7 +403,7 @@ public class TelaInicio extends JFrame {
 				public void run() {
 					try {
 							build.executeBuildAndDeployScripts(
-									getpkgsToInstall(), ctx);
+									getpkgsToInstall(), ctx, isSomeJavaItemSelected());
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
