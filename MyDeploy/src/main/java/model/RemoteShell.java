@@ -88,6 +88,11 @@ public class RemoteShell {
 			while ((line = bf.readLine()) != null) {
 				System.out.println(line);
 				buildServices.sendOutputToTela(telaInicio, line);
+				if(command.getDescricao().contains("./full_restart.sh")){
+					if(line.contains("AS 7.2.1.Final-redhat-10) started in ")){
+						break;
+					}
+				}
 			}
 
 			if (command.getScript().contains(PkgDeployConstants.CMD_CAT_OM)) {
@@ -102,14 +107,18 @@ public class RemoteShell {
 			while ((errorLine = errorBF.readLine()) != null) {
 				errorMsg = errorMsg + errorLine + "\n";
 			}
-			if (!errorMsg.isEmpty()) {
+			if (!errorMsg.isEmpty() && !command.getDescricao().contains("agents") ) {
 				buildServices.sendOutputToTela(telaInicio,
+						command.getDescricao() + ": KO");
+				buildServices.sendStatusCode(telaInicio,
 						command.getDescricao() + ": KO");
 				throw new RuntimeScriptException(errorMsg);
 			}
 
 			// Aguarda
 			cmd.join(1, TimeUnit.SECONDS);
+			buildServices.sendOutputToTela(telaInicio, command.getDescricao()
+					+ ": OK");
 			buildServices.sendStatusCode(telaInicio, command.getDescricao()
 					+ ": OK");
 		} finally {

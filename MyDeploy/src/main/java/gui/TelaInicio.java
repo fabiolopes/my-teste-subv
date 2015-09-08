@@ -420,9 +420,9 @@ public class TelaInicio extends JFrame {
 		}else{
 			String restart="";
 			if(rbFullRestart.isSelected()){
-				restart=PkgDeployConstants.SCRIPT_FULL_RESTART;
+				restart="full";
 			}else if(rbRestartAgents.isSelected()){
-				restart=PkgDeployConstants.SCRIPT_RESTART_AGENTS;
+				restart="agents";
 			}else if(rbRestartJBoss.isSelected()){
 				restart=PkgDeployConstants.SCRIPT_RESTART_JBOSS;
 			}

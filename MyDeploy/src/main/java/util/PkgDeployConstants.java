@@ -21,6 +21,11 @@ public class PkgDeployConstants {
 	public static final String FOLDER_PKG_ASST = FOLDER_MAIN+"pkg_asst/";
 	public static final String FOLDER_DEPLOY_SCRIPTS_ST = FOLDER_MAIN+"deploy_scripts/";
 	public static final String FOLDER_DEPLOY_ASST_SCRIPTS = FOLDER_MAIN+"deploy_asst_scripts/";
+	public static final String FOLDER_JBOSS_SCRIPT = FOLDER_MAIN+"bpms/scripts/";
+	public static final String FOLDER_AGENTS_MAIN = FOLDER_MAIN+"agents/";
+	public static final String FOLDER_AGENTWF_SCRIPT = FOLDER_AGENTS_MAIN+"AgentWF/script/";
+	public static final String FOLDER_AGENTSENDER_SCRIPT = FOLDER_AGENTS_MAIN+"AgentSender/script/";
+	
 	//}
 	
 	//Comando de entrada nas pastas{
@@ -30,6 +35,9 @@ public class PkgDeployConstants {
 	public static final String CD_FOLDER_ASST_DEPLOY_SCRIPTS = "cd "+FOLDER_DEPLOY_ASST_SCRIPTS+";";
 	public static final String CD_FOLDER_PKG_ST = "cd "+FOLDER_PKG_ST+";";
 	public static final String CD_FOLDER_PKG_ASST = "cd "+FOLDER_PKG_ASST+";";
+	public static final String CD_FOLDER_JBOSS_SCRIPT = "cd "+FOLDER_JBOSS_SCRIPT+";";
+	public static final String CD_FOLDER_AGENTWF_SCRIPT = "cd "+FOLDER_AGENTWF_SCRIPT+";";
+	public static final String CD_FOLDER_AGENTSENDER_SCRIPT = "cd "+FOLDER_AGENTSENDER_SCRIPT+";";
 	//}
 	
 	//scripts de geração de pacotes(Executá-los dentro de $FOLDER_STABLE_BUILD_SCRIPTS){
@@ -54,13 +62,14 @@ public class PkgDeployConstants {
 	public static final String SCRIPT_DEPLOY_BPM = "./deployBPM.sh;";
 	public static final String SCRIPT_DEPLOY_WS = "./deployWS.sh;";
 	public static final String SCRIPT_DEPLOY_AGE = "./deployAgents.sh;";
+	public static final String SCRIPT_RESTART_AGENTS = "./full_restart.sh agents;";
 	//Passar como argumento "num_delta+;"
 	public static final String SCRIPT_DEPLOY_SQL = "./deploySQL.sh ";
 	public static final String SCRIPT_DEPLOY_SQL_P212_1 = "./deploySQLp21.sh ";
 	public static final String SCRIPT_DEPLOY_SQL_P212_2 = "./deploySQLp22.sh ";
-	public static final String SCRIPT_FULL_RESTART = "./full_restart.sh;";
-	public static final String SCRIPT_RESTART_AGENTS = "./full_restart.sh agents;";
-	public static final String SCRIPT_RESTART_JBOSS = "./full_restart.sh jboss;";
+	public static final String SCRIPT_RESTART_AGENTSENDER = CD_FOLDER_AGENTSENDER_SCRIPT+"./restart_agent_sender.sh;";
+	public static final String SCRIPT_RESTART_JBOSS = CD_FOLDER_JBOSS_SCRIPT+"./stopJboss.sh;./startJboss;";
+
 	//}
 	//Comandos para tranferência do TAR para a pasta pkg ST{
 	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";pwd;";

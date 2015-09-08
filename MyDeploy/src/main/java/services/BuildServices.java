@@ -27,37 +27,45 @@ public class BuildServices {
 		commands = new ArrayList<Script>();
 	}
 
-	public void doRestart(String restart, TelaInicio telaInicio) throws IOException, RuntimeScriptException{
-		RemoteShell shell = new RemoteShell();
-		Script restartScript = new Script("Doing a "+restart, folderToDeploy+restart, getServerToDeploy());
-		shell.executeCommand(restartScript, this, telaInicio);
+	public void doRestart(String restart, TelaInicio telaInicio)
+			throws IOException, RuntimeScriptException {
+		if (restart.equals("full")) {
+			setFullRestartScripts();
+		} else if (restart.equals("agents")) {
+			commands.add(new Script("Doing the Agents restart",
+					folderToDeploy+PkgDeployConstants.SCRIPT_RESTART_AGENTS,
+					getServerToDeploy()));
+		} else {
+			commands.add(new Script("Doing the JBOSS restart",
+					PkgDeployConstants.SCRIPT_RESTART_JBOSS,
+					getServerToDeploy()));
+		}
+		executeAllCommands(telaInicio);
+
 	}
 
-	public void executeBuildAndDeployScripts(ArrayList<String> pkgs, TelaInicio telaInicio, boolean isSomeJavaSelected)
+	public void executeBuildAndDeployScripts(ArrayList<String> pkgs,
+			TelaInicio telaInicio, boolean isSomeJavaSelected)
 			throws IOException, RuntimeScriptException {
 		this.pkgs = pkgs;
 		this.someJavaSelected = isSomeJavaSelected;
 		getBuildScripts();
 		getPrepareDeploy();
 		getDeployScripts();
-		RemoteShell shell = new RemoteShell(getServerToBuild());
-		try{
-		for(Script command: commands){
-			shell.executeCommand(command, this, telaInicio);
-		}
-		}catch(Exception e){}
+		executeAllCommands(telaInicio);
 	}
 
 	public void getBuildScripts() {
-		//commands.add(new Script("get_code from SVN", folderToPkg
-			//	+ PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
+		commands.add(new Script("get_code from SVN", folderToPkg
+				+ PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
 		if (someJavaSelected || pkgs.contains("BPM")) {
 			commands.add(new Script("build Java by Maven", folderToPkg
 					+ PkgDeployConstants.SCRIPT_BUILD_JAVA, getServerToBuild()));
 
 			if (someJavaSelected) {
 				commands.add(new Script("Pkg All Java pkgs", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA, getServerToBuild()));
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA,
+						getServerToBuild()));
 			}
 			if (pkgs.contains("BPM")) {
 				commands.add(new Script("pkg BPM", folderToPkg
@@ -77,25 +85,41 @@ public class BuildServices {
 	}
 
 	public void getDeployScripts() {
-		commands.add(new Script("Looking the number pkg", getCorrectPkgDeploy()+PkgDeployConstants.CMD_CAT_OM, getServerToDeploy()));
-		if (pkgs.contains("MOD"))
+		commands.add(new Script("Looking the number pkg", getCorrectPkgDeploy()
+				+ PkgDeployConstants.CMD_CAT_OM, getServerToDeploy()));
+		if (pkgs.contains("MOD")) {
 			commands.add(new Script("Deploy of Modules", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_MOD, getServerToDeploy()));
-		if (pkgs.contains("EJB"))
+			commands.add(new Script("Doing the JBOSS restart",
+					PkgDeployConstants.SCRIPT_RESTART_JBOSS,
+					getServerToDeploy()));
+		}
+		
+		if (pkgs.contains("EJB")) {
 			commands.add(new Script("Deploy of EJBs", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_EJB, getServerToDeploy()));
-		if (pkgs.contains("GUI"))
+		}
+		
+		if (pkgs.contains("GUI")) {
 			commands.add(new Script("Deploy of GUI", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_GUI, getServerToDeploy()));
-		if (pkgs.contains("WS"))
+		}
+		
+		if (pkgs.contains("WS")) {
 			commands.add(new Script("Deploy of Web Services", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_WS, getServerToDeploy()));
-		if (pkgs.contains("BPM"))
+		}
+		
+		if (pkgs.contains("BPM")) {
 			commands.add(new Script("Deploy of BPMs", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_BPM, getServerToDeploy()));
-		if (pkgs.contains("AGE"))
+		}
+		
+		if (pkgs.contains("AGE")) {
 			commands.add(new Script("Deploy of Agents", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_AGE, getServerToDeploy()));
+		}
+		
 		for (String pkg : pkgs) {
 			if (pkg.contains("Delta")) {
 				String deltaCommand = pkg.substring(6);
@@ -104,8 +128,9 @@ public class BuildServices {
 								+ deltaCommand + ";", getServerToDeploy()));
 			}
 		}
-		commands.add(new Script("Doing a full restart", folderToDeploy
-				+ PkgDeployConstants.SCRIPT_FULL_RESTART, getServerToDeploy()));
+
+		setFullRestartScripts();
+
 	}
 
 	public void getPrepareDeploy() {
@@ -114,14 +139,35 @@ public class BuildServices {
 			commands.add(new Script("Copy_local",
 					PkgDeployConstants.SCRIPT_COPYLOCAL, getServerToBuild()));
 		} else {
-			commands.add(new Script("Creating the .tar. for all pkg in deploy machine",
-					folderToPkg+PkgDeployConstants.SCRIPT_PKG_ALL,getServerToBuild()));
-			commands.add(new Script("Creating a pkg folder in deploy machine", folderToDeploy+PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER, getServerToDeploy()));
+			commands.add(new Script(
+					"Creating the .tar. for all pkg in deploy machine",
+					folderToPkg + PkgDeployConstants.SCRIPT_PKG_ALL,
+					getServerToBuild()));
+			commands.add(new Script("Creating a pkg folder in deploy machine",
+					folderToDeploy
+							+ PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER,
+					getServerToDeploy()));
 			commands.add(new Script(
 					"Creating the .tar file, transfering inside of pkg in deploy machine",
-					serverToDeploy.equals(PkgDeployConstants.MACHINE_ST1) ? folderToPkg+PkgDeployConstants.CMD_ST1_CPY_TAR_TO_PKG
-							: folderToPkg+PkgDeployConstants.CMD_ST2_CPY_TAR_TO_PKG, getServerToBuild()));
-			commands.add(new Script("Untar the OM-*.tar", PkgDeployConstants.CD_FOLDER_PKG_ST+PkgDeployConstants.CMD_UNTAR_OM_TAR, getServerToDeploy()));
+					serverToDeploy.equals(PkgDeployConstants.MACHINE_ST1) ? folderToPkg
+							+ PkgDeployConstants.CMD_ST1_CPY_TAR_TO_PKG
+							: folderToPkg
+									+ PkgDeployConstants.CMD_ST2_CPY_TAR_TO_PKG,
+					getServerToBuild()));
+			commands.add(new Script("Untar the OM-*.tar",
+					PkgDeployConstants.CD_FOLDER_PKG_ST
+							+ PkgDeployConstants.CMD_UNTAR_OM_TAR,
+					getServerToDeploy()));
+		}
+	}
+
+	private void executeAllCommands(TelaInicio telaInicio) {
+		try {
+			for (Script command : commands) {
+				RemoteShell shell = new RemoteShell();
+				shell.executeCommand(command, this, telaInicio);
+			}
+		} catch (Exception e) {
 		}
 	}
 
@@ -145,32 +191,40 @@ public class BuildServices {
 			folderToDeploy = PkgDeployConstants.CD_FOLDER_ST_DEPLOY_SCRIPTS;
 		}
 	}
-	
-	private String getCorrectPkgDeploy(){
+
+	private String getCorrectPkgDeploy() {
 		if (serverToDeploy.equals(PkgDeployConstants.MACHINE_DEV1)
 				|| serverToDeploy.equals(PkgDeployConstants.MACHINE_DEV2)) {
-			return PkgDeployConstants.FOLDER_PKG_ASST;
+			return PkgDeployConstants.CD_FOLDER_PKG_ASST;
 		} else {
-			return PkgDeployConstants.FOLDER_PKG_ST;
+			return PkgDeployConstants.CD_FOLDER_PKG_ST;
 		}
 	}
-	
-	private String getCorrectDeltaScript(String number){
-		if(number.startsWith("2121")){
+
+	private String getCorrectDeltaScript(String number) {
+		if (number.startsWith("2121")) {
 			return PkgDeployConstants.SCRIPT_DEPLOY_SQL_P212_1;
-		}else if(number.startsWith("2122")){
+		} else if (number.startsWith("2122")) {
 			return PkgDeployConstants.SCRIPT_DEPLOY_SQL_P212_2;
-		}else{
+		} else {
 			return PkgDeployConstants.SCRIPT_DEPLOY_SQL;
 		}
+	}
+
+	private void setFullRestartScripts() {
+		commands.add(new Script("Doing the JBOSS restart",
+				PkgDeployConstants.SCRIPT_RESTART_JBOSS, getServerToDeploy()));
+		commands.add(new Script("Doing the Agents restart",
+				folderToDeploy+PkgDeployConstants.SCRIPT_RESTART_AGENTS,
+				getServerToDeploy()));
 	}
 
 	public void sendOutputToTela(final TelaInicio telaInicio,
 			final String output) {
 		telaInicio.setOutPutInTextArea(output);
 	}
-	
-	public void sendStatusCode(final TelaInicio telaInicio, final String status){
+
+	public void sendStatusCode(final TelaInicio telaInicio, final String status) {
 		telaInicio.setStatusCode(status);
 	}
 
