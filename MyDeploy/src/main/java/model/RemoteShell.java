@@ -1,5 +1,6 @@
 package model;
 
+import dao.DeployDao;
 import exceptions.RuntimeScriptException;
 import gui.TelaInicio;
 
@@ -88,7 +89,8 @@ public class RemoteShell {
 					}
 				}
 			}
-
+			
+			//Se o comando for o cat, pega o omTxt
 			if (command.getScript().contains(PkgDeployConstants.CMD_CAT_OM)) {
 				omTxt = line;
 			}
@@ -107,6 +109,15 @@ public class RemoteShell {
 				buildServices.sendStatusCode(telaInicio,
 						command.getDescricao() + ": KO");
 				throw new RuntimeScriptException(errorMsg);
+			}
+			
+			if(command.getScript().contains("./deploy")){
+				DeployDao dao = new DeployDao(getMachine());
+				String desc[] = command.getDescricao().split(" ");
+				String pkg = desc[0];
+				if(!dao.localizarDeploy(omTxt, pkg)){
+					throw new RuntimeScriptException("Erro ao executar deploy do "+pkg);
+				}
 			}
 
 			// Aguarda

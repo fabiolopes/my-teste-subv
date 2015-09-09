@@ -19,10 +19,10 @@ public class DeployDao {
    
     public boolean localizarDeploy(String pkg, String omTxt) throws SQLException {
         boolean existeDeploy = false;
-    	String sql = "SELECT * FROM UTI_TRACK_DEPLOY WHERE UTD_NAME LIKE ? AND UTD_NAME LIKE ? AND UTD_RESULT='OK'";
+    	String sql = "SELECT * FROM UTI_TRACK_DEPLOY WHERE UTD_FILE_NAME LIKE ? AND UTD_FILE_NAME LIKE ? AND UTD_RESULT='OK'";
         PreparedStatement stmt = conexao.prepareStatement(sql);
         stmt.setString(1, pkg);
-        stmt.setString(1, omTxt);
+        stmt.setString(2, omTxt);
         ResultSet rs = stmt.executeQuery();
         if(rs.next()){
         	existeDeploy = true;

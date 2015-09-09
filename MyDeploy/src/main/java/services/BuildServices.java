@@ -56,8 +56,8 @@ public class BuildServices {
 	}
 
 	public void getBuildScripts() {
-		commands.add(new Script("get_code from SVN",
-				PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
+		//commands.add(new Script("get_code from SVN",
+			//	PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
 		if (someJavaSelected || pkgs.contains("BPM")) {
 			commands.add(new Script("build Java by Maven", folderToPkg
 					+ PkgDeployConstants.SCRIPT_BUILD_JAVA, getServerToBuild()));
@@ -88,7 +88,7 @@ public class BuildServices {
 		commands.add(new Script("Looking the number pkg", getCorrectPkgDeploy()
 				+ PkgDeployConstants.CMD_CAT_OM, getServerToDeploy()));
 		if (pkgs.contains("MOD")) {
-			commands.add(new Script("Deploy of Modules", folderToDeploy
+			commands.add(new Script("MOD - Deploy of Modules", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_MOD, getServerToDeploy()));
 			commands.add(new Script("Doing the JBOSS restart",
 					PkgDeployConstants.SCRIPT_RESTART_JBOSS,
@@ -96,34 +96,34 @@ public class BuildServices {
 		}
 
 		if (pkgs.contains("EJB")) {
-			commands.add(new Script("Deploy of EJBs", folderToDeploy
+			commands.add(new Script("EJB - Deploy of EJBs", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_EJB, getServerToDeploy()));
 		}
 
 		if (pkgs.contains("GUI")) {
-			commands.add(new Script("Deploy of GUI", folderToDeploy
+			commands.add(new Script("GUI - Deploy of GUI", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_GUI, getServerToDeploy()));
 		}
 
 		if (pkgs.contains("WS")) {
-			commands.add(new Script("Deploy of Web Services", folderToDeploy
+			commands.add(new Script("WSB - Deploy of Web Services", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_WS, getServerToDeploy()));
 		}
 
 		if (pkgs.contains("BPM")) {
-			commands.add(new Script("Deploy of BPMs", folderToDeploy
+			commands.add(new Script("BPM - Deploy of BPMs", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_BPM, getServerToDeploy()));
 		}
 
 		if (pkgs.contains("AGE")) {
-			commands.add(new Script("Deploy of Agents", folderToDeploy
+			commands.add(new Script("AGE - Deploy of Agents", folderToDeploy
 					+ PkgDeployConstants.SCRIPT_DEPLOY_AGE, getServerToDeploy()));
 		}
 
 		for (String pkg : pkgs) {
 			if (pkg.contains("Delta")) {
 				String deltaCommand = pkg.substring(6);
-				commands.add(new Script("Deploy Delta" + deltaCommand,
+				commands.add(new Script("SQL-Delta"+deltaCommand+" - Deploy Delta" + deltaCommand,
 						folderToDeploy + getCorrectDeltaScript(deltaCommand)
 								+ deltaCommand + ";", getServerToDeploy()));
 			}
