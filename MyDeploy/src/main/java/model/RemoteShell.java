@@ -48,7 +48,7 @@ public class RemoteShell {
 
 	public void executeCommand(final Script command,
 			final BuildServices buildServices, final TelaInicio telaInicio)
-			throws IOException, RuntimeScriptException {
+			throws Exception {
 		// Cliente SSH
 		machine = command.getServer();
 		final SSHClient ssh = new SSHClient();
@@ -60,12 +60,7 @@ public class RemoteShell {
 			// Autenticacao
 			ssh.authPassword(USER, PASS);
 			// Executa comando remoto
-			executeCommandBySSH(ssh, command, buildServices, telaInicio);
-		} catch (Exception e) {
-			e.printStackTrace();
-			buildServices.sendOutputToTela(telaInicio,
-					"Problemas ao acessar servidor. (Disponibilidade/Autenticação)"
-							+ ": KO");
+			executeCommandBySSH(ssh, command, buildServices, telaInicio);			
 		} finally {
 			ssh.disconnect();
 		}
@@ -73,8 +68,7 @@ public class RemoteShell {
 
 	private void executeCommandBySSH(final SSHClient ssh, final Script command,
 			final BuildServices buildServices, final TelaInicio telaInicio)
-			throws ConnectionException, IOException, TransportException,
-			RuntimeScriptException {
+			throws Exception {
 		final Session session = ssh.startSession();
 		BufferedReader bf = null;
 		try {
