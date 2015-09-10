@@ -56,8 +56,8 @@ public class BuildServices {
 	}
 
 	public void getBuildScripts() {
-		//commands.add(new Script("get_code from SVN",
-			//	PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
+		commands.add(new Script("get_code from SVN", folderToPkg 
+				+ PkgDeployConstants.SCRIPT_GET_CODE, getServerToBuild()));
 		if (someJavaSelected || pkgs.contains("BPM")) {
 			commands.add(new Script("build Java by Maven", folderToPkg
 					+ PkgDeployConstants.SCRIPT_BUILD_JAVA, getServerToBuild()));

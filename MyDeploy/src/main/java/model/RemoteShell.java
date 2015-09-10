@@ -30,7 +30,7 @@ public class RemoteShell {
 	private String machine;
 	private final String USER = "usersiebel";
 	private final String PASS = "siebel2014";
-	private String omTxt;
+	private static String omTxt;
 
 	public RemoteShell(String machine) {
 		this.machine = machine;
@@ -79,21 +79,24 @@ public class RemoteShell {
 			final Command cmd = session.exec(command.getScript());
 			bf = new BufferedReader(new InputStreamReader(cmd.getInputStream()));
 			String line;
+			boolean restartou = false;
 			// Imprime saida, se exister
-			while ((line = bf.readLine()) != null) {
+			while ((line = bf.readLine()) != null && !restartou) {
 				System.out.println(line);
 				buildServices.sendOutputToTela(telaInicio, line);
-				if(command.getDescricao().contains("./full_restart.sh")){
+				if(command.getDescricao().contains("JBOSS restart")){
 					if(line.contains("AS 7.2.1.Final-redhat-10) started in ")){
-						break;
+						restartou = true;
 					}
 				}
+				
+				//Se o comando for o cat, pega o omTxt
+				if (command.getScript().contains(PkgDeployConstants.CMD_CAT_OM)) {
+					omTxt = line;
+				}
+
 			}
 			
-			//Se o comando for o cat, pega o omTxt
-			if (command.getScript().contains(PkgDeployConstants.CMD_CAT_OM)) {
-				omTxt = line;
-			}
 
 			BufferedReader errorBF = new BufferedReader(new InputStreamReader(
 					cmd.getErrorStream()));

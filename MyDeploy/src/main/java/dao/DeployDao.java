@@ -21,8 +21,8 @@ public class DeployDao {
         boolean existeDeploy = false;
     	String sql = "SELECT * FROM UTI_TRACK_DEPLOY WHERE UTD_FILE_NAME LIKE ? AND UTD_FILE_NAME LIKE ? AND UTD_RESULT='OK'";
         PreparedStatement stmt = conexao.prepareStatement(sql);
-        stmt.setString(1, pkg);
-        stmt.setString(2, omTxt);
+        stmt.setString(1, "%"+pkg+"%");
+        stmt.setString(2, "%"+omTxt+"%");
         ResultSet rs = stmt.executeQuery();
         if(rs.next()){
         	existeDeploy = true;
