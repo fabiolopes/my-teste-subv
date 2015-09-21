@@ -12,10 +12,8 @@ import java.security.PublicKey;
 import java.util.concurrent.TimeUnit;
 
 import net.schmizz.sshj.SSHClient;
-import net.schmizz.sshj.connection.ConnectionException;
 import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.connection.channel.direct.Session.Command;
-import net.schmizz.sshj.transport.TransportException;
 import net.schmizz.sshj.transport.verification.HostKeyVerifier;
 
 import org.slf4j.Logger;
@@ -61,7 +59,7 @@ public class RemoteShell {
 			// Autenticacao
 			ssh.authPassword(USER, PASS);
 			// Executa comando remoto
-			executeCommandBySSH(ssh, command, buildServices, telaInicio);			
+			executeCommandBySSH(ssh, command, buildServices, telaInicio);
 		} finally {
 			ssh.disconnect();
 		}
@@ -69,12 +67,12 @@ public class RemoteShell {
 
 	private void executeCommandBySSH(final SSHClient ssh, final Script command,
 			final BuildServices buildServices, final TelaInicio telaInicio)
-			throws Exception {
+			throws RuntimeScriptException, Exception {
 		final Session session = ssh.startSession();
 		BufferedReader bf = null;
 		try {
 			// Executa comando
-			
+
 			buildServices.sendOutputToTela(telaInicio, command.getDescricao());
 			final Command cmd = session.exec(command.getScript());
 			bf = new BufferedReader(new InputStreamReader(cmd.getInputStream()));
@@ -84,42 +82,49 @@ public class RemoteShell {
 			while ((line = bf.readLine()) != null && !restartou) {
 				System.out.println(line);
 				buildServices.sendOutputToTela(telaInicio, line);
-				if(command.getDescricao().contains("JBOSS restart")){
-					if(line.contains("AS 7.2.1.Final-redhat-10) started in ")){
+				if (command.getDescricao().contains("JBOSS restart")) {
+					if (line.contains("AS 7.2.1.Final-redhat-10) started in ")) {
 						restartou = true;
 					}
 				}
-				
-				//Se o comando for o cat, pega o omTxt
+
+				// Se o comando for o cat, pega o omTxt
 				if (command.getScript().contains(PkgDeployConstants.CMD_CAT_OM)) {
 					omTxt = line;
 				}
 
 			}
-			
 
-			BufferedReader errorBF = new BufferedReader(new InputStreamReader(
-					cmd.getErrorStream()));
+			if (!command.getDescricao().contains("JBOSS restart")) {
+				BufferedReader errorBF = new BufferedReader(
+						new InputStreamReader(cmd.getErrorStream()));
 
-			String errorMsg = "";
-			String errorLine;
-			while ((errorLine = errorBF.readLine()) != null) {
-				errorMsg = errorMsg + errorLine + "\n";
+				String errorMsg = "";
+				String errorLine;
+				while ((errorLine = errorBF.readLine()) != null) {
+					errorMsg = errorMsg + errorLine + "\n";
+				}
+
+				if (!errorMsg.isEmpty()
+						&& !command.getDescricao().contains("agents")) {
+					buildServices.sendOutputToTela(telaInicio,
+							command.getDescricao() + ": KO");
+					buildServices.sendStatusCode(telaInicio,
+							command.getDescricao() + ": KO");
+					throw new RuntimeScriptException(errorMsg);
+				}
 			}
-			if (!errorMsg.isEmpty() && !command.getDescricao().contains("agents") ) {
-				buildServices.sendOutputToTela(telaInicio,
-						command.getDescricao() + ": KO");
-				buildServices.sendStatusCode(telaInicio,
-						command.getDescricao() + ": KO");
-				throw new RuntimeScriptException(errorMsg);
-			}
-			
-			if(command.getScript().contains("./deploy")){
+			if (command.getScript().contains("./deploy")) {
 				DeployDao dao = new DeployDao(getMachine());
 				String desc[] = command.getDescricao().split(" ");
 				String pkg = desc[0];
-				if(!dao.localizarDeploy(omTxt, pkg)){
-					throw new RuntimeScriptException("Erro ao executar deploy do "+pkg);
+				if (!dao.localizarDeploy(omTxt, pkg)) {
+					buildServices.sendOutputToTela(telaInicio,
+							command.getDescricao() + ": KO");
+					buildServices.sendStatusCode(telaInicio,
+							command.getDescricao() + ": KO");
+					throw new RuntimeScriptException(
+							"Erro ao executar deploy do " + pkg);
 				}
 			}
 
@@ -130,8 +135,12 @@ public class RemoteShell {
 			buildServices.sendStatusCode(telaInicio, command.getDescricao()
 					+ ": OK");
 		} finally {
+			try{
 			secureClose(bf);
 			secureClose(session);
+			}finally{
+				
+			}
 		}
 	}
 

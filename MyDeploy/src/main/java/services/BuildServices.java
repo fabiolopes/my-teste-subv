@@ -27,7 +27,8 @@ public class BuildServices {
 		commands = new ArrayList<Script>();
 	}
 
-	public void doRestart(String restart, TelaInicio telaInicio)
+	 //Abortado porque aparentemente o cliente unix não consegue detachar do start_jboss e start_agents
+	 /* public void doRestart(String restart, TelaInicio telaInicio)
 			throws IOException, RuntimeScriptException {
 		if (restart.equals("full")) {
 			setFullRestartScripts();
@@ -42,7 +43,7 @@ public class BuildServices {
 		}
 		executeAllCommands(telaInicio);
 
-	}
+	}*/
 
 	public void executeBuildAndDeployScripts(ArrayList<String> pkgs,
 			TelaInicio telaInicio, boolean isSomeJavaSelected)
@@ -129,7 +130,7 @@ public class BuildServices {
 			}
 		}
 
-		setFullRestartScripts();
+		//setFullRestartScripts();
 
 	}
 

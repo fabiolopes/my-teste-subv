@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 
 import services.BuildServices;
-import util.PkgDeployConstants;
 import exceptions.RuntimeScriptException;
 
 public class TelaInicio extends JFrame {
@@ -394,6 +393,7 @@ public class TelaInicio extends JFrame {
 	}
 
 	private void btInstalarActionPerformed(java.awt.event.ActionEvent evt) {
+		limpaTela();
 		final BuildServices build = new BuildServices(cbServer.getSelectedItem().toString());
 		final TelaInicio ctx = this;
 		if (rbDeploy.isSelected()) {
@@ -404,6 +404,7 @@ public class TelaInicio extends JFrame {
 					try {
 							build.executeBuildAndDeployScripts(
 									getpkgsToInstall(), ctx, isSomeJavaItemSelected());
+							JOptionPane.showMessageDialog(null, "Deploy concluído com sucesso");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -417,14 +418,15 @@ public class TelaInicio extends JFrame {
 			JOptionPane.showMessageDialog(null,
 					"Insira insformações corretas dos deltas");
 		}
-		}else{
+		//Abortado porque aparentemente o cliente unix não consegue detachar do start_jboss e start_agents
+		/*}else{
 			String restart="";
 			if(rbFullRestart.isSelected()){
 				restart="full";
 			}else if(rbRestartAgents.isSelected()){
 				restart="agents";
 			}else if(rbRestartJBoss.isSelected()){
-				restart=PkgDeployConstants.SCRIPT_RESTART_JBOSS;
+				restart="jboss";
 			}
 			final String finalRestart = restart;
 			new Thread(new Runnable() {
@@ -432,6 +434,7 @@ public class TelaInicio extends JFrame {
 				public void run() {
 					try {
 						build.doRestart(finalRestart, ctx);
+						JOptionPane.showMessageDialog(null, "Restart concluído com sucesso");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -442,6 +445,7 @@ public class TelaInicio extends JFrame {
 					
 				}
 			}).start();
+			*/
 		}
 	}
 
@@ -519,6 +523,11 @@ public class TelaInicio extends JFrame {
 			cbDelta.setSelected(true);
 			cbDelta.setSelected(false);
 		}
+	}
+	
+	public void limpaTela(){
+		taOutPut.setText("");
+		taStatus.setText("");
 	}
 
 	public void setOutPutInTextArea(final String out) {

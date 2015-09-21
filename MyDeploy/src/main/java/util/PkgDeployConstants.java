@@ -66,8 +66,8 @@ public class PkgDeployConstants {
 	//Passar como argumento "num_delta+;"
 	public static final String SCRIPT_DEPLOY_SQL = "./deploySQL.sh ";
 	public static final String SCRIPT_DEPLOY_SQL_P212_1 = "./deploySQL_p2121.sh ";
-	public static final String SCRIPT_DEPLOY_SQL_P212_2 = "./deploySQLp_2122.sh ";
-	public static final String SCRIPT_DEPLOY_SQL_P212_3 = "./deploySQLp_2123.sh ";
+	public static final String SCRIPT_DEPLOY_SQL_P212_2 = "./deploySQL_p2122.sh ";
+	public static final String SCRIPT_DEPLOY_SQL_P212_3 = "./deploySQL_p2123.sh ";
 	public static final String SCRIPT_RESTART_AGENTSENDER = CD_FOLDER_AGENTSENDER_SCRIPT+"./restart_agent_sender.sh;";
 	public static final String SCRIPT_RESTART_JBOSS = CD_FOLDER_JBOSS_SCRIPT+"./stopJboss.sh;./startJboss.sh;";
 
