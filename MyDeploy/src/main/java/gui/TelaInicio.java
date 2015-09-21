@@ -38,7 +38,7 @@ public class TelaInicio extends JFrame {
 	private void initComponents() {
 
 		btGDelta = new javax.swing.ButtonGroup();
-		btGProced = new javax.swing.ButtonGroup();
+		// btGProced = new javax.swing.ButtonGroup();
 		panelPrincipal = new javax.swing.JPanel();
 		cbAgents = new javax.swing.JCheckBox();
 		cbEJB = new javax.swing.JCheckBox();
@@ -50,10 +50,10 @@ public class TelaInicio extends JFrame {
 		rbOne = new javax.swing.JRadioButton();
 		labelWhatDelta = new javax.swing.JLabel();
 		rbMais = new javax.swing.JRadioButton();
-		rbDeploy = new javax.swing.JRadioButton();
-		rbFullRestart = new javax.swing.JRadioButton();
-		rbRestartAgents = new javax.swing.JRadioButton();
-		rbRestartJBoss = new javax.swing.JRadioButton();
+		// rbDeploy = new javax.swing.JRadioButton();
+		// rbFullRestart = new javax.swing.JRadioButton();
+		// rbRestartAgents = new javax.swing.JRadioButton();
+		// rbRestartJBoss = new javax.swing.JRadioButton();
 		tfDeltaInicio = new javax.swing.JTextField();
 		tfDeltaFinal = new javax.swing.JTextField();
 		labelDeltaInicio = new javax.swing.JLabel();
@@ -63,7 +63,7 @@ public class TelaInicio extends JFrame {
 		labelTitle = new javax.swing.JLabel();
 		btInstalar = new javax.swing.JButton();
 		panelServer = new javax.swing.JPanel();
-		panelProcedimento = new javax.swing.JPanel();
+		// panelProcedimento = new javax.swing.JPanel();
 		cbServer = new javax.swing.JComboBox();
 		scrollOutput = new javax.swing.JScrollPane();
 		scrollStatus = new javax.swing.JScrollPane();
@@ -222,7 +222,7 @@ public class TelaInicio extends JFrame {
 
 		getContentPane().add(panelPrincipal);
 		panelPrincipal.setBounds(40, 90, 610, 180);
-		changePanelPrincipalEditable(false);
+		changePanelPrincipalEditable(true);
 
 		labelTitle.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
 		labelTitle.setText("Defina os dados da instalação");
@@ -266,54 +266,43 @@ public class TelaInicio extends JFrame {
 		getContentPane().add(panelServer);
 		panelServer.setBounds(40, 40, 400, 50);
 
-		panelProcedimento.setBorder(javax.swing.BorderFactory
-				.createTitledBorder("Escolha o procedimento a ser realizado"));
-		panelProcedimento.setLayout(null);
-		getContentPane().add(panelProcedimento);
-		panelProcedimento.setBounds(450, 40, 400, 50);
-		
-		btGProced.add(rbDeploy);
-		rbDeploy.setText("Deploy");
-		panelProcedimento.add(rbDeploy);
-		rbDeploy.setBounds(15, 20, 70, 20);
-		rbDeploy.addChangeListener(new javax.swing.event.ChangeListener() {
-			public void stateChanged(javax.swing.event.ChangeEvent evt) {
-				rbDeployStateChanged(evt);
-			}
-		});
-		
-		btGProced.add(rbFullRestart);
-		rbFullRestart.setText("Full Restart");
-		panelProcedimento.add(rbFullRestart);
-		rbFullRestart.setBounds(90, 20, 90, 20);
-		rbFullRestart.addChangeListener(new javax.swing.event.ChangeListener() {
-			public void stateChanged(javax.swing.event.ChangeEvent evt) {
-				rbStateChanged(evt, rbFullRestart);
-			}
-		});
-		
-		btGProced.add(rbRestartAgents);
-		rbRestartAgents.setText("Restart Agents");
-		panelProcedimento.add(rbRestartAgents);
-		rbRestartAgents.setBounds(180, 20, 100, 20);
-		rbRestartAgents
-				.addChangeListener(new javax.swing.event.ChangeListener() {
-					public void stateChanged(javax.swing.event.ChangeEvent evt) {
-						rbStateChanged(evt, rbRestartAgents);
-					}
-				});
-		
-		btGProced.add(rbRestartJBoss);
-		rbRestartJBoss.setText("Restart JBOSS");
-		panelProcedimento.add(rbRestartJBoss);
-		rbRestartJBoss.setBounds(290, 20, 100, 20);
-		rbRestartJBoss
-				.addChangeListener(new javax.swing.event.ChangeListener() {
-					public void stateChanged(javax.swing.event.ChangeEvent evt) {
-						rbStateChanged(evt, rbRestartJBoss);
-					}
-				});
-		
+		/*
+		 * panelProcedimento.setBorder(javax.swing.BorderFactory
+		 * .createTitledBorder("Escolha o procedimento a ser realizado"));
+		 * panelProcedimento.setLayout(null);
+		 * getContentPane().add(panelProcedimento);
+		 * panelProcedimento.setBounds(450, 40, 400, 50);
+		 * 
+		 * btGProced.add(rbDeploy); rbDeploy.setText("Deploy");
+		 * panelProcedimento.add(rbDeploy); rbDeploy.setBounds(15, 20, 70, 20);
+		 * rbDeploy.addChangeListener(new javax.swing.event.ChangeListener() {
+		 * public void stateChanged(javax.swing.event.ChangeEvent evt) {
+		 * rbDeployStateChanged(evt); } });
+		 * 
+		 * btGProced.add(rbFullRestart); rbFullRestart.setText("Full Restart");
+		 * panelProcedimento.add(rbFullRestart); rbFullRestart.setBounds(90, 20,
+		 * 90, 20); rbFullRestart.addChangeListener(new
+		 * javax.swing.event.ChangeListener() { public void
+		 * stateChanged(javax.swing.event.ChangeEvent evt) { rbStateChanged(evt,
+		 * rbFullRestart); } });
+		 * 
+		 * btGProced.add(rbRestartAgents);
+		 * rbRestartAgents.setText("Restart Agents");
+		 * panelProcedimento.add(rbRestartAgents);
+		 * rbRestartAgents.setBounds(180, 20, 100, 20); rbRestartAgents
+		 * .addChangeListener(new javax.swing.event.ChangeListener() { public
+		 * void stateChanged(javax.swing.event.ChangeEvent evt) {
+		 * rbStateChanged(evt, rbRestartAgents); } });
+		 * 
+		 * btGProced.add(rbRestartJBoss);
+		 * rbRestartJBoss.setText("Restart JBOSS");
+		 * panelProcedimento.add(rbRestartJBoss); rbRestartJBoss.setBounds(290,
+		 * 20, 100, 20); rbRestartJBoss .addChangeListener(new
+		 * javax.swing.event.ChangeListener() { public void
+		 * stateChanged(javax.swing.event.ChangeEvent evt) { rbStateChanged(evt,
+		 * rbRestartJBoss); } });
+		 */
+
 		pack();
 	}// </editor-fold>
 
@@ -344,22 +333,15 @@ public class TelaInicio extends JFrame {
 		}
 	}
 
-	private void rbDeployStateChanged(javax.swing.event.ChangeEvent evt) {
-		if (rbDeploy.isSelected()) {
-			changePanelPrincipalEditable(true);
-		} else {
-			changePanelPrincipalEditable(false);
-		}
-	}
-
-	private void rbStateChanged(javax.swing.event.ChangeEvent evt,
-			JRadioButton rb) {
-		if (rb.isSelected()) {
-			btInstalar.setEnabled(true);
-		} else {
-			btInstalar.setEnabled(false);
-		}
-	}
+	/*
+	 * private void rbDeployStateChanged(javax.swing.event.ChangeEvent evt) { if
+	 * (rbDeploy.isSelected()) { changePanelPrincipalEditable(true); } else {
+	 * changePanelPrincipalEditable(false); } }
+	 * 
+	 * private void rbStateChanged(javax.swing.event.ChangeEvent evt,
+	 * JRadioButton rb) { if (rb.isSelected()) { btInstalar.setEnabled(true); }
+	 * else { btInstalar.setEnabled(false); } }
+	 */
 
 	private void cbAgentsStateChanged(javax.swing.event.ChangeEvent evt) {
 		isSomeItemSelected();
@@ -394,17 +376,19 @@ public class TelaInicio extends JFrame {
 
 	private void btInstalarActionPerformed(java.awt.event.ActionEvent evt) {
 		limpaTela();
-		final BuildServices build = new BuildServices(cbServer.getSelectedItem().toString());
+		final BuildServices build = new BuildServices(cbServer
+				.getSelectedItem().toString());
 		final TelaInicio ctx = this;
-		if (rbDeploy.isSelected()) {
+		// if (rbDeploy.isSelected()) {
 		if (isDeltaCorrect()) {
 			new Thread(new Runnable() {
 
 				public void run() {
 					try {
-							build.executeBuildAndDeployScripts(
-									getpkgsToInstall(), ctx, isSomeJavaItemSelected());
-							JOptionPane.showMessageDialog(null, "Deploy concluído com sucesso");
+						build.executeBuildAndDeployScripts(getpkgsToInstall(),
+								ctx, isSomeJavaItemSelected());
+						JOptionPane.showMessageDialog(null,
+								"Deploy concluído com sucesso");
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -418,35 +402,25 @@ public class TelaInicio extends JFrame {
 			JOptionPane.showMessageDialog(null,
 					"Insira insformações corretas dos deltas");
 		}
-		//Abortado porque aparentemente o cliente unix não consegue detachar do start_jboss e start_agents
-		/*}else{
-			String restart="";
-			if(rbFullRestart.isSelected()){
-				restart="full";
-			}else if(rbRestartAgents.isSelected()){
-				restart="agents";
-			}else if(rbRestartJBoss.isSelected()){
-				restart="jboss";
-			}
-			final String finalRestart = restart;
-			new Thread(new Runnable() {
-				
-				public void run() {
-					try {
-						build.doRestart(finalRestart, ctx);
-						JOptionPane.showMessageDialog(null, "Restart concluído com sucesso");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (RuntimeScriptException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-				}
-			}).start();
-			*/
-		}
+		// Abortado porque aparentemente o cliente unix não consegue detachar do
+		// start_jboss e start_agents
+		/*
+		 * }else{ String restart=""; if(rbFullRestart.isSelected()){
+		 * restart="full"; }else if(rbRestartAgents.isSelected()){
+		 * restart="agents"; }else if(rbRestartJBoss.isSelected()){
+		 * restart="jboss"; } final String finalRestart = restart; new
+		 * Thread(new Runnable() {
+		 * 
+		 * public void run() { try { build.doRestart(finalRestart, ctx);
+		 * JOptionPane.showMessageDialog(null, "Restart concluído com sucesso");
+		 * } catch (IOException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); } catch (RuntimeScriptException e) { // TODO
+		 * Auto-generated catch block e.printStackTrace(); }
+		 * 
+		 * } }).start();
+		 * 
+		 * }
+		 */
 	}
 
 	private ArrayList<String> getpkgsToInstall() {
@@ -524,8 +498,8 @@ public class TelaInicio extends JFrame {
 			cbDelta.setSelected(false);
 		}
 	}
-	
-	public void limpaTela(){
+
+	public void limpaTela() {
 		taOutPut.setText("");
 		taStatus.setText("");
 	}
@@ -587,7 +561,7 @@ public class TelaInicio extends JFrame {
 
 	// Variables declaration - do not modify
 	private javax.swing.ButtonGroup btGDelta;
-	private javax.swing.ButtonGroup btGProced;
+	// private javax.swing.ButtonGroup btGProced;
 	private javax.swing.JButton btInstalar;
 	private javax.swing.JCheckBox cbAgents;
 	private javax.swing.JCheckBox cbBPM;
@@ -604,17 +578,17 @@ public class TelaInicio extends JFrame {
 	private javax.swing.JLabel labelWhatDelta;
 	private javax.swing.JPanel panelPrincipal;
 	private javax.swing.JPanel panelServer;
-	private javax.swing.JPanel panelProcedimento;
+	// private javax.swing.JPanel panelProcedimento;
 	private javax.swing.JScrollPane scrollStatus;
 	private javax.swing.JScrollPane scrollOutput;
 	private javax.swing.JTextArea taOutPut;
 	private javax.swing.JTextArea taStatus;
 	private javax.swing.JRadioButton rbMais;
 	private javax.swing.JRadioButton rbOne;
-	private javax.swing.JRadioButton rbDeploy;
-	private javax.swing.JRadioButton rbFullRestart;
-	private javax.swing.JRadioButton rbRestartAgents;
-	private javax.swing.JRadioButton rbRestartJBoss;
+	// private javax.swing.JRadioButton rbDeploy;
+	// private javax.swing.JRadioButton rbFullRestart;
+	// private javax.swing.JRadioButton rbRestartAgents;
+	// private javax.swing.JRadioButton rbRestartJBoss;
 	private javax.swing.JTextField tfDeltaFinal;
 	private javax.swing.JTextField tfDeltaInicio;
 	// End of variables declaration
