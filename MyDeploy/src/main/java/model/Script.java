@@ -2,7 +2,7 @@ package model;
 
 public class Script {
 	
-	//Descrição do pacote ex: AGE.tar
+	//DescriÃ§Ã£o do pacote ex: AGE.tar
 	private String descricao;
 	
 	//script a ser rodado

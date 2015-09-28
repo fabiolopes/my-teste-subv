@@ -17,17 +17,17 @@ public class Conexao {
             String driver = "oracle.jdbc.OracleDriver"; //Classe do driver JDBC
             String sid = "OMDBT1"; //Nome do Banco criado
             String portNumber = "1521";
-            String host = myHost; //Maquina onde est· o banco
-            String url = "jdbc:oracle:thin:@" + host + ":" + portNumber + ":" + sid;   //URL de conex„o
-            String usuario = "sds_admin"; //Usu·rio do banco
-            String senha = "sds_admin"; //Senha de conex„o
+            String host = myHost; //Maquina onde est√° o banco
+            String url = "jdbc:oracle:thin:@" + host + ":" + portNumber + ":" + sid;   //URL de conex√£o
+            String usuario = "sds_admin"; //Usu√°rio do banco
+            String senha = "sds_admin"; //Senha de conex√£o
 
             Class.forName(driver); //Carrega o driver
-            //ObtÈm a conex„o com o banco
+            //Obt√©m a conex√£o com o banco
             return DriverManager.getConnection(url, usuario, senha);
 
         } catch (ClassNotFoundException e) {
-        	System.out.println("N„o foi possÌvel conectar-se ao BD");
+        	System.out.println("N√£o foi poss√≠vel conectar-se ao BD");
             throw new SQLException(e.getMessage());
         }
     }

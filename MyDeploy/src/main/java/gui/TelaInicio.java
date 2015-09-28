@@ -2,16 +2,21 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
+
+import model.RemoteShell;
+
+import exceptions.RuntimeScriptException;
 
 import services.BuildServices;
-import exceptions.RuntimeScriptException;
 
 public class TelaInicio extends JFrame {
 
@@ -76,8 +81,8 @@ public class TelaInicio extends JFrame {
 		getContentPane().setLayout(null);
 
 		panelPrincipal.setBorder(javax.swing.BorderFactory
-				.createTitledBorder("InformaÁıes do pacote"));
-		panelPrincipal.setToolTipText("Insira informaÁıes do pacote");
+				.createTitledBorder("Informa√ß√µes do pacote"));
+		panelPrincipal.setToolTipText("Insira informa√ß√µes do pacote");
 		panelPrincipal.setLayout(null);
 
 		cbAgents.setText("Agents");
@@ -212,7 +217,7 @@ public class TelaInicio extends JFrame {
 
 		});
 
-		labelDeltaInicio.setText("Delta (inÌcio)");
+		labelDeltaInicio.setText("Delta (in√≠cio)");
 		panelPrincipal.add(labelDeltaInicio);
 		labelDeltaInicio.setBounds(160, 120, 70, 14);
 
@@ -225,7 +230,7 @@ public class TelaInicio extends JFrame {
 		changePanelPrincipalEditable(true);
 
 		labelTitle.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-		labelTitle.setText("Defina os dados da instalaÁ„o");
+		labelTitle.setText("Defina os dados da instala√ß√£o");
 		getContentPane().add(labelTitle);
 		labelTitle.setBounds(40, 0, 250, 40);
 
@@ -255,7 +260,7 @@ public class TelaInicio extends JFrame {
 
 		panelServer
 				.setBorder(javax.swing.BorderFactory
-						.createTitledBorder("Escolha o servidor onde a instalaÁ„o ser· realizada"));
+						.createTitledBorder("Escolha o servidor onde a instala√ß√£o ser√° realizada"));
 		panelServer.setLayout(null);
 
 		cbServer.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
@@ -383,12 +388,18 @@ public class TelaInicio extends JFrame {
 		if (isDeltaCorrect()) {
 			new Thread(new Runnable() {
 
-				public void run() {
+				public void run(){
 					try {
-						build.executeBuildAndDeployScripts(getpkgsToInstall(),
-								ctx, isSomeJavaItemSelected());
-						JOptionPane.showMessageDialog(null,
-								"Deploy concluÌdo com sucesso");
+						if(build.executeBuildAndDeployScripts(getpkgsToInstall(),
+								ctx, isSomeJavaItemSelected())){
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Deploy conclu√≠do com sucesso. "
+												+ "Vers√£o do pacote dispon√≠vel na √°rea de transfer√™ncia");
+						copyToTransferArea(RemoteShell.omTxt);
+						RemoteShell.omTxt = "";
+						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -400,9 +411,9 @@ public class TelaInicio extends JFrame {
 			}).start();
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Insira insformaÁıes corretas dos deltas");
+					"Insira insforma√ß√µes corretas dos deltas");
 		}
-		// Abortado porque aparentemente o cliente unix n„o consegue detachar do
+		// Abortado porque aparentemente o cliente unix nÔøΩo consegue detachar do
 		// start_jboss e start_agents
 		/*
 		 * }else{ String restart=""; if(rbFullRestart.isSelected()){
@@ -412,7 +423,7 @@ public class TelaInicio extends JFrame {
 		 * Thread(new Runnable() {
 		 * 
 		 * public void run() { try { build.doRestart(finalRestart, ctx);
-		 * JOptionPane.showMessageDialog(null, "Restart concluÌdo com sucesso");
+		 * JOptionPane.showMessageDialog(null, "Restart concluÔøΩdo com sucesso");
 		 * } catch (IOException e) { // TODO Auto-generated catch block
 		 * e.printStackTrace(); } catch (RuntimeScriptException e) { // TODO
 		 * Auto-generated catch block e.printStackTrace(); }
@@ -474,10 +485,10 @@ public class TelaInicio extends JFrame {
 	}
 
 	private boolean isDeltaCorrect() {
-		// Resumindo: Retorna true se cbdelta est· selecionado e se:
-		// (rb est· selecionado ou: (brmais est· selecionado e tfdeltafinal n„o
-		// est· vazio
-		// e o deltafinal È maior que o inicial) e deltainicio n„o est· vazio
+		// Resumindo: Retorna true se cbdelta estÔøΩ selecionado e se:
+		// (rb estÔøΩ selecionado ou: (brmais estÔøΩ selecionado e tfdeltafinal nÔøΩo
+		// estÔøΩ vazio
+		// e o deltafinal ÔøΩ maior que o inicial) e deltainicio nÔøΩo estÔøΩ vazio
 		return (!cbDelta.isSelected() || ((rbOne.isSelected() || (rbMais
 				.isSelected() && !tfDeltaFinal.getText().equals("") && Integer
 				.parseInt(tfDeltaFinal.getText()) > Integer
@@ -490,8 +501,8 @@ public class TelaInicio extends JFrame {
 			c.setEnabled(isEditable);
 		}
 		// Problema: Se true, todos os componentes, inclusive os referentes ao
-		// delta estar„o habilitados
-		// Como soluÁ„o, quando true, o checkbox do delta È marcado e
+		// delta estar√£o habilitados
+		// Como solu√ß√£o, quando true, o checkbox do delta √© marcado e
 		// desmarcado, deixando tudo desabilitado :)
 		if (isEditable) {
 			cbDelta.setSelected(true);
@@ -512,6 +523,12 @@ public class TelaInicio extends JFrame {
 	public void setStatusCode(final String status) {
 		taStatus.append(status + "\n");
 		taStatus.setCaretPosition(taStatus.getDocument().getLength());
+	}
+
+	private void copyToTransferArea(String toCopy) {
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		StringSelection selection = new StringSelection(toCopy);
+		clipboard.setContents(selection, null);
 	}
 
 	/**

@@ -1,0 +1,12 @@
+#Wed Sep 23 20:09:38 GMT-03:00 2015
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/java/dao/DeployDao.java=UTF-8
+encoding//src/main/java/exceptions/RuntimeScriptException.java=UTF-8
+encoding//src/main/java/gui/TelaInicio.java=UTF-8
+encoding//src/main/java/model/RemoteShell.java=UTF-8
+encoding//src/main/java/model/Script.java=UTF-8
+encoding//src/main/java/services/BuildServices.java=UTF-8
+encoding//src/main/java/util/Conexao.java=UTF-8
+encoding//src/main/java/util/PkgDeployConstants.java=UTF-8
+encoding/<project>=UTF-8

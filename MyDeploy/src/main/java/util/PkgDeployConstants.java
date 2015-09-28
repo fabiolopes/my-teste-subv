@@ -3,7 +3,7 @@ package util;
 public class PkgDeployConstants {
 	
 	public static final String TAR_NAME = "OM-*";
-	//dados das m·quinas{
+	//dados das m√°quinas{
 	public static final String MACHINE_DEV1 = "10.43.1.84";
 	public static final String MACHINE_DEV2 = "10.43.1.109";
 	public static final String MACHINE_ST1 = "10.43.1.87";
@@ -40,7 +40,7 @@ public class PkgDeployConstants {
 	public static final String CD_FOLDER_AGENTSENDER_SCRIPT = "cd "+FOLDER_AGENTSENDER_SCRIPT+";";
 	//}
 	
-	//scripts de geraÁ„o de pacotes(Execut·-los dentro de $FOLDER_STABLE_BUILD_SCRIPTS){
+	//scripts de gera√ß√£o de pacotes(Execut√°-los dentro de $FOLDER_STABLE_BUILD_SCRIPTS){
 	public static final String SCRIPT_GET_CODE = "./get_code.sh;";
 	public static final String SCRIPT_BUILD_JAVA = "./buildJava.sh;";
 	public static final String SCRIPT_PKG_ALL_JAVA = "./pkgAllJava.sh;";
@@ -48,12 +48,13 @@ public class PkgDeployConstants {
 	//Passar como argumento "num_delta+;"
 	public static final String SCRIPT_PKG_SQL_DELTA = "./pkgSQL_auto.sh ";
 	public static final String SCRIPT_PKG_ALL = "./pkgAll.sh;";
-	//Executar apÛs usar o $SCRIPT_PKG_ALL
+	//Executar ap√≥s usar o $SCRIPT_PKG_ALL
 	public static final String SCRIPT_COMMIT_PKG_SVN = "./caddsvn.sh pkg/"+TAR_NAME;
 	public static final String SCRIPT_COPYLOCAL = CD_OFFICIAL_BUILD_SCRIPTS+"./copyLocal.sh .."+"/pkg_asst/;";
+	public static final String SCRIPT_COPYLOCAL_ST = CD_STABLE_BUILD_SCRIPTS+"./copyLocal.sh .."+"/pkg/;";
 	//}
-	//scripts de deploy(Execut·-los dentro de $FOLDER_DEPLOY_SCRIPTS_ST){
-	//est· sem "./" pq È chamado direto via ssh
+	//scripts de deploy(Execut√°-los dentro de $FOLDER_DEPLOY_SCRIPTS_ST){
+	//est√° sem "./" pq √© chamado direto via ssh
 	public static final String CMD_CAT_OM = "cat OM.txt;";
 	public static final String SCRIPT_CREATE_PKG_FOLDER = "./create_pkg_folder.sh;";
 	public static final String SCRIPT_DEPLOY_EJB = "./deployEJBs.sh;";
@@ -72,7 +73,7 @@ public class PkgDeployConstants {
 	public static final String SCRIPT_RESTART_JBOSS = CD_FOLDER_JBOSS_SCRIPT+"./stopJboss.sh;./startJboss.sh;";
 
 	//}
-	//Comandos para tranferÍncia do TAR para a pasta pkg ST{
+	//Comandos para tranfer√™ncia do TAR para a pasta pkg ST{
 	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";pwd;";
 	public static final String CMD_ST2_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST2+":"+FOLDER_PKG_ST+";pwd;";
 	public static final String CMD_UNTAR_OM_TAR = "tar -xvf "+TAR_NAME+";pwd;";

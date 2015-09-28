@@ -28,7 +28,7 @@ public class RemoteShell {
 	private String machine;
 	private final String USER = "usersiebel";
 	private final String PASS = "siebel2014";
-	private static String omTxt;
+	public static String omTxt;
 
 	public RemoteShell(String machine) {
 		this.machine = machine;
@@ -45,11 +45,12 @@ public class RemoteShell {
 		this.machine = machine;
 	}
 
-	public void executeCommand(final Script command,
+	public boolean executeCommand(Script command,
 			final BuildServices buildServices, final TelaInicio telaInicio)
 			throws Exception {
 		// Cliente SSH
 		machine = command.getServer();
+		boolean rodou = false;
 		final SSHClient ssh = new SSHClient();
 		try {
 			// Configura tipo de KeyVerifier
@@ -59,35 +60,31 @@ public class RemoteShell {
 			// Autenticacao
 			ssh.authPassword(USER, PASS);
 			// Executa comando remoto
-			executeCommandBySSH(ssh, command, buildServices, telaInicio);
+			rodou = executeCommandBySSH(ssh, command, buildServices, telaInicio);
 		} finally {
 			ssh.disconnect();
 		}
+		
+		return rodou;
 	}
 
-	private void executeCommandBySSH(final SSHClient ssh, final Script command,
+	private boolean executeCommandBySSH(final SSHClient ssh, final Script command,
 			final BuildServices buildServices, final TelaInicio telaInicio)
 			throws RuntimeScriptException, Exception {
 		final Session session = ssh.startSession();
 		BufferedReader bf = null;
+		boolean rodou = false;
 		try {
 			// Executa comando
 
-			buildServices.sendOutputToTela(telaInicio, command.getDescricao());
+			sendInfoToScreen(buildServices, telaInicio, command.getDescricao());
 			final Command cmd = session.exec(command.getScript());
 			bf = new BufferedReader(new InputStreamReader(cmd.getInputStream()));
 			String line;
-			boolean restartou = false;
 			// Imprime saida, se exister
-			while ((line = bf.readLine()) != null && !restartou) {
+			while ((line = bf.readLine()) != null) {
 				System.out.println(line);
 				buildServices.sendOutputToTela(telaInicio, line);
-				if (command.getDescricao().contains("JBOSS restart")) {
-					if (line.contains("AS 7.2.1.Final-redhat-10) started in ")) {
-						restartou = true;
-					}
-				}
-
 				// Se o comando for o cat, pega o omTxt
 				if (command.getScript().contains(PkgDeployConstants.CMD_CAT_OM)) {
 					omTxt = line;
@@ -95,7 +92,7 @@ public class RemoteShell {
 
 			}
 
-			if (!command.getDescricao().contains("JBOSS restart")) {
+			if (!command.getDescricao().contains("GUI")) {
 				BufferedReader errorBF = new BufferedReader(
 						new InputStreamReader(cmd.getErrorStream()));
 
@@ -107,10 +104,7 @@ public class RemoteShell {
 
 				if (!errorMsg.isEmpty()
 						&& !command.getDescricao().contains("agents")) {
-					buildServices.sendOutputToTela(telaInicio,
-							command.getDescricao() + ": KO");
-					buildServices.sendStatusCode(telaInicio,
-							command.getDescricao() + ": KO");
+					sendInfoToScreen(buildServices, telaInicio, command.getDescricao() + ": KO");
 					throw new RuntimeScriptException(errorMsg);
 				}
 			}
@@ -119,10 +113,7 @@ public class RemoteShell {
 				String desc[] = command.getDescricao().split(" ");
 				String pkg = desc[0];
 				if (!dao.localizarDeploy(omTxt, pkg)) {
-					buildServices.sendOutputToTela(telaInicio,
-							command.getDescricao() + ": KO");
-					buildServices.sendStatusCode(telaInicio,
-							command.getDescricao() + ": KO");
+					sendInfoToScreen(buildServices, telaInicio, command.getDescricao() + ": KO");
 					throw new RuntimeScriptException(
 							"Erro ao executar deploy do " + pkg);
 				}
@@ -130,18 +121,18 @@ public class RemoteShell {
 
 			// Aguarda
 			cmd.join(1, TimeUnit.SECONDS);
-			buildServices.sendOutputToTela(telaInicio, command.getDescricao()
+			sendInfoToScreen(buildServices, telaInicio, command.getDescricao()
 					+ ": OK");
-			buildServices.sendStatusCode(telaInicio, command.getDescricao()
-					+ ": OK");
+			rodou = true;
 		} finally {
-			try{
-			secureClose(bf);
-			secureClose(session);
-			}finally{
-				
+			try {
+				secureClose(bf);
+				secureClose(session);
+			} finally {
+
 			}
 		}
+		return rodou;
 	}
 
 	private void setupKeyVerifier(final SSHClient ssh) {
@@ -161,6 +152,12 @@ public class RemoteShell {
 			LOG.error("Erro ao fechar recurso", ex);
 			System.out.println("Erro ao fechar");
 		}
+	}
+
+	private void sendInfoToScreen(final BuildServices buildServices,
+			final TelaInicio telaInicio, final String info) {
+		buildServices.sendOutputToTela(telaInicio, info);
+		buildServices.sendStatusCode(telaInicio, info);
 	}
 
 }
