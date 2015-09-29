@@ -524,6 +524,10 @@ public class TelaInicio extends JFrame {
 		taStatus.append(status + "\n");
 		taStatus.setCaretPosition(taStatus.getDocument().getLength());
 	}
+	
+	public void showInfoInDialog(String info){
+		JOptionPane.showMessageDialog(null, info);
+	}
 
 	private void copyToTransferArea(String toCopy) {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();

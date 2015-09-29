@@ -132,6 +132,10 @@ public class RemoteShell {
 
 			}
 		}
+		
+		if(command.getDescricao().contains("Deploy of Modules") && rodou){
+			buildServices.sendInfoToDialog(telaInicio, "Recomandado realizar restart no JBOSS antes de ir ao próximo passo");
+		}
 		return rodou;
 	}
 

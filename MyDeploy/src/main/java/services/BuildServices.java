@@ -6,6 +6,8 @@ import gui.TelaInicio;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import model.RemoteShell;
 import model.Script;
 import util.PkgDeployConstants;
@@ -252,6 +254,10 @@ public class BuildServices {
 
 	public void sendStatusCode(final TelaInicio telaInicio, final String status) {
 		telaInicio.setStatusCode(status);
+	}
+	
+	public void sendInfoToDialog(TelaInicio telaInicio, String info){
+		telaInicio.showInfoInDialog(info);
 	}
 
 	public String getServerToDeploy() {
