@@ -43,7 +43,7 @@ public class PkgDeployConstants {
 	//scripts de geração de pacotes(Executá-los dentro de $FOLDER_STABLE_BUILD_SCRIPTS){
 	public static final String SCRIPT_GET_CODE = "./get_code.sh;";
 	public static final String SCRIPT_BUILD_JAVA = "./buildJava.sh;";
-	public static final String SCRIPT_PKG_ALL_JAVA = "./pkgAllJava.sh;";
+	public static final String SCRIPT_PKG_ALL_JAVA = "./pkgAllJava_param.sh ";
 	public static final String SCRIPT_PKG_BPM = "./pkgBPM.sh;";
 	//Passar como argumento "num_delta+;"
 	public static final String SCRIPT_PKG_SQL_DELTA = "./pkgSQL_auto.sh ";

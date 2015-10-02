@@ -63,10 +63,25 @@ public class BuildServices {
 			commands.add(new Script("build Java by Maven", folderToPkg
 					+ PkgDeployConstants.SCRIPT_BUILD_JAVA, getServerToBuild()));
 
-			if (someJavaSelected) {
-				commands.add(new Script("Pkg All Java pkgs", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA,
-						getServerToBuild()));
+			if (pkgs.contains("MOD")) {
+				commands.add(new Script("pkg MOD", folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"MOD", getServerToBuild()));
+			}
+			if (pkgs.contains("EJB")) {
+				commands.add(new Script("pkg EJB", folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"EJB", getServerToBuild()));
+			}
+			if (pkgs.contains("GUI")) {
+				commands.add(new Script("pkg GUI", folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"GUI", getServerToBuild()));
+			}
+			if (pkgs.contains("WS")) {
+				commands.add(new Script("pkg WSB", folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"WSB", getServerToBuild()));
+			}
+			if (pkgs.contains("AGE")) {
+				commands.add(new Script("pkg AGE", folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"AGE", getServerToBuild()));
 			}
 			if (pkgs.contains("BPM")) {
 				commands.add(new Script("pkg BPM", folderToPkg
@@ -143,7 +158,7 @@ public class BuildServices {
 					!getServerToDeploy().equals(PkgDeployConstants.MACHINE_ST1) ? PkgDeployConstants.SCRIPT_COPYLOCAL
 							: PkgDeployConstants.SCRIPT_COPYLOCAL_ST,
 					getServerToBuild()));
-			
+
 		} else {
 			this.getPrepareDeployST();
 			commands.add(new Script(
@@ -159,18 +174,16 @@ public class BuildServices {
 					getServerToDeploy()));
 		}
 	}
-	
-	private void getPrepareDeployST(){
+
+	private void getPrepareDeployST() {
 		commands.add(new Script(
-				"Creating the .tar. for all pkg in deploy machine",
-				folderToPkg + PkgDeployConstants.SCRIPT_PKG_ALL,
-				getServerToBuild()));
-		//commands.add(new Script("Versioning this package", folderToPkg
-			//	+ PkgDeployConstants.SCRIPT_COMMIT_PKG_SVN,
-				//getServerToBuild()));
+				"Creating the .tar. for all pkg in deploy machine", folderToPkg
+						+ PkgDeployConstants.SCRIPT_PKG_ALL, getServerToBuild()));
+		// commands.add(new Script("Versioning this package", folderToPkg
+		// + PkgDeployConstants.SCRIPT_COMMIT_PKG_SVN,
+		// getServerToBuild()));
 		commands.add(new Script("Creating a pkg folder in deploy machine",
-				folderToDeploy
-						+ PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER,
+				folderToDeploy + PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER,
 				getServerToDeploy()));
 	}
 
@@ -255,8 +268,8 @@ public class BuildServices {
 	public void sendStatusCode(final TelaInicio telaInicio, final String status) {
 		telaInicio.setStatusCode(status);
 	}
-	
-	public void sendInfoToDialog(TelaInicio telaInicio, String info){
+
+	public void sendInfoToDialog(TelaInicio telaInicio, String info) {
 		telaInicio.showInfoInDialog(info);
 	}
 
