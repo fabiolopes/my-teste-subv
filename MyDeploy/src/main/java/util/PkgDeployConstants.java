@@ -43,7 +43,7 @@ public class PkgDeployConstants {
 	//scripts de geração de pacotes(Executá-los dentro de $FOLDER_STABLE_BUILD_SCRIPTS){
 	public static final String SCRIPT_GET_CODE = "./get_code.sh;";
 	public static final String SCRIPT_BUILD_JAVA = "./buildJava.sh;";
-	public static final String SCRIPT_PKG_ALL_JAVA = "./pkgAllJava_param.sh ";
+	public static final String SCRIPT_PKG_ALL_JAVA = "./pkgAllJava.sh ";
 	public static final String SCRIPT_PKG_BPM = "./pkgBPM.sh;";
 	//Passar como argumento "num_delta+;"
 	public static final String SCRIPT_PKG_SQL_DELTA = "./pkgSQL_auto.sh ";
@@ -69,6 +69,7 @@ public class PkgDeployConstants {
 	public static final String SCRIPT_DEPLOY_SQL_P212_1 = "./deploySQL_p2121.sh ";
 	public static final String SCRIPT_DEPLOY_SQL_P212_2 = "./deploySQL_p2122.sh ";
 	public static final String SCRIPT_DEPLOY_SQL_P212_3 = "./deploySQL_p2123.sh ";
+	public static final String SCRIPT_DEPLOY_SQL_P22 = "./deploySQL_p22.sh ";
 	public static final String SCRIPT_RESTART_AGENTSENDER = CD_FOLDER_AGENTSENDER_SCRIPT+"./restart_agent_sender.sh;";
 	public static final String SCRIPT_RESTART_JBOSS = CD_FOLDER_JBOSS_SCRIPT+"./stopJboss.sh;./startJboss.sh;";
 
@@ -77,5 +78,6 @@ public class PkgDeployConstants {
 	public static final String CMD_ST1_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST1+":"+FOLDER_PKG_ST+";pwd;";
 	public static final String CMD_ST2_CPY_TAR_TO_PKG = "scp "+FOLDER_STABLE_BUILD_SCRIPTS+"pkg/"+TAR_NAME+" "+SSH_MACHINE_ST2+":"+FOLDER_PKG_ST+";pwd;";
 	public static final String CMD_UNTAR_OM_TAR = "tar -xvf "+TAR_NAME+";pwd;";
+	public static final String CMD_DEL_BIG_TAR = "rm -f " + FOLDER_PKG_STABLE + "OM-*.tar;";
 
 }

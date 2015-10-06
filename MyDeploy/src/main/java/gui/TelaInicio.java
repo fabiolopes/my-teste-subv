@@ -2,11 +2,13 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -17,6 +19,7 @@ import model.RemoteShell;
 import exceptions.RuntimeScriptException;
 
 import services.BuildServices;
+import util.PkgDeployConstants;
 
 public class TelaInicio extends JFrame {
 
@@ -43,7 +46,7 @@ public class TelaInicio extends JFrame {
 	private void initComponents() {
 
 		btGDelta = new javax.swing.ButtonGroup();
-		// btGProced = new javax.swing.ButtonGroup();
+		btGProced = new javax.swing.ButtonGroup();
 		panelPrincipal = new javax.swing.JPanel();
 		cbAgents = new javax.swing.JCheckBox();
 		cbEJB = new javax.swing.JCheckBox();
@@ -55,20 +58,23 @@ public class TelaInicio extends JFrame {
 		rbOne = new javax.swing.JRadioButton();
 		labelWhatDelta = new javax.swing.JLabel();
 		rbMais = new javax.swing.JRadioButton();
-		// rbDeploy = new javax.swing.JRadioButton();
-		// rbFullRestart = new javax.swing.JRadioButton();
+		rbDeploy = new javax.swing.JRadioButton();
+		rbFQAPkg = new javax.swing.JRadioButton();
 		// rbRestartAgents = new javax.swing.JRadioButton();
 		// rbRestartJBoss = new javax.swing.JRadioButton();
 		tfDeltaInicio = new javax.swing.JTextField();
 		tfDeltaFinal = new javax.swing.JTextField();
+		tfFQAPkg = new javax.swing.JTextField();
 		labelDeltaInicio = new javax.swing.JLabel();
 		labelDeltaFinal = new javax.swing.JLabel();
+		labelFQAPkg = new javax.swing.JLabel();
 		taOutPut = new javax.swing.JTextArea();
 		taStatus = new javax.swing.JTextArea();
 		labelTitle = new javax.swing.JLabel();
-		btInstalar = new javax.swing.JButton();
+		btIniciar = new javax.swing.JButton();
+		btFechar = new javax.swing.JButton();
 		panelServer = new javax.swing.JPanel();
-		// panelProcedimento = new javax.swing.JPanel();
+		panelProcedimento = new javax.swing.JPanel();
 		cbServer = new javax.swing.JComboBox();
 		scrollOutput = new javax.swing.JScrollPane();
 		scrollStatus = new javax.swing.JScrollPane();
@@ -217,6 +223,28 @@ public class TelaInicio extends JFrame {
 
 		});
 
+		panelPrincipal.add(tfFQAPkg);
+		tfFQAPkg.setEnabled(false);
+		tfFQAPkg.setBounds(340, 140, 130, 20);
+		tfFQAPkg.addKeyListener(new java.awt.event.KeyListener() {
+
+			public void keyTyped(KeyEvent e) {
+				tfFQAPkgKeyTyped(e);
+
+			}
+
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+		});
+
 		labelDeltaInicio.setText("Delta (início)");
 		panelPrincipal.add(labelDeltaInicio);
 		labelDeltaInicio.setBounds(160, 120, 70, 14);
@@ -224,6 +252,10 @@ public class TelaInicio extends JFrame {
 		labelDeltaFinal.setText("Delta (final)");
 		panelPrincipal.add(labelDeltaFinal);
 		labelDeltaFinal.setBounds(250, 120, 60, 14);
+
+		labelFQAPkg.setText("Versão do pacote");
+		panelPrincipal.add(labelFQAPkg);
+		labelFQAPkg.setBounds(340, 120, 100, 14);
 
 		getContentPane().add(panelPrincipal);
 		panelPrincipal.setBounds(40, 90, 610, 180);
@@ -234,15 +266,25 @@ public class TelaInicio extends JFrame {
 		getContentPane().add(labelTitle);
 		labelTitle.setBounds(40, 0, 250, 40);
 
-		btInstalar.setText("Instalar");
-		btInstalar.setEnabled(false);
-		btInstalar.addActionListener(new java.awt.event.ActionListener() {
+		btIniciar.setText("Iniciar");
+		btIniciar.setEnabled(false);
+		btIniciar.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				btInstalarActionPerformed(evt);
+				btIniciarActionPerformed(evt);
 			}
 		});
-		getContentPane().add(btInstalar);
-		btInstalar.setBounds(40, 280, 80, 30);
+		getContentPane().add(btIniciar);
+		btIniciar.setBounds(40, 280, 80, 30);
+
+		btFechar.setText("Fechar");
+		btFechar.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				btFecharActionPerformed(evt);
+			}
+		});
+		getContentPane().add(btFechar);
+		btFechar.setBounds(140, 280, 80, 30);
+
 		scrollOutput.setViewportView(taOutPut);
 		getContentPane().add(scrollOutput);
 		scrollOutput.setBounds(40, 350, 810, 250);
@@ -271,26 +313,32 @@ public class TelaInicio extends JFrame {
 		getContentPane().add(panelServer);
 		panelServer.setBounds(40, 40, 400, 50);
 
+		panelProcedimento.setBorder(javax.swing.BorderFactory
+				.createTitledBorder("Escolha o procedimento a ser realizado"));
+		panelProcedimento.setLayout(null);
+		getContentPane().add(panelProcedimento);
+		panelProcedimento.setBounds(450, 40, 400, 50);
+
+		btGProced.add(rbDeploy);
+		rbDeploy.setText("Deploy");
+		panelProcedimento.add(rbDeploy);
+		rbDeploy.setBounds(15, 20, 70, 20);
+		rbDeploy.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				rbDeployStateChanged(evt);
+			}
+		});
+
+		btGProced.add(rbFQAPkg);
+		rbFQAPkg.setText("FQA Pkg");
+		panelProcedimento.add(rbFQAPkg);
+		rbFQAPkg.setBounds(90, 20, 90, 20);
+		rbFQAPkg.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent evt) {
+				rbFQAPkgStateChanged(evt);
+			}
+		});
 		/*
-		 * panelProcedimento.setBorder(javax.swing.BorderFactory
-		 * .createTitledBorder("Escolha o procedimento a ser realizado"));
-		 * panelProcedimento.setLayout(null);
-		 * getContentPane().add(panelProcedimento);
-		 * panelProcedimento.setBounds(450, 40, 400, 50);
-		 * 
-		 * btGProced.add(rbDeploy); rbDeploy.setText("Deploy");
-		 * panelProcedimento.add(rbDeploy); rbDeploy.setBounds(15, 20, 70, 20);
-		 * rbDeploy.addChangeListener(new javax.swing.event.ChangeListener() {
-		 * public void stateChanged(javax.swing.event.ChangeEvent evt) {
-		 * rbDeployStateChanged(evt); } });
-		 * 
-		 * btGProced.add(rbFullRestart); rbFullRestart.setText("Full Restart");
-		 * panelProcedimento.add(rbFullRestart); rbFullRestart.setBounds(90, 20,
-		 * 90, 20); rbFullRestart.addChangeListener(new
-		 * javax.swing.event.ChangeListener() { public void
-		 * stateChanged(javax.swing.event.ChangeEvent evt) { rbStateChanged(evt,
-		 * rbFullRestart); } });
-		 * 
 		 * btGProced.add(rbRestartAgents);
 		 * rbRestartAgents.setText("Restart Agents");
 		 * panelProcedimento.add(rbRestartAgents);
@@ -307,6 +355,7 @@ public class TelaInicio extends JFrame {
 		 * stateChanged(javax.swing.event.ChangeEvent evt) { rbStateChanged(evt,
 		 * rbRestartJBoss); } });
 		 */
+		setIcon();
 
 		pack();
 	}// </editor-fold>
@@ -338,14 +387,33 @@ public class TelaInicio extends JFrame {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private void rbDeployStateChanged(javax.swing.event.ChangeEvent evt) {
+		if (rbDeploy.isSelected()) {
+			tfFQAPkg.setEnabled(false);
+			cbServer.setModel(new javax.swing.DefaultComboBoxModel(
+					new String[] { "10.43.1.87", "10.43.1.109", "10.43.1.110" }));
+		} else {
+			tfFQAPkg.setEnabled(true);
+		}
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void rbFQAPkgStateChanged(javax.swing.event.ChangeEvent evt) {
+		if (rbFQAPkg.isSelected()) {
+			tfFQAPkg.setEnabled(true);
+			cbServer.setModel(new javax.swing.DefaultComboBoxModel(
+					new String[] { "R1", "R2.1" }));
+			isSomeItemVersionFQASelected();
+		} else {
+			tfFQAPkg.setEnabled(false);
+		}
+	}
+
 	/*
-	 * private void rbDeployStateChanged(javax.swing.event.ChangeEvent evt) { if
-	 * (rbDeploy.isSelected()) { changePanelPrincipalEditable(true); } else {
-	 * changePanelPrincipalEditable(false); } }
-	 * 
 	 * private void rbStateChanged(javax.swing.event.ChangeEvent evt,
-	 * JRadioButton rb) { if (rb.isSelected()) { btInstalar.setEnabled(true); }
-	 * else { btInstalar.setEnabled(false); } }
+	 * JRadioButton rb) { if (rb.isSelected()) { btIniciar.setEnabled(true); }
+	 * else { btIniciar.setEnabled(false); } }
 	 */
 
 	private void cbAgentsStateChanged(javax.swing.event.ChangeEvent evt) {
@@ -379,31 +447,47 @@ public class TelaInicio extends JFrame {
 		}
 	}
 
-	private void btInstalarActionPerformed(java.awt.event.ActionEvent evt) {
+	private void tfFQAPkgKeyTyped(java.awt.event.KeyEvent evt) {
+		isSomeItemVersionFQASelected();
+	}
+
+	private void btFecharActionPerformed(java.awt.event.ActionEvent evt) {
+		System.exit(0);
+	}
+
+	private void btIniciarActionPerformed(java.awt.event.ActionEvent evt) {
 		limpaTela();
-		final BuildServices build = new BuildServices(cbServer
-				.getSelectedItem().toString());
+		final BuildServices build = new BuildServices(getServer());
 		final TelaInicio ctx = this;
 		// if (rbDeploy.isSelected()) {
 		if (isDeltaCorrect()) {
 			new Thread(new Runnable() {
 
-				public void run(){
+				public void run() {
 					try {
-						if(build.executeBuildAndDeployScripts(getpkgsToInstall(),
-								ctx, isSomeJavaItemSelected())){
-						JOptionPane
-								.showMessageDialog(
-										null,
-										"Deploy concluído com sucesso. "
-												+ "Versão do pacote disponível na área de transferência");
-						copyToTransferArea(RemoteShell.omTxt);
-						RemoteShell.omTxt = "";
+						String msg = new String();
+						if (rbDeploy.isSelected()) {
+							if (build.executeBuildAndDeployScripts(
+									getpkgsToInstall(), ctx,
+									isSomeJavaItemSelected())) {
+								msg = "Deploy concluído com sucesso. Versão do pacote disponível na área de transferência";
+								copyToTransferArea(RemoteShell.omTxt);
+								RemoteShell.omTxt = "";
+							}
+						} else if (rbFQAPkg.isSelected()) {
+							if (build.generateFQAPkg(getpkgsToInstall(), ctx,
+									isSomeJavaItemSelected(), tfFQAPkg.getText().trim())) {
+								msg = "Pacote para FQA criado com sucesso";
+							}
 						}
+						JOptionPane.showMessageDialog(null, msg);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (RuntimeScriptException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -477,11 +561,20 @@ public class TelaInicio extends JFrame {
 
 	private void isSomeItemSelected() {
 		if (isSomeJavaItemSelected() || cbDelta.isSelected()) {
-			btInstalar.setEnabled(true);
+			btIniciar.setEnabled(true);
 		} else {
-			btInstalar.setEnabled(false);
+			btIniciar.setEnabled(false);
 		}
 
+	}
+
+	public void isSomeItemVersionFQASelected() {
+		if (isSomeJavaItemSelected() || cbDelta.isSelected()
+				&& !tfFQAPkg.getText().isEmpty()) {
+			btIniciar.setEnabled(true);
+		} else {
+			btIniciar.setEnabled(false);
+		}
 	}
 
 	private boolean isDeltaCorrect() {
@@ -494,6 +587,21 @@ public class TelaInicio extends JFrame {
 				.parseInt(tfDeltaFinal.getText()) > Integer
 				.parseInt(tfDeltaInicio.getText()))) && !tfDeltaInicio
 				.getText().equals("")));
+	}
+
+	private String getServer() {
+		if (rbDeploy.isSelected()) {
+			return cbServer
+			.getSelectedItem().toString();
+		} else {
+			String server = cbServer.getSelectedItem().toString();
+			if (server.equals("R1")) {
+				return PkgDeployConstants.MACHINE_ST1;
+			} else if (server.equals("R2.1")) {
+				return PkgDeployConstants.MACHINE_ST2;
+			}
+		}
+		return null;
 	}
 
 	private void changePanelPrincipalEditable(boolean isEditable) {
@@ -524,8 +632,8 @@ public class TelaInicio extends JFrame {
 		taStatus.append(status + "\n");
 		taStatus.setCaretPosition(taStatus.getDocument().getLength());
 	}
-	
-	public void showInfoInDialog(String info){
+
+	public void showInfoInDialog(String info) {
 		JOptionPane.showMessageDialog(null, info);
 	}
 
@@ -533,6 +641,13 @@ public class TelaInicio extends JFrame {
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		StringSelection selection = new StringSelection(toCopy);
 		clipboard.setContents(selection, null);
+	}
+
+	private void setIcon() {
+		URL url = this.getClass().getClassLoader()
+				.getResource("resource/icone_instalacao.png");
+		Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
+		this.setIconImage(iconeTitulo);
 	}
 
 	/**
@@ -582,8 +697,9 @@ public class TelaInicio extends JFrame {
 
 	// Variables declaration - do not modify
 	private javax.swing.ButtonGroup btGDelta;
-	// private javax.swing.ButtonGroup btGProced;
-	private javax.swing.JButton btInstalar;
+	private javax.swing.ButtonGroup btGProced;
+	private javax.swing.JButton btIniciar;
+	private javax.swing.JButton btFechar;
 	private javax.swing.JCheckBox cbAgents;
 	private javax.swing.JCheckBox cbBPM;
 	private javax.swing.JCheckBox cbDelta;
@@ -595,22 +711,24 @@ public class TelaInicio extends JFrame {
 	private javax.swing.JCheckBox cbWS;
 	private javax.swing.JLabel labelDeltaFinal;
 	private javax.swing.JLabel labelDeltaInicio;
+	private javax.swing.JLabel labelFQAPkg;
 	private javax.swing.JLabel labelTitle;
 	private javax.swing.JLabel labelWhatDelta;
 	private javax.swing.JPanel panelPrincipal;
 	private javax.swing.JPanel panelServer;
-	// private javax.swing.JPanel panelProcedimento;
+	private javax.swing.JPanel panelProcedimento;
 	private javax.swing.JScrollPane scrollStatus;
 	private javax.swing.JScrollPane scrollOutput;
 	private javax.swing.JTextArea taOutPut;
 	private javax.swing.JTextArea taStatus;
 	private javax.swing.JRadioButton rbMais;
 	private javax.swing.JRadioButton rbOne;
-	// private javax.swing.JRadioButton rbDeploy;
-	// private javax.swing.JRadioButton rbFullRestart;
+	private javax.swing.JRadioButton rbDeploy;
+	private javax.swing.JRadioButton rbFQAPkg;
 	// private javax.swing.JRadioButton rbRestartAgents;
 	// private javax.swing.JRadioButton rbRestartJBoss;
 	private javax.swing.JTextField tfDeltaFinal;
 	private javax.swing.JTextField tfDeltaInicio;
+	private javax.swing.JTextField tfFQAPkg;
 	// End of variables declaration
 }

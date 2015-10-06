@@ -6,10 +6,9 @@ import gui.TelaInicio;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import model.RemoteShell;
 import model.Script;
+import util.FileUtils;
 import util.PkgDeployConstants;
 
 public class BuildServices {
@@ -20,6 +19,7 @@ public class BuildServices {
 	private String folderToDeploy;
 	private ArrayList<String> pkgs;
 	private ArrayList<Script> commands;
+	private String flag;
 
 	public BuildServices(String serverToDeploy) {
 		super();
@@ -44,16 +44,37 @@ public class BuildServices {
 	 * }
 	 */
 
+	public boolean generateFQAPkg(final ArrayList<String> pkgs,
+			final TelaInicio telaInicio, final boolean isSomeJavaSelected,
+			final String fqaPkg) throws Exception {
+		this.flag = "fqa";
+		boolean isGenerated = false;
+		RemoteShell shell = new RemoteShell(getServerToBuild());
+		generateBuildScripts(pkgs, isSomeJavaSelected);
+		getPrepareDeployST();
+		executeAllCommands(telaInicio);
+		FileUtils.createLocalPkgStructure(fqaPkg, this, telaInicio);
+		shell.downloadFileToFqaPkg(fqaPkg);
+		isGenerated = FileUtils.isDiretorioVazio(fqaPkg, this, telaInicio);
+		return isGenerated;
+	}
+
 	public boolean executeBuildAndDeployScripts(ArrayList<String> pkgs,
 			TelaInicio telaInicio, boolean isSomeJavaSelected)
 			throws IOException, RuntimeScriptException {
-		this.pkgs = pkgs;
-		this.someJavaSelected = isSomeJavaSelected;
-		getBuildScripts();
+		flag = "deploy";
+		generateBuildScripts(pkgs, isSomeJavaSelected);
 		getPrepareDeploy();
 		getDeployScripts();
 		boolean b = executeAllCommands(telaInicio);
 		return b;
+	}
+
+	private void generateBuildScripts(ArrayList<String> pkgs,
+			boolean isSomeJavaSelected) {
+		this.pkgs = pkgs;
+		this.someJavaSelected = isSomeJavaSelected;
+		getBuildScripts();
 	}
 
 	private void getBuildScripts() {
@@ -65,23 +86,28 @@ public class BuildServices {
 
 			if (pkgs.contains("MOD")) {
 				commands.add(new Script("pkg MOD", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"MOD", getServerToBuild()));
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA + "MOD",
+						getServerToBuild()));
 			}
 			if (pkgs.contains("EJB")) {
 				commands.add(new Script("pkg EJB", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"EJB", getServerToBuild()));
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA + "EJB",
+						getServerToBuild()));
 			}
 			if (pkgs.contains("GUI")) {
 				commands.add(new Script("pkg GUI", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"GUI", getServerToBuild()));
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA + "GUI",
+						getServerToBuild()));
 			}
 			if (pkgs.contains("WS")) {
 				commands.add(new Script("pkg WSB", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"WSB", getServerToBuild()));
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA + "WSB",
+						getServerToBuild()));
 			}
 			if (pkgs.contains("AGE")) {
 				commands.add(new Script("pkg AGE", folderToPkg
-						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA+"AGE", getServerToBuild()));
+						+ PkgDeployConstants.SCRIPT_PKG_ALL_JAVA + "AGE",
+						getServerToBuild()));
 			}
 			if (pkgs.contains("BPM")) {
 				commands.add(new Script("pkg BPM", folderToPkg
@@ -182,9 +208,17 @@ public class BuildServices {
 		// commands.add(new Script("Versioning this package", folderToPkg
 		// + PkgDeployConstants.SCRIPT_COMMIT_PKG_SVN,
 		// getServerToBuild()));
-		commands.add(new Script("Creating a pkg folder in deploy machine",
-				folderToDeploy + PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER,
-				getServerToDeploy()));
+		if (flag.equals("deploy")) {
+			commands.add(new Script("Creating a pkg folder in deploy machine",
+					folderToDeploy
+							+ PkgDeployConstants.SCRIPT_CREATE_PKG_FOLDER,
+					getServerToDeploy()));
+			
+		}else if(flag.equals("fqa")){
+			commands.add(new Script("Deleting OM-*.tar file", folderToPkg
+					 + PkgDeployConstants.CMD_DEL_BIG_TAR,
+					 getServerToBuild()));
+		}
 	}
 
 	private boolean executeAllCommands(TelaInicio telaInicio) {
@@ -247,6 +281,8 @@ public class BuildServices {
 			return PkgDeployConstants.SCRIPT_DEPLOY_SQL_P212_2;
 		} else if (number.startsWith("2123")) {
 			return PkgDeployConstants.SCRIPT_DEPLOY_SQL_P212_3;
+		} else if (number.startsWith("22")) {
+			return PkgDeployConstants.SCRIPT_DEPLOY_SQL_P22;
 		} else {
 			return PkgDeployConstants.SCRIPT_DEPLOY_SQL;
 		}
@@ -295,6 +331,14 @@ public class BuildServices {
 
 	public String getFolderToDeploy() {
 		return folderToDeploy;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
 
 }

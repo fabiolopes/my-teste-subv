@@ -6,6 +6,7 @@ import gui.TelaInicio;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.PublicKey;
@@ -15,6 +16,8 @@ import net.schmizz.sshj.SSHClient;
 import net.schmizz.sshj.connection.channel.direct.Session;
 import net.schmizz.sshj.connection.channel.direct.Session.Command;
 import net.schmizz.sshj.transport.verification.HostKeyVerifier;
+import net.schmizz.sshj.xfer.FileSystemFile;
+import net.schmizz.sshj.xfer.scp.SCPDownloadClient;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,32 +48,61 @@ public class RemoteShell {
 		this.machine = machine;
 	}
 
+	private SSHClient connect(SSHClient ssh) throws IOException {
+		// Configura tipo de KeyVerifier
+		setupKeyVerifier(ssh);
+		// Conecta com a maquina remota
+		ssh.connect(machine);
+		// Autenticacao
+		ssh.authPassword(USER, PASS);
+		// Executa comando remoto
+		return ssh;
+	}
+	
+	@SuppressWarnings("finally")
+	public boolean downloadFileToFqaPkg(final String fqaPkg) throws IOException{
+		SSHClient ssh = new SSHClient();
+		boolean rodou = false;
+		try {
+			ssh = connect(ssh);
+			downloadFile(ssh, fqaPkg);
+			rodou = true;
+		}finally{
+			ssh.disconnect();
+			return rodou;
+		}
+	}
+	
+	private void downloadFile(final SSHClient ssh, final String fqaPkg) throws IOException{  	
+		SCPDownloadClient downCli = ssh.newSCPFileTransfer().newSCPDownloadClient();
+    	String filesTAR = PkgDeployConstants.FOLDER_PKG_STABLE;
+    	File dirFQAPkg = new File("C:/java/"+fqaPkg+"/pkg/");
+    	downCli.copy(filesTAR, new FileSystemFile(dirFQAPkg));
+    	secureClose(ssh);
+    }
+	
+
 	public boolean executeCommand(Script command,
 			final BuildServices buildServices, final TelaInicio telaInicio)
 			throws Exception {
 		// Cliente SSH
 		machine = command.getServer();
 		boolean rodou = false;
-		final SSHClient ssh = new SSHClient();
+		SSHClient ssh = new SSHClient();
 		try {
-			// Configura tipo de KeyVerifier
-			setupKeyVerifier(ssh);
-			// Conecta com a maquina remota
-			ssh.connect(machine);
-			// Autenticacao
-			ssh.authPassword(USER, PASS);
-			// Executa comando remoto
+			ssh = connect(ssh);
 			rodou = executeCommandBySSH(ssh, command, buildServices, telaInicio);
 		} finally {
 			ssh.disconnect();
 		}
-		
+
 		return rodou;
 	}
 
-	private boolean executeCommandBySSH(final SSHClient ssh, final Script command,
-			final BuildServices buildServices, final TelaInicio telaInicio)
-			throws RuntimeScriptException, Exception {
+	private boolean executeCommandBySSH(final SSHClient ssh,
+			final Script command, final BuildServices buildServices,
+			final TelaInicio telaInicio) throws RuntimeScriptException,
+			Exception {
 		final Session session = ssh.startSession();
 		BufferedReader bf = null;
 		boolean rodou = false;
@@ -104,7 +136,8 @@ public class RemoteShell {
 
 				if (!errorMsg.isEmpty()
 						&& !command.getDescricao().contains("agents")) {
-					sendInfoToScreen(buildServices, telaInicio, command.getDescricao() + ": KO");
+					sendInfoToScreen(buildServices, telaInicio,
+							command.getDescricao() + ": KO");
 					throw new RuntimeScriptException(errorMsg);
 				}
 			}
@@ -113,7 +146,8 @@ public class RemoteShell {
 				String desc[] = command.getDescricao().split(" ");
 				String pkg = desc[0];
 				if (!dao.localizarDeploy(omTxt, pkg)) {
-					sendInfoToScreen(buildServices, telaInicio, command.getDescricao() + ": KO");
+					sendInfoToScreen(buildServices, telaInicio,
+							command.getDescricao() + ": KO");
 					throw new RuntimeScriptException(
 							"Erro ao executar deploy do " + pkg);
 				}
@@ -132,9 +166,11 @@ public class RemoteShell {
 
 			}
 		}
-		
-		if(command.getDescricao().contains("Deploy of Modules") && rodou){
-			buildServices.sendInfoToDialog(telaInicio, "Recomandado realizar restart no JBOSS antes de ir ao próximo passo");
+
+		if (command.getDescricao().contains("Deploy of Modules") && rodou) {
+			buildServices
+					.sendInfoToDialog(telaInicio,
+							"Recomandado realizar restart no JBOSS antes de ir ao próximo passo");
 		}
 		return rodou;
 	}
