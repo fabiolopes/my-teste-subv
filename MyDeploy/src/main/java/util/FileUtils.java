@@ -4,7 +4,19 @@ import exceptions.RuntimeScriptException;
 import exceptions.TransferFilesException;
 import gui.TelaInicio;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import services.BuildServices;
 
@@ -64,5 +76,31 @@ public class FileUtils {
 		// move o arquivo para o novo diretorio
 		return arquivo.renameTo(new File(dir, arquivo.getName()));
 
+	}
+
+	public static Document getXMLDocumentFromInputStream(InputStream content) {
+
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder;
+		try {
+			builder = builderFactory.newDocumentBuilder();
+			StringBuilder xmlString = new StringBuilder();
+			
+			BufferedReader in = new BufferedReader(new InputStreamReader(content));
+		    String str = "";
+		    while ((str = in.readLine()) != null) {
+		        xmlString.append(str);
+		    }
+		    
+	        return (Document) builder.parse(new ByteArrayInputStream(xmlString.toString().getBytes()));
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }
